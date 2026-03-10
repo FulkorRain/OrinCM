@@ -18,23 +18,31 @@ body {
     display:flex;
 }
 
-.sidebar ul{
-    display:grid;
+.sidebar ul {
+    display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
     list-style: none;
+    padding: 0;
 }
 
 .sidebar li {
-  background-color: red;
-  border: 1px black solid;
-  width: auto;
-  height: 50px;
-  display: grid;
-    place-items: center;
-  
+    background-color: red;
+    border: 2px black solid;
+    height: 50px;
+    display: flex;
+    padding: 5px;
 }
+
 .sidebar a {
     text-decoration: none;
     background-color: white;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
