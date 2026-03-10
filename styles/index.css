@@ -50,6 +50,12 @@ body {
     text-align: center;
 }
 
+.main-content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+}
+
 .main-content {
     background-color: white;
     display: flex;
@@ -70,4 +76,7 @@ body {
 
 .main-content p:last-child {
     margin-bottom: 0px;
+}
+
+.mailing-list-button {
 }
