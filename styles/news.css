@@ -4,6 +4,7 @@
     font-family: 'Bookman Old Style', serif;
 }
 
+
 body {
     margin: 8px;
     background-color: #c3cdb1;
@@ -17,8 +18,10 @@ body {
     border: 2px solid black;
 }
 
-.content {
-    display: flex;
+.left-sidebar,
+.right-sidebar {
+    width: 200px;
+    flex-shrink: 0;
 }
 
 .left-sidebar ul,
@@ -41,6 +44,16 @@ body {
     color: black;
 }
 
+
+.content {
+    display: flex;
+    gap: 15px;
+}
+
+main {
+    flex: 1;
+}
+
 .main-container {
-    width: 70vw;
+    width: 100%;
 }
