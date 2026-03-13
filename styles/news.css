@@ -40,3 +40,7 @@ body {
 .right-sidebar a {
     color: black;
 }
+
+.main-container {
+    width: 70vw;
+}
