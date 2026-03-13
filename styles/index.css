@@ -86,3 +86,35 @@ body {
     padding: 10px 20px;
     place-self: center;
 }
+
+/* Media Query for Mobile responsiveness */
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column; /* Stacks the sidebar and main content vertically */
+    }
+
+    .sidebar {
+        margin-bottom: 20px; /* Adds space before the main content starts */
+    }
+
+    .sidebar ul {
+        margin-right: 0; /* Clears that 10px margin you have for desktop */
+    }
+
+    .main-content {
+        font-size: 18px; /* Slightly smaller text so it's readable on small screens */
+    }
+
+    .main-content p {
+        margin-bottom: 40px; /* Reduced gap between paragraphs for mobile */
+    }
+
+    .mailing-list-button {
+        width: 100%; /* Makes the button easy to tap with a thumb */
+        font-size: 24px; /* Slightly smaller but still chunky and retro */
+    }
+    
+    .header-container {
+        height: 15vh; /* Shorter header to save precious screen space */
+    }
+}
