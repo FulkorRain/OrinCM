@@ -16,3 +16,27 @@ body {
     margin-bottom: 10px;
     border: 2px solid black;
 }
+
+.content {
+    display: flex;
+}
+
+.left-sidebar ul,
+.right-sidebar ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    list-style: none;
+    padding: 0;
+    background-color: #b7b9a8;
+    border: 2px solid black;
+}
+
+.left-sidebar a,
+.right-sidebar a {
+    text-decoration: none;
+}
+
+.right-sidebar a {
+    color: black;
+}
