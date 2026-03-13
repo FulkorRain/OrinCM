@@ -27,8 +27,9 @@ body {
 .left-sidebar ul,
 .right-sidebar ul {
     display: grid;
+    place-items:center;
     grid-template-columns: 1fr;
-    gap: 5px;
+    gap: 2rem;
     list-style: none;
     padding: 0;
     background-color: #b7b9a8;
@@ -70,4 +71,10 @@ main {
 
 .comment-entry p {
     margin: 2px 0;
+}
+
+.paragraphs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem
 }
