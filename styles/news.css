@@ -36,6 +36,11 @@ body {
     border: 2px solid black;
 }
 
+.left-sidebar li,
+.right-sidebar li {
+    text-align: center;
+}
+
 .left-sidebar a,
 .right-sidebar a {
     text-decoration: none;
