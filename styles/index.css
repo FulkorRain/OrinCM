@@ -87,34 +87,55 @@ body {
     place-self: center;
 }
 
-/* Media Query for Mobile responsiveness */
+
+.sidebar li:hover {
+    background-color: #b30000;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    z-index: 10;
+}
+
+
+.sidebar li:active {
+    background-color: red;
+    transform: scale(1.0);
+    transition: all 0.1s ease;
+}
+
+/* 3. Smooth transition for the link inside too */
+.sidebar a {
+    transition: background-color 0.2s ease;
+}
+
+
 @media (max-width: 768px) {
     .content {
-        flex-direction: column; /* Stacks the sidebar and main content vertically */
+        flex-direction: column;
     }
 
     .sidebar {
-        margin-bottom: 20px; /* Adds space before the main content starts */
+        margin-bottom: 20px;
     }
 
     .sidebar ul {
-        margin-right: 0; /* Clears that 10px margin you have for desktop */
+        margin-right: 0;
     }
 
     .main-content {
-        font-size: 18px; /* Slightly smaller text so it's readable on small screens */
+        font-size: 18px;
     }
 
     .main-content p {
-        margin-bottom: 40px; /* Reduced gap between paragraphs for mobile */
+        margin-bottom: 40px;
     }
 
     .mailing-list-button {
-        width: 100%; /* Makes the button easy to tap with a thumb */
-        font-size: 24px; /* Slightly smaller but still chunky and retro */
+        width: 100%;
+        font-size: 24px;
     }
     
     .header-container {
-        height: 15vh; /* Shorter header to save precious screen space */
+        height: 15vh;
     }
 }
