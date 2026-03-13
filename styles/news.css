@@ -83,3 +83,29 @@ main {
     flex-direction: column;
     gap: 1.5rem
 }
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+    }
+
+    main {
+        order: -1;
+    }
+
+    .header-container {
+        height: 15vh;
+    }
+
+    .left-sidebar,
+    .right-sidebar {
+        width: 100%;
+    }
+
+    .left-sidebar ul,
+    .right-sidebar ul {
+        gap: 0.5rem;
+        padding: 10px 0;
+        margin-bottom: 15px;
+    }
+}
