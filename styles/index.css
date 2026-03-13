@@ -103,7 +103,6 @@ body {
     transition: all 0.1s ease;
 }
 
-/* 3. Smooth transition for the link inside too */
 .sidebar a {
     transition: background-color 0.2s ease;
 }
