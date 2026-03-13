@@ -57,3 +57,17 @@ main {
 .main-container {
     width: 100%;
 }
+.comment-container {
+    margin-top: 50px;
+    padding-top: 20px;
+    font-size: 0.9rem; 
+}
+
+.comment-entry {
+    margin-bottom: 20px;
+    line-height: 1.2; 
+}
+
+.comment-entry p {
+    margin: 2px 0;
+}
