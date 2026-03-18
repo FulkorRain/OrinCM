@@ -51,6 +51,35 @@ body {
     color: #0080ff
 }
 
+.right-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 400px;
+}
+
+.floorplan,
+.fake-ad {
+    width: 100%;
+    background-color: #808080;
+    padding: 0;
+    border: 2px solid #333; 
+    
+    outline: 2px solid #999;
+    outline-offset: -4px; 
+    
+    box-shadow: inset 1px 1px 0px #fff, 2px 2px 0px #000;
+}
+
+.floorplan {
+    height: 100px;
+}
+
+.fake-ad {
+    height: 300px;
+}
+
+
 .content {
     display: flex;
     gap: 15px;
@@ -92,13 +121,11 @@ main {
         height: 15vh;
     }
 
-    .left-sidebar,
-    .right-sidebar {
+    .left-sidebar {
         width: 100%;
     }
 
-    .left-sidebar ul,
-    .right-sidebar ul {
+    .left-sidebar ul {
         gap: 0.5rem;
         padding: 10px 0;
         margin-bottom: 15px;
