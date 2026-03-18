@@ -64,6 +64,10 @@ main {
     width: 100%;
 }
 
+.main-text {
+    margin-top: 10px;
+}
+
 .paragraphs {
     display: flex;
     flex-direction: column;
