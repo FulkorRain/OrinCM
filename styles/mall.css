@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Bookman Old Style', serif;
+}
+
+
+body {
+    margin: 8px;
+    background-color: #c3cdb1;
+}
+
+.header-container {
+    width: 100%;
+    height: 30vh;
+    background-color:#9c9827;
+    margin-bottom: 10px;
+    border: 2px solid black;
+}
+
+.left-sidebar,
+.right-sidebar {
+    width: 200px;
+    flex-shrink: 0;
+}
+
+.left-sidebar ul,
+.right-sidebar ul {
+    display: grid;
+    place-items:center;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    background-color: #b7b9a8;
+    border: 2px solid #333; 
+    
+    outline: 2px solid #999;
+    outline-offset: -4px; 
+    
+    box-shadow: inset 1px 1px 0px #fff, 2px 2px 0px #000;
+}
+
+.left-sidebar li,
+.right-sidebar li {
+    text-align: center;
+}
+
+.left-sidebar a,
+.right-sidebar a {
+    text-decoration: none;
+}
+
+.right-sidebar a {
+    color: black;
+}
+
+
+.content {
+    display: flex;
+    gap: 15px;
+}
+
+main {
+    flex: 1;
+}
+
+.main-container {
+    width: 100%;
+}
+.comment-container {
+    margin-top: 50px;
+    padding-top: 20px;
+    font-size: 0.9rem; 
+}
+
+.comment-entry {
+    margin-bottom: 20px;
+    line-height: 1.2; 
+}
+
+.comment-entry p {
+    margin: 2px 0;
+}
+
+.paragraphs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+    }
+
+    main {
+        order: -1;
+    }
+
+    .header-container {
+        height: 15vh;
+    }
+
+    .left-sidebar,
+    .right-sidebar {
+        width: 100%;
+    }
+
+    .left-sidebar ul,
+    .right-sidebar ul {
+        gap: 0.5rem;
+        padding: 10px 0;
+        margin-bottom: 15px;
+    }
+}
