@@ -18,14 +18,12 @@ body {
     border: 2px solid black;
 }
 
-.left-sidebar,
-.right-sidebar {
+.left-sidebar {
     width: 200px;
     flex-shrink: 0;
 }
 
-.left-sidebar ul,
-.right-sidebar .floorplan {
+.left-sidebar ul {
     display: grid;
     place-items:center;
     grid-template-columns: 1fr;
@@ -40,10 +38,6 @@ body {
     box-shadow: inset 1px 1px 0px #fff, 2px 2px 0px #000;
 }
 
-.right-sidebar .floorplan {
-   background-color: #808080;
-}
-
 .left-sidebar ul {
    background-color: #ff77a2;
 }
@@ -54,16 +48,7 @@ body {
 
 .left-sidebar a {
     text-decoration: none;
-}
-
-.left-sidebar a {
     color: #0080ff
-}
-
-.right-sidebar .floorplan {
-    height: 100%;
-    display: grid;
-    place-items: center;
 }
 
 .content {
