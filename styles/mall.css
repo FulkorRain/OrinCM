@@ -25,7 +25,7 @@ body {
 }
 
 .left-sidebar ul,
-.right-sidebar ul {
+.right-sidebar .floorplan {
     display: grid;
     place-items:center;
     grid-template-columns: 1fr;
@@ -40,7 +40,7 @@ body {
     box-shadow: inset 1px 1px 0px #fff, 2px 2px 0px #000;
 }
 
-.right-sidebar ul {
+.right-sidebar .floorplan {
    background-color: #808080;
 }
 
@@ -48,20 +48,23 @@ body {
    background-color: #ff77a2;
 }
 
-.left-sidebar li,
-.right-sidebar li {
+.left-sidebar li {
     text-align: center;
 }
 
-.left-sidebar a,
-.right-sidebar a {
+.left-sidebar a {
     text-decoration: none;
 }
 
-.right-sidebar a {
-    color: black;
+.left-sidebar a {
+    color: #0080ff
 }
 
+.right-sidebar .floorplan {
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
 
 .content {
     display: flex;
