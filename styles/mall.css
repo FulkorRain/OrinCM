@@ -76,7 +76,12 @@ body {
 }
 
 .fake-ad {
-    height: 300px;
+    height: 100px; /* change this */
+}
+
+.fake-ad p {
+    background-color: white;
+    font-size: 20px;
 }
 
 
