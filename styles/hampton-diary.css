@@ -1,0 +1,117 @@
+body {
+            background-color: #00FFFF;
+            font-family: Arial, sans-serif;
+            color: black;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .layout-container {
+            display: flex;
+            max-width: 900px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background-color: #FFFF00;
+            border: 2px solid black;
+            width: 200px;
+            flex-shrink: 0;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            height: fit-content;
+        }
+
+        .sidebar-btn {
+            background-color: white;
+            border: 1px solid gray;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+        }
+
+        .main-content {
+            flex-grow: 1;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            color: #FFFF00;
+            font-size: 48px;
+            margin: 0;
+            text-shadow: 
+                -1px -1px 0 #000,  
+                 1px -1px 0 #000,
+                -1px  1px 0 #000,
+                 1px  1px 0 #000,
+                 3px  3px 0 #000; 
+        }
+
+        .rat-gif {
+            width: 80px;
+            height: auto;
+        }
+
+        p {
+            line-height: 1.4;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .footer-section {
+            text-align: center;
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .guestbook-btn {
+            background-color: white;
+            border: 2px solid black;
+            padding: 10px 30px;
+            font-size: 24px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+
+        .hit-counter {
+            border: 2px solid gray;
+            padding: 5px;
+            background: white;
+            font-family: monospace;
+            font-size: 28px;
+            letter-spacing: 5px;
+        }
+
+        .banner-ad {
+            max-width: 400px;
+            border: 1px solid black;
+        }
+
+        .bottom-nav {
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .bottom-nav a {
+            color: blue;
+            text-decoration: none;
+        }
+
+        .bottom-nav a:visited {
+            color: magenta;
+        }
