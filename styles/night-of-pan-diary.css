@@ -13,17 +13,30 @@ body {
             gap: 20px;
         }
 
-        .sidebar {
-            background-color: #8080ff;
-            border: 2px solid black;
-            width: 200px;
-            flex-shrink: 0;
-            padding: 20px 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            height: fit-content;
-        }
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    width: 200px;
+    flex-shrink: 0; 
+}
+
+
+.sidebar {
+    background-color: #8080ff;
+    border: 2px solid black;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: fit-content;
+}
+
+
+.sidebar-image {
+    width: 100%;
+    height: auto;
+}
 
         .sidebar-btn {
             background-color: white;
