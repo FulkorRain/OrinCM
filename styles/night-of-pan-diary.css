@@ -1,5 +1,5 @@
 body {
-            background-color: #00FFFF;
+            background-color: #0000ff;
             font-family: Arial, sans-serif;
             color: black;
             margin: 0;
@@ -14,7 +14,7 @@ body {
         }
 
         .sidebar {
-            background-color: #FFFF00;
+            background-color: #8080ff;
             border: 2px solid black;
             width: 200px;
             flex-shrink: 0;
@@ -59,7 +59,7 @@ body {
                  3px  3px 0 #000; 
         }
 
-        .rat-gif {
+        .symbol {
             width: 80px;
             height: auto;
         }
