@@ -128,3 +128,11 @@ body {
         .bottom-nav a:visited {
             color: magenta;
         }
+
+        .main-content p {
+            color: white;
+        }
+
+         .main-content h1 {
+            color: orange;
+        }
