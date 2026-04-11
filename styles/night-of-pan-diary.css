@@ -135,4 +135,8 @@ body {
 
          .main-content h1 {
             color: orange;
+            font-family: "Great Vibes", cursive;
+            font-weight: 400;
+            font-style: normal;
+            margin-left: 150px;
         }
