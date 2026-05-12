@@ -15,6 +15,9 @@ class OverlayManager {
         if (version === 'v1') {
             this.button.addEventListener('click', () => this.unlock());
         }
+        else if (version === 'v2'){
+            this.button.addEventListener('click', () => this.unlock())
+        }
     }
 
     unlock() {
