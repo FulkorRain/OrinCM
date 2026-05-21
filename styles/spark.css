@@ -48,6 +48,7 @@ h1 {
     font-size: 20px;
     margin-bottom: 250px; 
     line-height: 1.2;
+    max-width: 50vw;
 }
 
 footer {

@@ -1,0 +1,16 @@
+document.querySelectorAll('.sidebar-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const targetId = button.getAttribute('data-target');
+        
+
+        document.querySelectorAll('.content-page').forEach(page => {
+            page.style.display = 'none';
+        });
+
+
+        const targetPage = document.getElementById(targetId);
+        if (targetPage) {
+            targetPage.style.display = 'block';
+        }
+    });
+});
