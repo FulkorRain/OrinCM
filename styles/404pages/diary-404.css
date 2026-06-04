@@ -1,0 +1,71 @@
+body {
+    margin: 0;
+    background: #efefef;
+    color: #000;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+
+
+.error-wrapper {
+    margin-left: 190px;
+    margin-top: 70px;
+}
+
+
+
+h1 {
+    margin: 0 0 40px 160px;
+    font-size: 56px;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+
+.message {
+    font-size: 36px;
+    line-height: 1.05;
+}
+
+.message p {
+    margin: 0;
+}
+
+
+.home-button {
+    display: inline-block;
+
+    margin-top: 70px;
+    margin-left: 5px;
+
+    padding: 12px 20px;
+
+    background: #f5f5f5;
+    color: #777;
+
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+
+    border: 3px double #222;
+}
+
+.home-button:hover {
+    background: #fafafa;
+}
+
+
+hr {
+    margin-top: 38px;
+    border: none;
+    border-top: 1px solid #a0a0a0;
+}
+
+.technical-details {
+    text-align: center;
+
+    margin-top: 8px;
+
+    font-size: 28px;
+    font-weight: bold;
+}
