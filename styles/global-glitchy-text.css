@@ -1,23 +1,4 @@
-body {
-    background: #0a0a0a;
-    color: #fff;
-    font-family: 'Arial Black', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-}
-
-.glitch-wrapper {
-    text-align: center;
-}
-
 .glitch {
-    font-size: 5rem;
-    font-weight: bold;
-    text-transform: uppercase;
     position: relative;
     display: inline-block;
     
@@ -25,11 +6,11 @@ body {
                  -0.01em -0.03em 0 rgba(0, 255, 0, 0.4),
                  0.01em 0.03em 0 rgba(0, 0, 255, 0.6);
                  
-    /* Main jitter kept at a rapid 1s cycle */
+
     animation: glitch-shake 1s infinite steps(1);
 }
 
-/* --- CLONE 1: CYAN CHROMATIC SLICE --- */
+
 .glitch::before {
     content: attr(data-text);
     position: absolute;
@@ -39,11 +20,9 @@ body {
     mix-blend-mode: screen;
     
     clip-path: inset(50% 0 30% 0);
-    /* 50% Speed boost: 1.75s -> 0.87s loop */
     animation: glitch-slice-1 0.87s infinite steps(1);
 }
 
-/* --- CLONE 2: MAGENTA CHROMATIC SLICE --- */
 .glitch::after {
     content: attr(data-text);
     position: absolute;
@@ -53,11 +32,10 @@ body {
     mix-blend-mode: screen;
     
     clip-path: inset(20% 0 60% 0);
-    /* 50% Speed boost: 1.4s -> 0.7s loop */
     animation: glitch-slice-2 0.7s infinite steps(1);
 }
 
-/* --- HYPER-DRIVE DISTORTION TIMELINES --- */
+
 
 @keyframes glitch-shake {
     0%, 85%, 100% { transform: translate(0, 0) scale(1); }
