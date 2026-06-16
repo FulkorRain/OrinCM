@@ -1,0 +1,346 @@
+/* ── PAGE COLOUR TOKENS ─────────────────────────────────────────  */
+:root {
+  --bg-void:       #050505;
+  --bg-card:       #0e0b0b;
+  --bg-card-alt:   #110d0d;
+  --border-dim:    #2a1a1a;
+  --border-glow:   #5a1e1e;
+
+  --text-primary:  #e8d5c4;
+  --text-muted:    #7a6055;
+  --text-glow:     #ff6b4a;
+  --topbar-bg:     rgba(5, 2, 2, .92);
+  --topbar-border: #1e0f0f;
+
+  --font-display:  'Cinzel Decorative', serif;
+  --font-body:     'IM Fell English', serif;
+}
+
+
+/* ── BODY OVERRIDE ──────────────────────────────────────────────  */
+body {
+  background: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  min-height: 100vh;
+  background-size: 180px 180px, 100% 100%;
+  background-attachment: fixed;
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+
+/* ── TOP BAR ────────────────────────────────────────────────────  */
+#top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: var(--topbar-bg);
+  border-bottom: 1px solid var(--topbar-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+#top-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+#top-bar-label {
+  font-family: var(--font-display);
+  font-size: .7rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+#intensity-control {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+#intensity-control button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-dim);
+  border-radius: 50%;
+  background: #180d0d;
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#intensity-control button:hover {
+  background: #2a1010;
+  border-color: var(--clay-red);
+  transform: scale(1.08);
+}
+
+#intensity-control button:active { transform: scale(.94); }
+
+#intensity-display {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  min-width: 56px;
+  justify-content: center;
+}
+
+#intensity-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--text-glow);
+  line-height: 1;
+  transition: transform .1s;
+}
+
+/* JS adds .bump to pulse the number when it changes */
+#intensity-value.bump { transform: scale(1.35); }
+
+#intensity-max {
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+
+
+/* ── SECTIONS CONTAINER ─────────────────────────────────────────  */
+#sections-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.effect-section {
+  background: linear-gradient(160deg, var(--bg-card) 0%, var(--bg-card-alt) 100%);
+  border: 1px solid var(--border-dim);
+  border-radius: 20px 14px 18px 16px / 14px 18px 14px 20px;
+  padding: 36px 32px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s;
+}
+
+.effect-section:hover { border-color: var(--border-glow); }
+
+/* Faint rune-like corner decoration */
+.effect-section::before {
+  content: '◈';
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 1rem;
+  color: var(--border-dim);
+  pointer-events: none;
+  transition: color .3s;
+}
+
+.effect-section:hover::before { color: var(--border-glow); }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: .08em;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-dim);
+  padding-bottom: 12px;
+}
+
+.section-desc {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: .95rem;
+}
+
+.section-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.corruptable-text {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  line-height: 1.8;
+}
+
+.corruptable-image {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ACTIVE badge — shown when an effect is running (JS adds .is-active to .effect-section) */
+.active-badge {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  font-size: .65rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--text-glow);
+  font-family: var(--font-display);
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.effect-section.is-active .active-badge { opacity: 1; }
+
+.decay-canvas {
+  border-radius: 12px;
+  display: block;
+  max-width: 100%;
+}
+
+
+/* ── EFFECT CSS CLASSES ─────────────────────────────────────────────────────────────── */
+
+/* Screen shake — applied to #app */
+@keyframes shake-sm {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) }
+  20%       { transform: translate(-3px, 2px) rotate(-.3deg) }
+  40%       { transform: translate(3px, -2px) rotate(.3deg) }
+  60%       { transform: translate(-2px, 3px) rotate(-.2deg) }
+  80%       { transform: translate(2px, -1px) rotate(.2deg) }
+}
+
+@keyframes shake-md {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) }
+  20%       { transform: translate(-7px, 4px) rotate(-.5deg) }
+  40%       { transform: translate(7px, -5px) rotate(.5deg) }
+  60%       { transform: translate(-5px, 6px) rotate(-.4deg) }
+  80%       { transform: translate(5px, -3px) rotate(.4deg) }
+}
+
+@keyframes shake-lg {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) }
+  15%       { transform: translate(-14px, 8px) rotate(-1deg) }
+  35%       { transform: translate(14px, -10px) rotate(1deg) }
+  55%       { transform: translate(-10px, 12px) rotate(-.8deg) }
+  75%       { transform: translate(10px, -6px) rotate(.8deg) }
+}
+
+#app.shaking-low  { animation: shake-sm .18s ease-in-out infinite; }
+#app.shaking-mid  { animation: shake-md .15s ease-in-out infinite; }
+#app.shaking-high { animation: shake-lg .12s ease-in-out infinite; }
+
+
+/* Flicker — applied to body */
+@keyframes flicker-low {
+  0%, 100% { opacity: 1 }
+  92%       { opacity: 1 }
+  93%       { opacity: .6 }
+  94%       { opacity: 1 }
+  97%       { opacity: 1 }
+  98%       { opacity: .7 }
+  99%       { opacity: 1 }
+}
+
+@keyframes flicker-mid {
+  0%, 100% { opacity: 1 }
+  85%       { opacity: 1 }
+  86%       { opacity: .3 }
+  88%       { opacity: 1 }
+  91%       { opacity: .5 }
+  93%       { opacity: 1 }
+  96%       { opacity: .4 }
+  98%       { opacity: 1 }
+}
+
+@keyframes flicker-high {
+  0%, 100% { opacity: 1 }
+  10%       { opacity: .2 }
+  12%       { opacity: 1 }
+  30%       { opacity: .5 }
+  33%       { opacity: 1 }
+  55%       { opacity: .1 }
+  58%       { opacity: .9 }
+  75%       { opacity: .3 }
+  78%       { opacity: 1 }
+  90%       { opacity: .4 }
+}
+
+body.flickering-low  { animation: flicker-low  3.5s step-end infinite; }
+body.flickering-mid  { animation: flicker-mid  2s   step-end infinite; }
+body.flickering-high { animation: flicker-high .9s  step-end infinite; }
+
+
+/* Scanlines — pseudo-element on body, z-index keeps it above all content */
+body.scanlines::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, .18) 2px,
+    rgba(0, 0, 0, .18) 4px
+  );
+}
+
+/* Vignette — dark corners, z-index just below scanlines */
+body.vignette::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, .85) 100%);
+}
+
+
+/* ── MOBILE ─────────────────────────────────────────────────────  */
+@media (max-width: 768px) {
+  #top-bar-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  #intensity-value { font-size: 1.6rem; }
+
+  .effect-section { padding: 22px 16px; }
+
+  .section-title { font-size: 1rem; }
+
+  .corruptable-image,
+  .decay-canvas { max-width: 100%; }
+
+  #sections-container {
+    padding: 24px 12px 60px;
+    gap: 24px;
+  }
+}
