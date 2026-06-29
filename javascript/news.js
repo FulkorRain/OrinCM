@@ -4,7 +4,7 @@ const comments = [
     {
         user: "",
         website: "[Conspiracy Site]",
-        websiteUrl: "#",
+        websiteUrl: "../html/spark.html",
         text: "Absolute horseshit. Anyone who isn't brainwashed can see the lazy photoshopping. Another excuse to import marxist third-worlders from Canadumb! For any sheep somehow still confused about what's going on, I've laid the whole plan out. How about you publish this story if you have some balls and actually care about TRUTH!!!"
     },
     {
