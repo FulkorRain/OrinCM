@@ -3,7 +3,7 @@ import {screenShake} from "./effects/screen-shake.js";
 import {corruptText} from "./effects/text-corruption.js";
 import {flicker} from "./effects/flicker.js";
 import {imageWarp} from "./effects/image-warp.js";
-import { pictureDecay } from "./effects/pixel-decay.js";
+import { pixelDecay } from "./effects/pixel-decay.js";
 import {screenDecay} from  "./effects/screen-decay.js";
 
 
@@ -88,7 +88,7 @@ const effectRegistry = [
             sectionElement.querySelector('.section-content').appendChild(canvas);
         },
         run(sectionElement) {
-            return pictureDecay(sectionElement);
+            return pixelDecay(sectionElement);
         }
     },
     {

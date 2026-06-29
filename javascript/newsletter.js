@@ -57,7 +57,7 @@ function showError(fieldId, errorId, show) {
 function validateForm() {
   let valid = true;
 
-  const email = form.email.value.trim();
+  const email = document.getElementById('emailInput').value?.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     showError('email', 'emailError', true);
@@ -103,7 +103,7 @@ async function subscribeToEmailOctopus(data) {
 
   const result = await response.json();
   if (!response.ok) {
-    const code = reulst?.error?.code || '';
+    const code = result?.error?.code || '';
     if (code === 'MEMBER_EXISTS_WITH_EMAIL_ADDRESS') {
       return {success:true, alreadySubscribed: true };
     }
@@ -138,9 +138,9 @@ form.addEventListener('submit', async (e) => {
   submitBtn.classList.add('loading');
 
   const data = {
-    email: document.getElementById('emailInput').value.trim(),
-    firstName: document.getElementById('firstName').value.trim(),
-    lastName: document.getElementById('lastName').value.trim(),
+    email: document.getElementById('emailInput').value?.trim(),
+    firstName: document.getElementById('firstName').value?.trim(),
+    lastName: document.getElementById('lastName').value?.trim(),
   };
 
   try {

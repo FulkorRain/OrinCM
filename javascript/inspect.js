@@ -48,7 +48,7 @@ document.querySelectorAll('.editable-zone:not(#vessel-content)').forEach(zone =>
         const line = this.closest('.code-line');
         if (line) {
             const lines = Array.from(document.querySelectorAll('.code-line'));
-            const ln = lines = lines.indexOf(line) + 1;
+            const ln =  lines.indexOf(line) + 1;
             document.getElementById('sb-cursor').textContent = `Ln ${ln}, Col 1`;
         }
     });
