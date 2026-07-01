@@ -60,7 +60,7 @@ if (searchForm) {
         window.location.href = destination;
     } else {
         //TODO: change this to a search page result later on.
-        error. textContent = "The page or forum you searched for does not exist";
+        error.textContent = "The page or forum you searched for does not exist";
     }
   });
 }

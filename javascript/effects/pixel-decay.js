@@ -58,7 +58,7 @@ function _loadImagePixels(src) {
     };
 
     img.onerror = () => {
-      if (!cancelled) reject(new Error(`Failed to load iamge: ${src}`));
+      if (!cancelled) reject(new Error(`Failed to load image: ${src}`));
     };
     img.src = src;
   });
@@ -69,7 +69,7 @@ function _loadImagePixels(src) {
       imgRef.onload = null;
       imgRef.onerror = null;
       imgRef.src = "";
-      imRef = null;
+      imgRef = null;
     }
   };
 
