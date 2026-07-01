@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bulletin Bytes</title>
+
+  <link rel="stylesheet" href="../styles/forum-thread.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- HEADER -->
+    <table class="top-header" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="logo-area">
+          <h1 class="retro-logo">Bulletin Bytes</h1>
+        </td>
+
+        <td class="nav-area">
+          <a href="forum.html">home</a>
+          |
+          <a href="#">faq</a>
+          |
+          <a href="#">members</a>
+        </td>
+      </tr>
+    </table>
+
+    <!-- SEARCH -->
+    <div class="search-container">
+
+      <form id="searchForm">
+        <input
+          type="text"
+          id="searchInput"
+          class="retro-search"
+          placeholder="Search forums..."
+        />
+
+        <button type="submit" class="retro-button">
+          GO
+        </button>
+      </form>
+
+      <div id="searchError" class="search-error"></div>
+
+    </div>
+
+    <!-- INFO -->
+    <div class="forum-info">
+      You last visited: 2004-06-12 14:08<br>
+      The time now is: 14:08
+    </div>
+
+    <!-- FORUM TABLE -->
+    <table class="forum-table" cellspacing="1" cellpadding="6">
+
+      <tr class="forum-header">
+        <th width="5%"></th>
+        <th align="left">Forum</th>
+        <th width="10%">Posts</th>
+        <th width="10%">Threads</th>
+        <th width="25%">Last Post</th>
+      </tr>
+
+      <!-- FORUM ROW -->
+      <tr class="forum-row">
+
+        <td class="forum-icon-cell">
+          <div class="forum-icon"></div>
+        </td>
+
+        <td>
+          <a class="forum-link" href="thread.html">
+            A really important forum
+          </a>
+
+          <div class="forum-description">
+            (but nobody ever posts in here)
+          </div>
+        </td>
+
+        <td align="center">1</td>
+        <td align="center">1</td>
+
+        <td align="center">
+          2004-06-12 13:52
+        </td>
+
+      </tr>
+
+      <!-- FORUM ROW -->
+      <tr class="forum-row">
+
+        <td class="forum-icon-cell">
+          <div class="forum-icon"></div>
+        </td>
+
+        <td>
+          <a class="forum-link" href="thread.html">
+            Creatively named forum
+          </a>
+
+          <div class="forum-description">
+            Another forum. Because I'm bored.
+          </div>
+        </td>
+
+        <td align="center">56</td>
+        <td align="center">4</td>
+
+        <td align="center">
+          2004-06-12 12:21
+        </td>
+
+      </tr>
+
+    </table>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <span><span class="yellow-dot"></span> New posts</span>
+      <span><span class="gray-dot"></span> No new posts</span>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      &lt;
+      <a href="#">Contact Us</a>
+      -
+      <a href="#">Bulletin Bytes</a>
+      &gt;
+
+      <br><br>
+
+      Powered by TotallyNotvBulletin 1.0<br>
+      Copyright © 2004 Bulletin Bytes Internet Systems
+    </div>
+
+  </div>
+
+  <script src="../javascript/forum-thread.js"></script>
+</body>
+</html>

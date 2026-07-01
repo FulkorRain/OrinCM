@@ -1,0 +1,173 @@
+/* ── BASE BUTTON ────────────────────────────────────────────────  */
+.clay-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 17px 42px;
+  min-width: 160px;
+  overflow: hidden;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  text-decoration: none;
+
+  border: 3px solid var(--clay-border);
+  border-radius: 15px 9px 13px 11px / 11px 14px 9px 13px;
+
+  background:
+    radial-gradient(ellipse 55% 75% at 22% 40%, rgba(30,0,0,.55) 0%, transparent 65%),
+    radial-gradient(ellipse 42% 52% at 76% 62%, rgba(195,85,85,.18) 0%, transparent 55%),
+    linear-gradient(150deg,
+      var(--clay-dark)   0%,
+      var(--clay-red)   38%,
+      var(--clay-light) 63%,
+      var(--clay-red)  100%
+    );
+
+  box-shadow:
+    0 2px 4px rgba(255,170,140,.07) inset,
+    0 -5px 10px rgba(0,0,0,.45) inset,
+    5px 0 10px rgba(0,0,0,.18) inset,
+    0 9px 0 var(--clay-bottom),
+    0 11px 5px rgba(0,0,0,.5),
+    0 18px 36px rgba(0,0,0,.42);
+
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: .08em;
+  color: var(--clay-text);
+  text-shadow: 0 1px 4px rgba(0,0,0,.55), 0 0 10px rgba(0,0,0,.2);
+
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.clay-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ── CRACK OVERLAY — Pattern 1 (default, left-heavy) ────────────  */
+.clay-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: .9;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80'%3E%3Cg fill='none' stroke='rgba(10,1,1,0.92)' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke-width='2' d='M 44 5 C 40 16 30 26 43 43 C 51 54 46 66 53 77'/%3E%3Cpath stroke-width='1.5' d='M 43 43 C 70 36 112 28 162 26 C 192 25 218 27 248 25'/%3E%3Cpath stroke-width='1' d='M 53 77 C 58 81 65 76 69 79'/%3E%3Cpath stroke-width='0.8' d='M 112 28 C 115 20 120 13 124 9'/%3E%3Cpath stroke-width='0.8' d='M 43 43 C 34 38 20 33 12 29'/%3E%3Cpath stroke-width='0.7' d='M 44 5 C 39 3 34 5 31 3'/%3E%3Cpath stroke-width='0.7' d='M 162 26 C 165 19 169 14 173 11'/%3E%3Cpath stroke-width='0.6' d='M 220 27 C 222 22 225 18 228 15'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+
+/* ── GRAIN TEXTURE ──────────────────────────────────────────────  */
+.clay-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: .09;
+  background-size: 180px 180px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+
+/* ── HOVER / ACTIVE / DISABLED ──────────────────────────────────  */
+.clay-btn:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 2px 4px rgba(255,170,140,.07) inset,
+    0 -5px 10px rgba(0,0,0,.45) inset,
+    5px 0 10px rgba(0,0,0,.18) inset,
+    0 11px 0 var(--clay-bottom),
+    0 13px 7px rgba(0,0,0,.45),
+    0 22px 40px rgba(0,0,0,.38);
+}
+
+.clay-btn:active {
+  transform: translateY(6px);
+  box-shadow:
+    0 1px 2px rgba(255,170,140,.04) inset,
+    0 -3px 6px rgba(0,0,0,.4) inset,
+    0 3px 0 var(--clay-bottom),
+    0 4px 8px rgba(0,0,0,.45);
+}
+
+.clay-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Toggled-on state — add/remove via JS: btn.classList.add('btn-active') */
+.clay-btn.btn-active {
+  --clay-red:    #5a1a1a;
+  --clay-light:  #7a2828;
+  --clay-dark:   #380e0e;
+  --clay-bottom: #220808;
+}
+
+.clay-btn--full {
+  width: 100%;
+}
+
+
+/* ── CRACK PATTERN 2 — centre vertical ──────────────────────────  */
+.clay-crack-2::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80'%3E%3Cg fill='none' stroke='rgba(10,1,1,0.92)' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke-width='2' d='M 186 4 C 183 17 191 30 185 46 C 181 59 187 70 183 78'/%3E%3Cpath stroke-width='1.4' d='M 185 46 C 158 40 126 35 93 33'/%3E%3Cpath stroke-width='1.4' d='M 185 46 C 212 42 240 40 270 38'/%3E%3Cpath stroke-width='0.8' d='M 93 33 C 88 25 84 17 82 10'/%3E%3Cpath stroke-width='0.8' d='M 270 38 C 274 30 277 22 280 15'/%3E%3Cpath stroke-width='0.7' d='M 183 78 C 188 82 195 77 199 80'/%3E%3Cpath stroke-width='0.7' d='M 186 4 C 181 2 176 4 173 2'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+
+/* ── CRACK PATTERN 3 — right-side sweeping left ─────────────────  */
+.clay-crack-3::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 80'%3E%3Cg fill='none' stroke='rgba(10,1,1,0.92)' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke-width='2' d='M 332 5 C 336 17 325 28 337 45 C 344 55 340 67 347 76'/%3E%3Cpath stroke-width='1.5' d='M 337 45 C 306 38 270 33 235 31 C 208 29 183 31 158 29'/%3E%3Cpath stroke-width='0.9' d='M 347 76 C 352 80 358 75 362 78'/%3E%3Cpath stroke-width='0.8' d='M 235 31 C 231 23 227 15 225 9'/%3E%3Cpath stroke-width='0.7' d='M 332 5 C 327 3 322 5 319 3'/%3E%3Cpath stroke-width='0.7' d='M 337 45 C 348 41 358 38 365 36'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+
+/* ── LOADING SPINNER ────────────────────────────────────────────
+   HTML structure needed inside button:
+     <span class="btn-text">Label →</span>
+     <span class="btn-spinner"><span class="spinner-ring"></span></span>
+   Toggle: btn.classList.add('loading') / .remove('loading')
+─────────────────────────────────────────────────────────────── */
+.clay-btn .btn-text    { transition: opacity .2s; }
+
+.clay-btn .btn-spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.clay-btn.loading .btn-text    { opacity: 0; }
+.clay-btn.loading .btn-spinner { opacity: 1; }
+
+.spinner-ring {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(245,221,208,.3);
+  border-top-color: #f5ddd0;
+  border-radius: 50%;
+  animation: clay-spin .7s linear infinite;
+}
+
+@keyframes clay-spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* ── MOBILE ─────────────────────────────────────────────────────  */
+@media (max-width: 768px) {
+  .clay-btn {
+    width: 100%;
+    padding: 16px 24px;
+  }
+}
