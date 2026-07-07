@@ -9,21 +9,45 @@ function getStartTransform(element) {
 
     const y = (window.innerHeight - rect.top) + edgeBuffer;
 
-    const viewportCenterX = window.innerWidth / 2;
-    const viewportRightX = window.innerWidth;
-    const targetScreenX = gsap.utils.random(viewportCenterX, viewportRightX);
-    const x = targetScreenX - rect.left;
+    const x = (window.innerWidth / 6) - edgeBuffer; 
 
     return {x , y};
+}
+
+const waveSwitchMinMs = 200;
+const waveSwitchMaxMs = 800;
+
+let waveRandomizerTimeoutId = null;
+
+function scheduleNextWaveSwitch(footerElement) {
+    const delay = waveSwitchMinMs + Math.random() * (waveSwitchMaxMs - waveSwitchMinMs);
+    waveRandomizerTimeoutId = setTimeout(() => {
+        const showCurvy = Math.random() < 0.5;
+        footerElement.classList.toggle("wave-show-curvy", showCurvy);
+        footerElement.classList.toggle("wave-show-jagged", !showCurvy);
+
+        if (footerElement.classList.contains("is-waving")) {
+            scheduleNextWaveSwitch(footerElement);
+        }
+    }, delay);
+}
+
+function stopWaveRandomizer() {
+    if (waveRandomizerTimeoutId !== null) {
+        clearTimeout(waveRandomizerTimeoutId);
+        waveRandomizerTimeoutId = null;
+    }
 }
 
 function playFigureRise() {
     const riseElement = document.getElementById("figureRise");
     const glitchElement = document.getElementById("figureGlitch");
+    const footerElement = document.querySelector("footer");
+
+    const waveStartDelaySeconds = 0.5;
 
     if(!riseElement || !glitchElement) return null;
 
-    // const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const prefersReducedMotion = false;
     let timeline;
 
@@ -36,26 +60,28 @@ function playFigureRise() {
         });
     } else {
         const start = getStartTransform(riseElement);
-        const footerElement = document.querySelector("footer");
         gsap.set(riseElement, {x: start.x, y:start.y});
 
         timeline = gsap.timeline({delay: startDelayMs/ 1000});
 
         timeline.call(() => glitchElement.classList.add("is-glitching"));
-        timeline.call(() => footerElement.classList.add("is-waving"));
 
         timeline.to(riseElement, {
-            x: 0,
-            y: 0,
+            y: 100,
             duration: travelDuration,
             ease: "power2.out"
         });
 
-        // timeline.call(() => glitchElement.classList.remove("is-glitching"));
+        timeline.call(() => {
+            footerElement.classList.add("is-waving");
+            scheduleNextWaveSwitch(footerElement);
+        }, null, waveStartDelaySeconds);
+
     }
 
     const cleanup = () => {
         if (timeline) timeline.kill();
+        stopWaveRandomizer();
     }
 
     window.addEventListener("beforeunload", cleanup, {once: true});
@@ -63,5 +89,6 @@ function playFigureRise() {
 
     return cleanup;
 }
+
 
 document.addEventListener("DOMContentLoaded", playFigureRise);
