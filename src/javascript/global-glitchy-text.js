@@ -1,3 +1,44 @@
+const nun404SwitchMinMs = 200;
+const nun404SwitchMaxMs = 600;
+
+const originalText = '404';
+const jumpscareText = 'NUN';
+
+let nun404TimeoutId = null;
+
+function glitchText() {
+    let result = "";
+    for (let i = 0; i < originalText.length; i++) {
+        result += Math.random() < 0.5 ? originalText[i] : jumpscareText[i];
+    }
+
+    return result;
+}
+
+function scheduleNextNun404Switch(element) {
+    const delay = nun404SwitchMinMs + Math.random() * (nun404SwitchMaxMs - nun404SwitchMinMs);
+    nun404TimeoutId = setTimeout(() => {
+        const nextText = glitchText();
+        element.textContent = nextText;
+        element.dataset.text = nextText;
+        scheduleNextNun404Switch(element);
+    }, delay);
+}
+
+function stopNun404Switch() {
+    if (nun404TimeoutId !== null) {
+        clearTimeout(nun404TimeoutId);
+        nun404TimeoutId = null;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const nun404Element = document.querySelector('.nun');
+    if (nun404Element) {
+        scheduleNextNun404Switch(nun404Element);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const glitchElements = document.querySelectorAll('.glitch');
     const cyberGlyphs = 'XΔ🛑█▓░░■☠️01⚙️🤖⏳µ§@#$¥%';

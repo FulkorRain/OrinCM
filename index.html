@@ -1,13 +1,45 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>orincm</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/javascript/index.js"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href = "styles/index.css">
+    <link href="https://fonts.cdnfonts.com/css/bookman-old-style" rel="stylesheet">
+    <script src = "javascript/index.js" defer></script>
+    <title>Praire Golem Press</title>
+    <script src = "../javascript/global-transition.js" defer></script>
+    <link rel = "stylesheet" href = "styles/global-transition.css">
+</head>
+<body>
+    <div class = "wrapper">
+    <header>
+        <div class = "header-container">
+            <!-- <div>LOGO HERE</div>
+            <div>Praire Golem Press</div> -->
+        </div>
+    </header>
+
+    <div class = "content">
+        <nav class = "sidebar page-transition">
+            <ul class = "nav-links">
+                <li><a href="#">Announcements</a></li>
+                <li><a href="#">Space Dracula</a></li>
+                <li><a href="#">The Demon Gate</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+        
+        <div class = "main-content-grid">
+        <main class = "main-content page-transition">
+            <article>
+                <p>I'm excited to present our comic books, Space Dracula and The Demon Gate. These are from a set of stories called the Triptych Files which are a long time in the making soon to feature a board game set in this world of weird espionage horror.</p>
+                <p>I've long been interested in the combination of spies and monsters. I remembered only recently that i'd actually written some short stories in a similair vein way back in the 90s when i was like 12 years old. I even managed to get one published in a local Alberta paper. and i was delighted to see that their website is amazingly <a href ="html/news.html">still online</a>! Very old-school haha. There's something uniquely charming about Web 1.0</p>
+            </article>
+        </main>
+        <button class = "mailing-list-button">Mailing List Signup</button>
+        </div>
+    </div>
+    </div>
+</body>
 </html>

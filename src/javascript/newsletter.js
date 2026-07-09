@@ -38,10 +38,12 @@ const CONFIG = {
   document.getElementById('footerUnsubscribe').href = `mailto:${CONFIG.contactEmail}?subject=Unsubscribe from ${CONFIG.companyName} Newsletter&body=Please unsubscribe me from the ${CONFIG.companyName} newsletter.`;
 })();
 
+
+
 const form = document.getElementById('signupForm');
 const submitBtn = document.getElementById('submitBtn');
-const alertOk = document.getElementById('alertOk');
-const alertErr = document.getElementById('alertErr');
+const alertOk = document.getElementById('alertSuccess');
+const alertErr = document.getElementById('alertError');
 const signupCard = document.getElementById('signupCard');
 const successCard = document.getElementById('successCard');
 
@@ -54,11 +56,28 @@ function showError(fieldId, errorId, show) {
   error.classList.toggle('visible', show);
 }
 
+function resetForm() {
+  document.getElementById('firstName').value = '';
+  document.getElementById('lastName').value = '';
+  document.getElementById('emailInput').value = '';
+
+  document.getElementById('consentMarketing').checked = false;
+  document.getElementById('consentPrivacy').checked = false;
+  document.getElementById('consentAge').checked = false;
+
+  document.getElementById('emailError').classList.remove('visible');
+  document.getElementById('consentError').classList.remove('visible');
+  document.getElementById('privacyError').classList.remove('visible');
+
+  alertOk.classList.remove('visible');
+  alertErr.classList.remove('visible');
+}
+
 function validateForm() {
   let valid = true;
 
   const email = document.getElementById('emailInput').value?.trim();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email)) {
     showError('email', 'emailError', true);
     valid = false;
@@ -150,6 +169,7 @@ form.addEventListener('submit', async (e) => {
     }
     signupCard.classList.add('hidden');
     successCard.classList.add('visible');
+    resetForm();
   } catch (err) {
     console.error('Mailchimp error:', err);
     document.getElementById('errorMsg').textContent = "An error occurred while subscribing. Please try again later.";

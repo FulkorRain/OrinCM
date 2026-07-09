@@ -99,7 +99,7 @@ main {
 footer {
 
   --wave-curvy-height: 10px;
-  --wave-jagged-height: 80px;
+  --wave-jagged-height: 250px;
   --wave-tile-width: 80px;
   --wave-scroll-speed: 1.2s;
 
@@ -108,7 +108,6 @@ footer {
     font-weight: 500;
     text-align: center;
     padding-top: calc(var(--wave-jagged-height) + 6px);
-    border-top: 1px solid black;
 }
 
 footer::before,
