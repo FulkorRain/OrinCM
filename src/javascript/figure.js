@@ -96,11 +96,11 @@ function playFigureRise() {
         }, null, waveStartDelaySeconds + soundDelaySeconds);
 
         // TODO: implement once we have landing page to redirect to
-        // const redirectUrl = "/src/html/404pages/forum-404.html";
-        // const redirectDelaySeconds = 0.5;
-        // timeline.call(() => {
-        //     window.location.href = redirectUrl;
-        // }, null, `+=${redirectDelaySeconds}`);
+        const redirectUrl = "/index.html";
+        const redirectDelaySeconds = 0.5;
+        timeline.call(() => {
+            window.location.href = redirectUrl;
+        }, null, `+=${redirectDelaySeconds}`);
 
     }
 
