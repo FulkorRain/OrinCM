@@ -199,7 +199,6 @@ body {
   display: block;
 }
 
-/* ACTIVE badge — shown when an effect is running (JS adds .is-active to .effect-section) */
 .active-badge {
   position: absolute;
   top: 16px;

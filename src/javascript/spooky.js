@@ -5,6 +5,7 @@ import {flicker} from "./effects/flicker.js";
 import {imageWarp} from "./effects/image-warp.js";
 import { pixelDecay } from "./effects/pixel-decay.js";
 import {screenDecay} from  "./effects/screen-decay.js";
+import { bugCrawl } from "./effects/bug_crawl.js";
 
 
 const effectRegistry = [
@@ -107,6 +108,22 @@ const effectRegistry = [
             return screenDecay(sectionElement);
         }
     },
+    {
+        id: 'bug-crawl',
+        title: 'Bug Crawling Effect',
+        description: 'Creepy Crawly on Screen',
+        crackClass: 'clay-crack-1',
+        type: 'toggle',
+        buildContent(sectionElement) {
+            const p = document.createElement('p');
+            p.className = 'section-desc';
+            p.textContent = 'Wheres the bug spray.'
+            sectionElement.querySelector('.section-content').appendChild(p);
+        },
+        run(sectionElement) {
+            return bugCrawl();
+        }
+    },
 
 ]
 
@@ -171,6 +188,17 @@ function initIntensityUI() {
 
     refresh();
 }
+
+document.addEventListener('effect-ended', (e) => {
+    const section = document.getElementById(e.detail.id);
+    if (!section) return;
+    const button = section.querySelector('.clay-btn');
+    if (!button) return;
+
+    button.querySelector('span').textContent = 'Activate';
+    button.classList.remove('btn-active');
+    section.classList.remove('is-active');
+});
 
 buildPage();
 initIntensityUI();
