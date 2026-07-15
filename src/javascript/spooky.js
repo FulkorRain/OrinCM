@@ -6,6 +6,8 @@ import {imageWarp} from "./effects/image-warp.js";
 import { pixelDecay } from "./effects/pixel-decay.js";
 import {screenDecay} from  "./effects/screen-decay.js";
 import { bugCrawl } from "./effects/bug_crawl.js";
+import { permanentCorruption } from "./effects/permanent_corruption.js";
+import { chaosText } from "./effects/chaos-text.js";
 
 
 const effectRegistry = [
@@ -14,7 +16,6 @@ const effectRegistry = [
         title: 'Text Corruption',
         description: 'Ancient glyphs bleed through written word.',
         crackClass: '',
-        type: 'toggle',
         buildContent(sectionElement) {
             const p = document.createElement('p');
             p.className = 'corruptable-text';
@@ -26,11 +27,40 @@ const effectRegistry = [
         }
     },
     {
+        id: 'permanent-corruption',
+        title: 'Permanent Corruption',
+        description: 'Some wounds arent meant to heal. The text remembers',
+        crackClass: '',
+        buildContent(sectionElement) {
+            const p = document.createElement('p');
+            p.className = 'corruptable-text';
+            p.textContent = 'This message was never meant to be read. The words resist you.';
+            sectionElement.querySelector('.section-content').appendChild(p);
+        },
+        run(sectionElement) {
+            return permanentCorruption(sectionElement);
+        }
+    },
+    {
+        id: 'chaos-text',
+        title: 'Chaos Text',
+        description: 'The letters cannot decide what they are.',
+        crackClass: '',
+        buildContent(sectionElement) {
+            const p = document.createElement('p');
+            p.className = 'corruptable-text';
+            p.textContent = 'Something is interfering with the signal. The message cannot hold its shape.';
+            sectionElement.querySelector('.section-content').appendChild(p);
+        },
+        run(sectionElement) {
+            return chaosText(sectionElement);
+        }
+    },
+    {
         id: 'screen-distortion',
         title: 'Screen Distortion',
         description: 'The ground shifts. Something stirs beneath',
         crackClass: 'clay-crack-2',
-        type: 'toggle',
         buildContent(sectionElement) {
             const p = document.createElement('p');
             p.className = 'section-desc';
@@ -46,7 +76,6 @@ const effectRegistry = [
         title: 'Light Flicker',
         description: 'The lights know you are watching.',
         crackClass: '',
-        type: 'toggle',
         buildContent(sectionElement) {
             const p = document.createElement('p');
             p.className = 'section-desc';
@@ -62,7 +91,6 @@ const effectRegistry = [
         title: 'Image Corruption',
         description: 'What the eye sees, the mind distorts',
         crackClass: '',
-        type: 'toggle',
         buildContent(sectionElement) {
             const img = document.createElement('img');
             img.className = 'corruptable-image';
@@ -79,7 +107,6 @@ const effectRegistry = [
         title: 'Picture Decay',
         description: 'The image remembers nothing. Darkness takes it cell by cell.',
         crackClass: 'clay-crack-2',
-        type: 'toggle',
         buildContent(sectionElement) {
             const canvas = document.createElement('canvas');
             canvas.className = 'decay-canvas';
@@ -97,7 +124,6 @@ const effectRegistry = [
         title: 'Section Decay',
         description: 'The clay remembers nothing. It crumbles, cell by cell.',
         crackClass: 'clay-crack-3',
-        type: 'toggle',
         buildContent(sectionElement) {
             const p = document.createElement('p');
             p.className = 'section-desc';
@@ -113,7 +139,6 @@ const effectRegistry = [
         title: 'Bug Crawling Effect',
         description: 'Creepy Crawly on Screen',
         crackClass: 'clay-crack-1',
-        type: 'toggle',
         buildContent(sectionElement) {
             const p = document.createElement('p');
             p.className = 'section-desc';
@@ -162,6 +187,16 @@ function buildPage() {
        });
 
        container.appendChild(section);
+
+       if (effect.id === 'permanent-corruption') {
+            const wasActive = permanentCorruption.restore(section);
+            if (wasActive) {
+                const btn = section.querySelector('.clay-btn');
+                btn.querySelector('span').textContent = 'Deactivate';
+                btn.classList.add('btn-active');
+                section.classList.add('is-active');
+            }
+       }
     });
 }
 
