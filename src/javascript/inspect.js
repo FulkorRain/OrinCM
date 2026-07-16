@@ -5,7 +5,7 @@
         const span = document.createElement("span");
         span.className = 'gutter-line';
         span.textContent = i + 1;
-        if (line.classList.contains("vessel-line")) {
+        if (line.classList.contains("seal-line")) {
             span.classList.add("h1");
         }
         gutter.appendChild(span);
@@ -38,7 +38,7 @@ function showToast(msg, duration) {
     toastTimer = setTimeout(() => el.classList.remove('show'), duration || 2500);
 }
 
-document.querySelectorAll('.editable-zone:not(#vessel-content)').forEach(zone => {
+document.querySelectorAll('.editable-zone:not(#seal-content)').forEach(zone => {
     zone.addEventListener('input', function () {
         markDirty();
         showToast('Edit Saved - Keep Looking', 2200);
@@ -58,55 +58,29 @@ document.querySelectorAll('.editable-zone:not(#vessel-content)').forEach(zone =>
     });
 });
 
-const SECRET_WORD = 'ANIMA';
+const SEAL_TEXT = 'corrupted';
 
-const vesselEl = document.getElementById('vessel-content');
-const vesselLine = document.getElementById('vessel-line');
-const vesselComments = [
-    'vessel-comment-1',
-    'vessel-comment-2',
-    'vessel-comment-3',
-    'vessel-comment-4',
-    'vessel-comment-5',
-];
+const sealElement = document.getElementById('seal-content');
+const sealLine = document.getElementById('seal-line');
 
-vesselEl.addEventListener('input', function () {
+sealElement.addEventListener('input', function() {
     markDirty();
-    const val = vesselEl.textContent.trim().toUpperCase();
+    const value = this.textContent.trim();
 
-    if (this.textContent.trim().length > 0) {
-        this.classList.add('has-text');
-    } else {
-        this.classList.remove('has-text');
-    }
-
-    vesselLine.classList.add('active');
-    vesselComments.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.add('active');
-    });
-
-    if (val === SECRET_WORD) {
+    if (value.length === 0) {
+        sealLine.classList.add('broken');
         triggerSecret();
-    } else if (val.length > 0) {
-        if (SECRET_WORD.startsWith(val)) {
-
-            showToast(`Something Stirs (${val.length}/${SECRET_WORD.length})`, 1500);
-        } else {
-
-            showToast('The vessel does not respond.', 1800);
-        }
+    } else if (value.length < SEAL_TEXT.length) {
+        showToast('The seal is weakening...', 1500);
+        sealLine.classList.add('broken');
     } else {
-        vesselLine.classList.remove('active');
-        vesselComments.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.classList.remove('active');
-        });
+        sealLine.classList.remove('broken');
+        showToast('Something is locked here.', 1800);
     }
 });
 
-vesselEl.addEventListener('keydown', function (e) {
-    if (e.key == 'Enter') e.preventDefault();
+sealElement.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') e.preventDefault();
 });
 
 let secretTriggered = false;
@@ -114,7 +88,7 @@ function triggerSecret() {
     if (secretTriggered) return;
     secretTriggered = true;
 
-    document.getElementById('sb-hint').textContent = 'The vessel responds... The secret is revealed.';
+    document.getElementById('sb-hint').textContent = 'seal broken';
     document.getElementById('sb-hint').classList.add('glow');
 
     setTimeout(() => {
