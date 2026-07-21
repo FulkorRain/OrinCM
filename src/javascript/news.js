@@ -1,19 +1,19 @@
 const comments = {
     "home-content": [
         {
-            user: "",
-            website: "[Conspiracy Site]",
+            user: "TruthWolf23",
+            website: "irreplaceablespark",
             websiteUrl: "../html/spark.html",
             text: "Absolute horseshit. Anyone who isn't brainwashed can see the lazy photoshopping. Another excuse to import marxist third-worlders from Canadumb! For any sheep somehow still confused about what's going on, I've laid the whole plan out. How about you publish this story if you have some balls and actually care about TRUTH!!!"
         },
         {
-            user: "",
+            user: "FlannelFan5",
             website: "",
             websiteUrl: "",
             text: "I'm really scared. How is this much rain even possible and what is with some of these comments?? People are dead wat is wrong with you"
         },
         {
-            user: "",
+            user: "Dancing_qu33n",
             website: "",
             websiteUrl: "",
             text: "Does any one no if they take Costco membership card in the US?"
@@ -21,7 +21,7 @@ const comments = {
     ],
     "kneeling-hub-content": [
         {
-            user: "",
+            user: "Vanquished_Burrito",
             website: "",
             websiteUrl: "",
             text: "Who pulled the pok? hehe"
@@ -36,18 +36,18 @@ const comments = {
     "statue-content": [
         {
             user: "Reyna",
-            website: "",
+            website: "waxwing basin",
             websiteUrl: "",
             text: "I always found this statue so creepy!! I have to pass it on my way to work every day…."
         },
         {
-            user: "",
+            user: "wastefulfocus83",
             website: "",
             websiteUrl: "",
             text: "Actually ת is Tav means 400 and מ mem means “water” or “languages/tongues” so the plaque is really saying 400 languages (spoken accross Canada) for 99 years so far. It is beutiful message and it is why his plaque it’s was written in 2 languages."
         },
         {
-            user: "",
+            user: "Gamer☢☢☢natioN",
             website: "",
             websiteUrl: "",
             text: "What you serious? Herbew goes back to front idiot"
