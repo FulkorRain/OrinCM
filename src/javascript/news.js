@@ -36,7 +36,7 @@ const comments = {
     "statue-content": [
         {
             user: "Reyna",
-            website: "",
+            website: "waxwing basin",
             websiteUrl: "",
             text: "I always found this statue so creepy!! I have to pass it on my way to work every day…."
         },
