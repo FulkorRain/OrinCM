@@ -1,4 +1,3 @@
-/* ── BODY OVERRIDE ──────────────────────────────────────────────  */
 body {
   background: #d4d8e1;
   font-family: Tahoma, Verdana, Arial, sans-serif;
@@ -15,9 +14,8 @@ a:hover { color: #cc0000; }
 }
 
 
-/* ── PAGE HEADER ────────────────────────────────────────────────  */
 .top-header {
-  width: 100%;
+  width: 85%;
   background: #f0f0f0;
   border: 2px outset #fff;
   margin-bottom: 10px;
@@ -27,21 +25,21 @@ a:hover { color: #cc0000; }
 
 .retro-logo {
   margin: 0;
-  font-size: 42px;
+  font-size: 60px;
   color: #5a7dbb;
   font-style: italic;
   text-shadow: 2px 2px #ffffff;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .nav-area {
   text-align: right;
   vertical-align: middle;
   padding-right: 20px;
-  font-size: 12px;
+  font-size: 20px;
 }
 
 
-/* ── SEARCH ─────────────────────────────────────────────────────  */
 .search-container { margin-bottom: 15px; }
 
 .retro-search {
@@ -68,22 +66,25 @@ a:hover { color: #cc0000; }
 }
 
 
-/* ── FORUM TABLE ────────────────────────────────────────────────  */
 .forum-table {
-  width: 100%;
-  background: #999;
+  width: 75%;
+  padding-left: 10%;
 }
 
 .forum-header th {
   background: #003399;
   color: white;
-  font-size: 11px;
+  font-size: 20px;
 }
 
-.forum-row td { background: #c8c9f2; }
+.forum-row td { 
+  background: #c8c9f2;
+  padding: 60px;
+  border-top: 35px solid #d4d8e1;
+}
 
 .forum-link {
-  font-size: 15px;
+  font-size: 25px;
   font-weight: bold;
 }
 
@@ -106,24 +107,6 @@ a:hover { color: #cc0000; }
 .forum-info { margin-bottom: 10px; }
 
 
-/* ── LEGEND ─────────────────────────────────────────────────────  */
-.legend { margin-top: 15px; }
-.legend span { margin-right: 20px; }
-
-.yellow-dot,
-.gray-dot {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1px solid black;
-  vertical-align: middle;
-}
-.yellow-dot { background: gold; }
-.gray-dot   { background: gray; }
-
-
-/* ── THREAD PAGE ────────────────────────────────────────────────  */
 .thread-title {
   background: #003399;
   color: white;
@@ -134,9 +117,9 @@ a:hover { color: #cc0000; }
 }
 
 .post-table {
-  width: 100%;
-  background: #666;
+  width: 70%;
   margin-bottom: 15px;
+  padding-left: 10%;
 }
 
 .post-header td {
@@ -190,10 +173,51 @@ a:hover { color: #cc0000; }
   font-size: 10px;
 }
 
-
-/* ── FOOTER ─────────────────────────────────────────────────────  */
 .footer {
   text-align: center;
   margin-top: 30px;
   font-size: 11px;
+}
+
+.forum-category-header th {
+  background: #336699;
+  color: white;
+  font-size: 12px;
+  padding: 5px 6px;
+}
+
+.breadcrumb {
+  font-size: 11px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.breadcrumb a {
+  color: #003399;
+}
+
+.search-results-panel {
+  margin-bottom: 20px;
+}
+
+.search-results-heading {
+  background: #003399;
+  color: white;
+  padding: 6px 8px;
+  font-weight: bold;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.search-no-results {
+  padding: 10px;
+  background: #efefef;
+  border: 1px solid #ccc;
+  font-size: 11px;
+}
+
+.placeholder-badge {
+  color: #999;
+  font-size: 10px;
+  font-style: italic;
 }
