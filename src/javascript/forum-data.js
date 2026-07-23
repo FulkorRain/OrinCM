@@ -1,3 +1,6 @@
+// EDITABLE
+// This is where all of the data for all the threads live.
+// Let me know if you want me to break it down
 const FORUMS = [
 
   // ── 1. ANNOUNCEMENTS ──────────────────────────────────────
