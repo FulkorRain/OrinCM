@@ -65,7 +65,8 @@ const comments = {
 const container = document.querySelector('.comment-container');
 
 function renderComments(targetId) {
-    container.innerHTML = '';
+    const existingComments = container.querySelectorAll('.comment-entry');
+    existingComments.forEach(comment => comment.remove());
 
     const currentComments = comments[targetId];
 
