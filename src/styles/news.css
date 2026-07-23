@@ -139,3 +139,11 @@ main {
         height:auto;
     }
 }
+
+#user-email::placeholder {
+    text-align: center;
+  }
+
+  #user-email::-webkit-input-placeholder { text-align: center; }
+  #user-email::-moz-placeholder { text-align: center; }
+  #user-email:-ms-input-placeholder { text-align: center; }
