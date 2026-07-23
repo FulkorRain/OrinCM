@@ -1,0 +1,67 @@
+img:not(.global-lightbox-content) {
+  cursor: zoom-in;
+  transition: opacity 0.2s ease;
+}
+
+img:not(.global-lightbox-content):hover {
+  opacity: 0.9;
+}
+
+.global-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-in-out;
+  z-index: 999999;
+}
+
+.global-lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.global-lightbox-content {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  transform: scale(0.85);
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform-origin 0.1s ease-out;
+  cursor: zoom-in;
+}
+
+.global-lightbox.active .global-lightbox-content {
+  transform: scale(1);
+}
+
+.global-lightbox-content.zoomed {
+  transform: scale(2.2) !important;
+  cursor: zoom-out;
+}
+
+.global-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 1000000;
+}
+
+.global-lightbox-close:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}

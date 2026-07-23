@@ -96,6 +96,13 @@ main {
     gap: 1.5rem
 }
 
+
+.news-img {
+  width: 50%;
+  height: auto;
+  align-self: center;
+}
+
 @media (max-width: 768px) {
     .content {
         flex-direction: column;
@@ -120,10 +127,9 @@ main {
         padding: 10px 0;
         margin-bottom: 15px;
     }
-}
 
-.news-img {
-  width: 50%;
-  height: auto;
-  align-self: center;
+    .news-img {
+        width: 100%;
+        height:auto;
+    }
 }
