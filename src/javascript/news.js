@@ -1,6 +1,13 @@
 const comments = {
     "home-content": [
         {
+            user: "ulan_gershovich",
+            website: "",
+            websiteUrl: "",
+            text: "hey that's my jeep hahahahaah guess they aint building no malls any time soon!!"
+        },
+
+        {
             user: "TruthWolf23",
             website: "irreplaceablespark",
             websiteUrl: "../html/spark.html",
