@@ -69,6 +69,7 @@ main {
 .main-container {
     width: 100%;
 }
+
 .comment-container {
     margin-top: 50px;
     padding-top: 20px;
@@ -121,3 +122,8 @@ main {
     }
 }
 
+#car-img {
+  width: 50%;
+  height: auto;
+  align-self: center;
+}
