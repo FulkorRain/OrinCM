@@ -103,6 +103,12 @@ main {
   align-self: center;
 }
 
+#signup-button {
+    background-color: #808080;
+    color: white;
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     .content {
         flex-direction: column;
