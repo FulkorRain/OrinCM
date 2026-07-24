@@ -8,6 +8,7 @@ import {screenDecay} from  "./effects/screen-decay.js";
 import { bugCrawl } from "./effects/bug_crawl.js";
 import { permanentCorruption } from "./effects/permanent_corruption.js";
 import { chaosText } from "./effects/chaos-text.js";
+import { permanentDecay } from "./effects/permanent_decay.js";
 
 
 const effectRegistry = [
@@ -135,6 +136,21 @@ const effectRegistry = [
         }
     },
     {
+        id: 'permanent-decay',
+        title: 'Permanent Decay',
+        description: 'What crumbles here does not return.',
+        crackClass: 'clay-crack-2',
+        buildContent(sectionElement) {
+            const p = document.createElement('p');
+            p.className = 'section-desc';
+            p.textContent = 'The golem forgets. Piece by piece, it surrenders to the dark.'
+            sectionElement.querySelector('.section-content').appendChild(p);
+        },
+        run(sectionElement) {
+            return permanentDecay(sectionElement);
+        }
+    },
+    {
         id: 'bug-crawl',
         title: 'Bug Crawling Effect',
         description: 'Creepy Crawly on Screen',
@@ -194,6 +210,16 @@ function buildPage() {
                 const btn = section.querySelector('.clay-btn');
                 btn.querySelector('span').textContent = 'Deactivate';
                 btn.classList.add('btn-active');
+                section.classList.add('is-active');
+            }
+       }
+
+       if (effect.id === 'permanent-decay') {
+            const wasActive = permanentDecay.restore(section);
+            if(wasActive) {
+                const button = section.querySelector('.clay-btn');
+                button.querySelector('span').textContent = 'Deactivate';
+                button.classList.add('btn-active');
                 section.classList.add('is-active');
             }
        }
