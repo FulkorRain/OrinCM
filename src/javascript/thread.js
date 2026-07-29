@@ -137,7 +137,7 @@ function getThreadIdFromUrl() {
 function findThread(id) {
     for (let i = 0; i < FORUMS.length; i++) {
         const forum = FORUMS[i];
-        for (let j = 0; forum.threads.length; j++) {
+        for (let j = 0; j < forum.threads.length; j++) {
             if(forum.threads[j].id === id) {
                 return {thread: forum.threads[j], forumName: forum.name};
             }

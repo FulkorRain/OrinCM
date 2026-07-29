@@ -63,39 +63,43 @@ const SEAL_TEXT = 'corrupted';
 const sealElement = document.getElementById('seal-content');
 const sealLine = document.getElementById('seal-line');
 
-sealElement.addEventListener('input', function() {
-    markDirty();
-    const value = this.textContent.trim();
+if (sealElement && sealLine) {
 
-    if (value.length === 0) {
-        sealLine.classList.add('broken');
-        triggerSecret();
-    } else if (value.length < SEAL_TEXT.length) {
-        showToast('The seal is weakening...', 1500);
-        sealLine.classList.add('broken');
-    } else {
-        sealLine.classList.remove('broken');
-        showToast('Something is locked here.', 1800);
+    sealElement.addEventListener('input', function() {
+        markDirty();
+        const value = this.textContent.trim();
+    
+        if (value.length === 0) {
+            sealLine.classList.add('broken');
+            triggerSecret();
+        } else if (value.length < SEAL_TEXT.length) {
+            showToast('The seal is weakening...', 1500);
+            sealLine.classList.add('broken');
+        } else {
+            sealLine.classList.remove('broken');
+            showToast('Something is locked here.', 1800);
+        }
+    });
+    
+    sealElement.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') e.preventDefault();
+    });
+    
+    let secretTriggered = false;
+    function triggerSecret() {
+        if (secretTriggered) return;
+        secretTriggered = true;
+    
+        document.getElementById('sb-hint').textContent = 'seal broken';
+        document.getElementById('sb-hint').classList.add('glow');
+    
+        setTimeout(() => {
+            document.getElementById('secret-overlay').classList.add('reveal');
+        }, 600);
+    
     }
-});
-
-sealElement.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') e.preventDefault();
-});
-
-let secretTriggered = false;
-function triggerSecret() {
-    if (secretTriggered) return;
-    secretTriggered = true;
-
-    document.getElementById('sb-hint').textContent = 'seal broken';
-    document.getElementById('sb-hint').classList.add('glow');
-
-    setTimeout(() => {
-        document.getElementById('secret-overlay').classList.add('reveal');
-    }, 600);
-
 }
+
 
 function closeSecret() {
     document.getElementById('secret-overlay').classList.remove('reveal');

@@ -1,4 +1,4 @@
-import {stateManager} from '../managers/state-manager';
+import {stateManager} from '../managers/state-manager.js';
 
 const CELL_SIZE = window.innerWidth < 768 ? 14 : 6;
 const TICK_MS = 80;

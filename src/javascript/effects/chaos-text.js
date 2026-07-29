@@ -80,8 +80,8 @@ function chaosText(sectionElement) {
             });
         }, duration);
 
-        return isActive;
     });
+    return isActive;
 }
 
 chaosText.isActive = () => isActive;

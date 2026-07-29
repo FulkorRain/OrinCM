@@ -6,11 +6,11 @@ const CONFIG = {
 
   privacyPolicyUrl: "#privacy",
   termsUrl: "#terms",
-  physicalAddress: "123 Main Street, Anytown, USA", // TODO: Change
+  physicalAddress: import.meta.env.VITE_PHYSICAL_ADDRESS,
 
   emailOctopus: {
-    apiKey: "eo_1552db01f2ac3b432b240b6d36de14b839f5aa968781050359ec0e36b4ebdc23",
-    listId: "fbc341f0-60a1-11f1-b51e-a54e0d06fd55", // TODO: Change
+    apiKey: import.meta.env.VITE_EMAILOCTOPUS_API_KEY,
+    listId: import.meta.env.VITE_EMAILOCTOPUS_LIST_ID,
     tags: [],
     doubleOptIn: true,
   },
