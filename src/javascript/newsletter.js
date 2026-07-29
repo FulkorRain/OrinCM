@@ -6,11 +6,11 @@ const CONFIG = {
 
   privacyPolicyUrl: "#privacy",
   termsUrl: "#terms",
-  physicalAddress: "123 Main Street, Anytown, USA", // TODO: Change
+  physicalAddress: import.meta.env.VITE_PHYSICAL_ADDRESS,
 
   emailOctopus: {
-    apiKey: "your-emailoctopus-api-key", // TODO: Change
-    listId: "your-list-id", // TODO: Change
+    apiKey: import.meta.env.VITE_EMAILOCTOPUS_API_KEY,
+    listId: import.meta.env.VITE_EMAILOCTOPUS_LIST_ID,
     tags: [],
     doubleOptIn: true,
   },
@@ -20,7 +20,7 @@ const CONFIG = {
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
   const href = (id, url) => { const el = document.getElementById(id); if (el) el.href = url; };
 
-  document.title = `${CONFIG.companyName} Newsletter Newsletter`;
+  document.title = `${CONFIG.companyName} Newsletter`;
 
   set("logoInitials", CONFIG.companyInitials);
   set("companyName", CONFIG.companyName);
@@ -79,10 +79,10 @@ function validateForm() {
   const email = document.getElementById('emailInput').value?.trim();
   const emailRegex = /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email)) {
-    showError('email', 'emailError', true);
+    showError('emailInput', 'emailError', true);
     valid = false;
   } else {
-    showError('email', 'emailError', false);
+    showError('emailInput', 'emailError', false);
   }
 
   const consentMarketing = form.consentMarketing.checked;
@@ -142,7 +142,7 @@ async function subscribeToEmailOctopus(data) {
 //     body: JSON.stringify(data)
 //   });
 //   const result = await response.json();
-//   if (!response.success) throw new Error(result.error);
+//   if (!result.success) throw new Error(result.error);
 //   return result;
 // }
 
@@ -151,6 +151,13 @@ form.addEventListener('submit', async (e) => {
   alertOk.classList.remove('visible');
   alertErr.classList.remove('visible');
 
+  const lastSubmit = parseInt(sessionStorage.getItem('lastSubmit') || '0');
+  if (Date.now() - lastSubmit < 5000) {
+    document.getElementById('errorMsg').textContent = 'Please wait a moment before trying again.';
+    alertErr.classList.add('visible');
+    return;
+  }
+  sessionStorage.setItem('lastSubmit', Date.now());
   if (!validateForm()) return;
 
   submitBtn.disabled = true;
@@ -171,7 +178,7 @@ form.addEventListener('submit', async (e) => {
     successCard.classList.add('visible');
     resetForm();
   } catch (err) {
-    console.error('Mailchimp error:', err);
+    console.error('EmailOctopus error:', err);
     document.getElementById('errorMsg').textContent = "An error occurred while subscribing. Please try again later.";
     alertErr.classList.add('visible');
   } finally {

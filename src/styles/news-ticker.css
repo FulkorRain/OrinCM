@@ -1,0 +1,38 @@
+.skull-ring {
+    position: relative;
+    width: 520px;
+    height: 480px;
+    margin: 0 auto;
+}
+
+.skull-ring__skull {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: auto;
+    z-index: 5;
+    filter: drop-shadow(0 0 18px rgba(0, 0, 0, 0.6));
+}
+
+.skull-ring__text-stage {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.ring-word {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    z-index: 10;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    white-space: pre;
+    pointer-events: none;
+    will-change: transform, opacity;
+    color: yellow;
+    -webkit-text-stroke: 1px #000;
+}

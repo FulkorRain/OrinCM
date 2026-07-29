@@ -5,6 +5,10 @@ import {flicker} from "./effects/flicker.js";
 import {imageWarp} from "./effects/image-warp.js";
 import { pixelDecay } from "./effects/pixel-decay.js";
 import {screenDecay} from  "./effects/screen-decay.js";
+import { bugCrawl } from "./effects/bug_crawl.js";
+import { permanentCorruption } from "./effects/permanent_corruption.js";
+import { chaosText } from "./effects/chaos-text.js";
+import { permanentDecay } from "./effects/permanent_decay.js";
 
 
 const effectRegistry = [
@@ -13,7 +17,6 @@ const effectRegistry = [
         title: 'Text Corruption',
         description: 'Ancient glyphs bleed through written word.',
         crackClass: '',
-        type: 'toggle',
         buildContent(sectionElement) {
             const p = document.createElement('p');
             p.className = 'corruptable-text';
@@ -25,11 +28,40 @@ const effectRegistry = [
         }
     },
     {
+        id: 'permanent-corruption',
+        title: 'Permanent Corruption',
+        description: 'Some wounds arent meant to heal. The text remembers',
+        crackClass: '',
+        buildContent(sectionElement) {
+            const p = document.createElement('p');
+            p.className = 'corruptable-text';
+            p.textContent = 'This message was never meant to be read. The words resist you.';
+            sectionElement.querySelector('.section-content').appendChild(p);
+        },
+        run(sectionElement) {
+            return permanentCorruption(sectionElement);
+        }
+    },
+    {
+        id: 'chaos-text',
+        title: 'Chaos Text',
+        description: 'The letters cannot decide what they are.',
+        crackClass: '',
+        buildContent(sectionElement) {
+            const p = document.createElement('p');
+            p.className = 'corruptable-text';
+            p.textContent = 'Something is interfering with the signal. The message cannot hold its shape.';
+            sectionElement.querySelector('.section-content').appendChild(p);
+        },
+        run(sectionElement) {
+            return chaosText(sectionElement);
+        }
+    },
+    {
         id: 'screen-distortion',
         title: 'Screen Distortion',
         description: 'The ground shifts. Something stirs beneath',
         crackClass: 'clay-crack-2',
-        type: 'toggle',
         buildContent(sectionElement) {
             const p = document.createElement('p');
             p.className = 'section-desc';
@@ -45,7 +77,6 @@ const effectRegistry = [
         title: 'Light Flicker',
         description: 'The lights know you are watching.',
         crackClass: '',
-        type: 'toggle',
         buildContent(sectionElement) {
             const p = document.createElement('p');
             p.className = 'section-desc';
@@ -61,7 +92,6 @@ const effectRegistry = [
         title: 'Image Corruption',
         description: 'What the eye sees, the mind distorts',
         crackClass: '',
-        type: 'toggle',
         buildContent(sectionElement) {
             const img = document.createElement('img');
             img.className = 'corruptable-image';
@@ -78,7 +108,6 @@ const effectRegistry = [
         title: 'Picture Decay',
         description: 'The image remembers nothing. Darkness takes it cell by cell.',
         crackClass: 'clay-crack-2',
-        type: 'toggle',
         buildContent(sectionElement) {
             const canvas = document.createElement('canvas');
             canvas.className = 'decay-canvas';
@@ -96,7 +125,6 @@ const effectRegistry = [
         title: 'Section Decay',
         description: 'The clay remembers nothing. It crumbles, cell by cell.',
         crackClass: 'clay-crack-3',
-        type: 'toggle',
         buildContent(sectionElement) {
             const p = document.createElement('p');
             p.className = 'section-desc';
@@ -105,6 +133,36 @@ const effectRegistry = [
         },
         run(sectionElement) {
             return screenDecay(sectionElement);
+        }
+    },
+    {
+        id: 'permanent-decay',
+        title: 'Permanent Decay',
+        description: 'What crumbles here does not return.',
+        crackClass: 'clay-crack-2',
+        buildContent(sectionElement) {
+            const p = document.createElement('p');
+            p.className = 'section-desc';
+            p.textContent = 'The golem forgets. Piece by piece, it surrenders to the dark.'
+            sectionElement.querySelector('.section-content').appendChild(p);
+        },
+        run(sectionElement) {
+            return permanentDecay(sectionElement);
+        }
+    },
+    {
+        id: 'bug-crawl',
+        title: 'Bug Crawling Effect',
+        description: 'Creepy Crawly on Screen',
+        crackClass: 'clay-crack-1',
+        buildContent(sectionElement) {
+            const p = document.createElement('p');
+            p.className = 'section-desc';
+            p.textContent = 'Wheres the bug spray.'
+            sectionElement.querySelector('.section-content').appendChild(p);
+        },
+        run(sectionElement) {
+            return bugCrawl();
         }
     },
 
@@ -145,6 +203,26 @@ function buildPage() {
        });
 
        container.appendChild(section);
+
+       if (effect.id === 'permanent-corruption') {
+            const wasActive = permanentCorruption.restore(section);
+            if (wasActive) {
+                const btn = section.querySelector('.clay-btn');
+                btn.querySelector('span').textContent = 'Deactivate';
+                btn.classList.add('btn-active');
+                section.classList.add('is-active');
+            }
+       }
+
+       if (effect.id === 'permanent-decay') {
+            const wasActive = permanentDecay.restore(section);
+            if(wasActive) {
+                const button = section.querySelector('.clay-btn');
+                button.querySelector('span').textContent = 'Deactivate';
+                button.classList.add('btn-active');
+                section.classList.add('is-active');
+            }
+       }
     });
 }
 
@@ -171,6 +249,17 @@ function initIntensityUI() {
 
     refresh();
 }
+
+document.addEventListener('effect-ended', (e) => {
+    const section = document.getElementById(e.detail.id);
+    if (!section) return;
+    const button = section.querySelector('.clay-btn');
+    if (!button) return;
+
+    button.querySelector('span').textContent = 'Activate';
+    button.classList.remove('btn-active');
+    section.classList.remove('is-active');
+});
 
 buildPage();
 initIntensityUI();

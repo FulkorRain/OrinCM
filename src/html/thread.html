@@ -1,135 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>RetroForum - Thread</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bulletin Bytes - Thread</title>
 
   <link rel="stylesheet" href="../styles/forum-thread.css">
-  <script src="../javascript/forum-thread.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
+
+  <script src="../javascript/forum-data.js"></script>
+  <script defer src="../javascript/thread.js"></script>
 </head>
 <body>
 
   <div class="page-wrapper">
-    <!-- TOP NAV -->
+
     <table class="top-header" cellspacing="0" cellpadding="0">
       <tr>
         <td class="logo-area">
-          <h1 class="retro-logo">RetroForum</h1>
+          <h1 class="retro-logo">Bulletin Bytes</h1>
         </td>
         <td class="nav-area">
-          <a href="forum.html">home</a>
+          <a href="forum.html"><i class="ph-bold ph-house"></i></a>
           |
-          <a href="#">faq</a>
+          <a href="#"><i class="ph-bold ph-question"></i></a>
           |
-          <a href="#">members</a>
+          <a href="#"><i class="ph-bold ph-users"></i></a>
         </td>
       </tr>
     </table>
-    <!-- THREAD TITLE -->
-    <div class="thread-title">
-      Thread: Welcome to the Important Forum
-    </div>
-    <!-- POST -->
-    <table class="post-table" cellspacing="1" cellpadding="0">
-      <tr class="post-header">
-        <td>
-          06-12-2004, 01:22 PM
-        </td>
-      </tr>
-      <tr>
-        <!-- USER INFO -->
-        <td>
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="user-panel">
-                <div class="username">
-                  CoolGuy2004
-                </div>
-                <div class="user-title">
-                  elite member
-                </div>
-                <img
-                  src="https://placehold.co/80x80"
-                  class="avatar"
-                >
-                <div class="user-stats">
-                  Join Date: Jun 2004<br>
-                  Posts: 42<br>
-                  Location: The Internet
-                </div>
-              </td>
-              <!-- POST CONTENT -->
-              <td class="post-content">
-                <div class="post-text">
-                  hey guys welcome to my forum
-                  <br><br>
-                  pls dont spam
-                  <br><br>
-                  also check out my website its under construction lol
-                </div>
-                <div class="signature">
-                  __________________<br>
-                  Windows XP Professional User
-                </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <!-- SECOND POST -->
-    <table class="post-table" cellspacing="1" cellpadding="0">
-      <tr class="post-header">
-        <td>
-          06-12-2004, 01:37 PM
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="user-panel">
-                <div class="username">
-                  xXShadowKnightXx
-                </div>
-                <div class="user-title">
-                  banned from school computers
-                </div>
-                <img
-                  src="https://placehold.co/80x80"
-                  class="avatar"
-                >
-                <div class="user-stats">
-                  Join Date: May 2004<br>
-                  Posts: 183<br>
-                  Location: unknown
-                </div>
-              </td>
-              <td class="post-content">
-
-                <div class="post-text">
-                  this forum is cool
-                  <br><br>
-                  anyone here play runescape???
-                </div>
-                <div class="signature">
-                  __________________<br>
-                  AOL Instant Messenger: shadowknight420
-                </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <!-- FOOTER -->
-    <div class="footer">
-      <a href="forum.html">
-        Return to Forum Index
-      </a>
-    </div>
+    <div id="threadContainer"></div>
 
   </div>
 

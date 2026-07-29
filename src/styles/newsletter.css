@@ -1,4 +1,4 @@
-/* ── PAGE COLOUR TOKENS ─────────────────────────────────────────  */
+
 :root {
   --color-bg:             #1e1a18;
   --color-surface:        #272220;
@@ -20,7 +20,6 @@
 }
 
 
-/* ── BODY OVERRIDE ─────────────────────────────────────────────────────────────── */
 body {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
@@ -59,7 +58,6 @@ body::after {
 }
 
 
-/* ── BACK BUTTON ────────────────────────────────────────────────  */
 .back-btn {
   position: fixed;
   top: 24px;
@@ -90,7 +88,6 @@ body::after {
 }
 
 
-/* ── LAYOUT WRAPPER ─────────────────────────────────────────────  */
 .page-wrapper {
   position: relative;
   z-index: 1;
@@ -101,14 +98,13 @@ body::after {
 }
 
 
-/* ── BRAND HEADER ───────────────────────────────────────────────  */
 .brand-header {
   text-align: center;
   margin-bottom: 40px;
   animation: fadeUp .7s cubic-bezier(.22,1,.36,1) both;
 }
 
-/* Swap this placeholder div for an <img> tag when the client logo is ready */
+/* TODO: change when we have logo*/
 .brand-logo-placeholder {
   display: inline-flex;
   align-items: center;
@@ -152,7 +148,6 @@ body::after {
 }
 
 
-/* ── SIGNUP CARD ────────────────────────────────────────────────  */
 .signup-card {
   background: var(--color-surface-raised);
   border: 1px solid var(--color-border);
@@ -204,7 +199,6 @@ body::after {
 }
 
 
-/* ── FORM ELEMENTS ──────────────────────────────────────────────  */
 .form-group { margin-bottom: 14px; }
 
 .form-label {
@@ -267,7 +261,6 @@ body::after {
 
 .field-error.visible { display: block; }
 
-/* Newsletter submit button — uses page-specific styling, not clay-btn */
 .btn-submit {
   width: 100%;
   padding: 15px 24px;
@@ -291,47 +284,6 @@ body::after {
     0 6px 14px rgba(0,0,0,.35);
   transition: background .2s, transform .15s, box-shadow .15s;
 }
-
-.btn-submit:hover {
-  background: var(--color-accent-hover);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.12) inset,
-    0 -2px 0 rgba(0,0,0,.2) inset,
-    0 5px 0 #7a2e22,
-    0 8px 20px rgba(194,92,74,.3);
-  transform: translateY(-2px);
-}
-
-.btn-submit:active {
-  transform: translateY(2px);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.08) inset,
-    0 -1px 0 rgba(0,0,0,.15) inset,
-    0 2px 0 #7a2e22,
-    0 3px 8px rgba(0,0,0,.3);
-}
-
-.btn-submit:disabled {
-  opacity: .55;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btn-submit .btn-text { transition: opacity .2s; }
-
-.btn-submit .btn-spinner {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity .2s;
-}
-
-.btn-submit.loading .btn-text    { opacity: 0; }
-.btn-submit.loading .btn-spinner { opacity: 1; }
-
 .spinner-ring {
   width: 20px;
   height: 20px;
@@ -342,7 +294,6 @@ body::after {
 }
 
 
-/* ── CONSENT CHECKBOXES ─────────────────────────────────────────  */
 .consent-section {
   margin-top: 22px;
   padding-top: 22px;
@@ -401,7 +352,6 @@ body::after {
 }
 
 
-/* ── FEEDBACK STATES ────────────────────────────────────────────  */
 .alert {
   display: none;
   padding: 14px 16px;
@@ -429,7 +379,6 @@ body::after {
 .alert-icon { flex-shrink: 0; margin-top: 1px; }
 
 
-/* ── TRUST BADGES ───────────────────────────────────────────────  */
 .trust-bar {
   display: flex;
   align-items: center;
@@ -454,7 +403,6 @@ body::after {
 .trust-item svg { flex-shrink: 0; }
 
 
-/* ── FOOTER ─────────────────────────────────────────────────────  */
 .page-footer {
   text-align: center;
   margin-top: 28px;
@@ -496,7 +444,6 @@ body::after {
 }
 
 
-/* ── SUCCESS STATE ──────────────────────────────────────────────  */
 .success-card {
   display: none;
   text-align: center;
@@ -536,7 +483,6 @@ body::after {
 }
 
 
-/* ── ANIMATIONS ─────────────────────────────────────────────────  */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
