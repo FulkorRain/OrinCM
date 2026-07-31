@@ -109,6 +109,27 @@ main {
     cursor: pointer;
 }
 
+.obituary-head {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.obituary-head img {
+    width: 100px;
+    height: 100px;
+}
+
+.obituary-head-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.obituary-head-text h1,
+.obituary-head-text h2 {
+    margin: 0;
+}
+
 @media (max-width: 768px) {
     .content {
         flex-direction: column;
