@@ -104,7 +104,6 @@ document.querySelectorAll('.sidebar-btn').forEach(button => {
             targetPage.style.display = 'block';
         }
 
-        // Hide mailing list signup on obituaries
         const signup = document.querySelector('.signup');
 
         if (targetId === 'obituary-content') {
