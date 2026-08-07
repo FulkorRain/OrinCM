@@ -14,7 +14,7 @@ body {
 
 .page-container {
     background-image: url('/src/assets/images/animal_tile_bg.png');
-    background-size: contain;
+    background-size: 300px 300px;
     background-position: center;
     background-repeat: repeat;
     background-attachment: fixed;
@@ -117,18 +117,24 @@ body {
     height: auto;
 }
 
+
 .neon-box {
-    background-color: #00ff00;
+    background-color: #d3f0df;
     width: 250px;
     padding: 15px;
     font-size: 16px;
-    color: #000;
+    color: #000000;
     margin-left: -20px;
 }
 
 .neon-box p {
     margin: 0 0 15px 0;
-    text-shadow: 1px 1px 0px white, -1px -1px 0px white;
+    /* text-shadow: 
+        0.5px 1px 0 white,
+        -1px -1px 0 white,
+        1px -1px 0 white,
+        -1px 1px 0 white,
+        0 0 3px white; */
 }
 
 .inline-image-text {
@@ -141,8 +147,8 @@ body {
     border: 2px solid white;
     padding: 5px;
     width: 140px;
-    font-size: 11px;
-    color: white;
+    font-size: 12px;
+    color: black;
     font-weight: bold;
     margin-top: 15px;
     margin-left: -50px;

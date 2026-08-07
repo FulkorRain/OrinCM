@@ -1,7 +1,7 @@
 import {gsap} from "gsap";
 
 const startDelayMs = 100;
-const travelDuration = 3.5;
+const travelDuration = 2.5;
 const edgeBuffer = 100;
 
 function getStartTransform(element) {
@@ -14,8 +14,8 @@ function getStartTransform(element) {
     return {x , y};
 }
 
-const waveSwitchMinMs = 200;
-const waveSwitchMaxMs = 500;
+const waveSwitchMinMs = 100;
+const waveSwitchMaxMs = 300;
 
 let waveRandomizerTimeoutId = null;
 
@@ -58,7 +58,7 @@ function playFigureRise() {
         timeline = gsap.to(riseElement, {
             opacity: 1,
             duration: 1,
-            delay: startDelayMs
+            delay: startDelayMs / 1000
         });
     } else {
         const start = getStartTransform(riseElement);
@@ -97,10 +97,10 @@ function playFigureRise() {
 
         // TODO: implement once we have landing page to redirect to
         const redirectUrl = "/index.html";
-        const redirectDelaySeconds = 0.5;
+        const redirectDelaySeconds = 1;
         timeline.call(() => {
             window.location.href = redirectUrl;
-        }, null, `+=${redirectDelaySeconds}`);
+        }, null, `-=${redirectDelaySeconds}`);
 
     }
 
