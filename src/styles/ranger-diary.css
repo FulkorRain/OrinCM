@@ -1,6 +1,10 @@
 /* style.css */
 body {
-    background-color: #008000; 
+    background-image: url('/src/assets/images/ranger_page_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: "Times New Roman", Times, serif;
     margin: 0;
     padding: 20px;
@@ -9,6 +13,12 @@ body {
 }
 
 .page-container {
+    background-image: url('/src/assets/images/animal_tile_bg.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    padding: 20px;
     width: 450px; 
     position: relative;
     display: flex;
@@ -93,12 +103,18 @@ body {
 }
 
 .park-image img {
-    width: 200px;
-    height: 150px;
+    width: 250px;
+    height: 300px;
     border: none;
     display: block;
     margin-bottom: -5px; 
     margin-left: -20px;
+    padding: 10px;
+}
+
+.ranger-image {
+    width: 250px;
+    height: auto;
 }
 
 .neon-box {
@@ -142,23 +158,32 @@ body {
 
 .btn-donate {
     background-color: #9999ff;
-    color: black;
     border: 2px solid black;
-    padding: 4px 15px;
-    font-size: 18px;
-    font-family: "Times New Roman", Times, serif;
-    cursor: pointer;
+    padding: 2px 4px;
+    display: inline-block;
+    height: 35px;
+    width: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-guestbook {
     background-color: #8b4513;
-    color: black;
     border: 2px solid black;
-    padding: 4px 10px;
-    font-size: 18px;
-    font-family: "Times New Roman", Times, serif;
-    text-shadow: 1px 1px 0px #000;
-    cursor: pointer;
+    padding: 3px 6px;
+    height: 30px;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-donate img,
+.btn-guestbook img {
+    width: 120px;
+    height: auto;
+    display: block;
 }
 
 .copyright-box {

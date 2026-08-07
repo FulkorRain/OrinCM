@@ -1,6 +1,6 @@
 import {gsap} from "gsap";
 
-const startDelayMs = 2500;
+const startDelayMs = 100;
 const travelDuration = 3.5;
 const edgeBuffer = 100;
 
@@ -58,7 +58,7 @@ function playFigureRise() {
         timeline = gsap.to(riseElement, {
             opacity: 1,
             duration: 1,
-            delay: startDelayMs / 1000
+            delay: startDelayMs
         });
     } else {
         const start = getStartTransform(riseElement);

@@ -33,6 +33,20 @@ const FORUMS = [
                    this is the official forum for Prairie Golem Press<br><br>
                    rules are pretty simple: be cool, dont spam, dont be weird<br><br>
                    more stuff coming soon. the site is still under construction lol`
+          },
+          {
+            author: "CoolGuy2004",
+            userTitle: "Admin",
+            joinDate: "Jun 2004",
+            postCount: 1,
+            location: "The Internet",
+            avatar: "https://placehold.co/80x80",
+            date: "06-01-2004, 09:00 AM",
+            signature: "Windows XP Professional User",
+            text: `hey everyone welcome to Bulletin Bytes<br><br>
+                   this is the official forum for Prairie Golem Press<br><br>
+                   rules are pretty simple: be cool, dont spam, dont be weird<br><br>
+                   more stuff coming soon. the site is still under construction lol`
           }
         ]
       },
