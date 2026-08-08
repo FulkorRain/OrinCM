@@ -6,77 +6,199 @@ const FORUMS = [
   // ── 1. ANNOUNCEMENTS ──────────────────────────────────────
   {
     id: "announcements",
-    name: "Announcements",
-    description: "Important updates from the admin. Read before posting.",
+    name: "Hot Bytes",
+    description: "Kindly review the Forum rules before posting.",
     threads: [
       {
         id: "welcome-to-bulletin-bytes",
-        title: "Welcome to Bulletin Bytes!!",
-        author: "CoolGuy2004",
-        date: "2004-06-01",
-        displayDate: "06-01-2004",
-        posts: 1,
-        views: 312,
-        lastPost: "2004-06-01 09:00",
+        title: "Weird Mall Ads",
+        author: "Butterfly♡Kisser",
+        posts: 7,
+        views: 212,
+        lastPost: "1999-12-04",
         type: "thread",
         content: [
           {
-            author: "CoolGuy2004",
-            userTitle: "Admin",
-            joinDate: "Jun 2004",
-            postCount: 1,
+            author: "Butterfly♡Kisser",
+            userTitle: "Lurker",
+            joinDate: "Nov 1998",
+            postCount: 4,
             location: "The Internet",
             avatar: "https://placehold.co/80x80",
-            date: "06-01-2004, 09:00 AM",
-            signature: "Windows XP Professional User",
-            text: `hey everyone welcome to Bulletin Bytes<br><br>
-                   this is the official forum for Prairie Golem Press<br><br>
-                   rules are pretty simple: be cool, dont spam, dont be weird<br><br>
-                   more stuff coming soon. the site is still under construction lol`
+            signature: "Pretty High (for a Butterfly)",
+            text: `Does anyone remember those weird ads for that mall in Alberta? I forgot the name but always found the ads so odd lol like they kinda gave me a funny feeling whenever they came on. Does anyone else remember this?`
           },
-          {
-            author: "CoolGuy2004",
+             {
+            author: "de0rdra",
+            userTitle: "Lurker",
+            joinDate: "Mar 1999",
+            postCount: 16,
+            location: "Nice try",
+            avatar: "https://placehold.co/80x80",
+            signature: "...",
+            text: `Blast from the past lol, yeah super weird vibe I don’t know the name either but I remember what you’re talking about. MINI GOOOLF`
+          },
+             {
+            author: "Cringe_Lizard",
             userTitle: "Admin",
-            joinDate: "Jun 2004",
-            postCount: 1,
+            joinDate: "Jun 1998",
+            postCount: 87,
+            location: "Montana",
+            avatar: "https://placehold.co/80x80",
+            signature: "Hangin' loose.",
+            text: `I believe you mean Myriad Mall which was being built in Hartsorn Creek Alberta. It did not get finished, for obvious reasons. Kinda sad because from the photos we do have it looks pretty sick lol`
+          },
+             {
+            author: "Butterfly♡Kisser",
+            userTitle: "Lurker",
+            joinDate: "Nov 1998",
+            postCount: 4,
             location: "The Internet",
             avatar: "https://placehold.co/80x80",
-            date: "06-01-2004, 09:00 AM",
-            signature: "Windows XP Professional User",
-            text: `hey everyone welcome to Bulletin Bytes<br><br>
-                   this is the official forum for Prairie Golem Press<br><br>
-                   rules are pretty simple: be cool, dont spam, dont be weird<br><br>
-                   more stuff coming soon. the site is still under construction lol`
+            signature: "Pretty High (for a Butterfly)",
+            text: `Yes that’s the one! Amazing!`
+          },
+             {
+            author: "omelio",
+            userTitle: "Poster Boy",
+            joinDate: "Feb 1998",
+            postCount: 108,
+            location: "Spain",
+            avatar: "https://placehold.co/80x80",
+            signature: "How do you like your eggs?",
+            text: `Here’s some more info on it if you are curious. I agree it is too bad they couldn’t finish.[hyperlink to hidden news article]`
+          },
+             {
+            author: "gherKen",
+            userTitle: "Lurker",
+            joinDate: "Apr 1998",
+            postCount: 33,
+            location: "Brine",
+            avatar: "https://placehold.co/80x80",
+            signature: "Feelin fine",
+            text: `I remember reading something that the main architect was like a total freak and delayed the construction a bunch with unreasonable demands and whatnot, so maybe wouled never have opened anyway…`
+          }
+             {
+            author: "mike83",
+            userTitle: "Poster Boy",
+            joinDate: "Jan 1999",
+            postCount: 148,
+            location: "Alberta",
+            avatar: "https://placehold.co/80x80",
+            signature: "IT Professional",
+            text: `Yo man I remember these too! I always thought the popcorn one was so weird like I don’t need to drive three hours to some hick town for popcorn lol we have plenty of that here in civilization.`
           }
         ]
       },
       {
         id: "rules-read-first",
-        title: "RULES - Read before posting or u will be banned",
-        author: "CoolGuy2004",
-        date: "2004-06-01",
-        displayDate: "06-01-2004",
-        posts: 1,
-        views: 204,
-        lastPost: "2004-06-01 09:15",
+        title: "Worried about Y2K?",
+        author: "i_wok_alone",
+        posts: 10,
+        views: 489,
+        lastPost: "1999-11-17",
         type: "thread",
         content: [
           {
-            author: "CoolGuy2004",
-            userTitle: "Admin",
-            joinDate: "Jun 2004",
-            postCount: 1,
-            location: "The Internet",
+            author: "i_wok_alone",
+            userTitle: "Lurker",
+            joinDate: "May 1999",
+            postCount: 63,
+            location: "Illinois",
             avatar: "https://placehold.co/80x80",
-            date: "06-01-2004, 09:15 AM",
-            signature: "Windows XP Professional User",
-            text: `ok so here are the rules<br><br>
-                   1. no spam<br>
-                   2. no flaming<br>
-                   3. no warez or cracks<br>
-                   4. keep it pg-13 guys come on<br>
-                   5. no hotlinking my bandwidth is not free<br><br>
-                   break the rules and ur banned. simple as that`
+            signature: "We are ☆star-stuff☆",
+            text: `Do you think this is all overblown? I get the basic idea off two many chars in the Date and a text overflow error but don’t understand why would that be such a big deal?`
+          },
+          {
+            author: "jim1972",
+            userTitle: "Lurker",
+            joinDate: "Aug 1999",
+            postCount: 3,
+            location: "Florida",
+            avatar: "https://placehold.co/80x80",
+            signature: "Roush 5-car",
+            text: `We will be abkle to deal with it but consequences would be pretty bnd if we didn’t lol`
+          },
+          {
+            author: "Barfolomew",
+            userTitle: "Lurker",
+            joinDate: "May 1998",
+            postCount: 89,
+            location: "The Web",
+            avatar: "https://placehold.co/80x80",
+            signature: "There goes the neighborhood.",
+            text: `Basically you need to go into the source code on every device and update so there’s enough space for the date change or at least change the way the date updates`
+          },
+          {
+            author: "Tears_in_the_Brain",
+            userTitle: "Lurker",
+            joinDate: "Sep 1999",
+            postCount: 9,
+            location: "Manitoba",
+            avatar: "https://placehold.co/80x80",
+            signature: "Nü metal 4 lyfe",
+            text: `Couldn’t they send some kind of update like you said but wirelessly somehow, like beam it into all the computers instead of going door to door?`
+          },
+          {
+            author: "Barfolomew",
+            userTitle: "Lurker",
+            joinDate: "May 1998",
+            postCount: 89,
+            location: "The Web",
+            avatar: "https://placehold.co/80x80",
+            signature: "There goes the neighborhood.",
+            text: `Sure wireless beaming. That might be the dumbest thing I have ever read on this site and that is saying something (¬_¬)`
+          },
+          {
+            author: "❀Rosicrucian❊Druid⏾࣪",
+            userTitle: "Poster Boy",
+            joinDate: "Dec 1997",
+            postCount: 513,
+            location: "Starship Earth",
+            avatar: "https://placehold.co/80x80",
+            signature: "Night of Pan[link to this diary]",
+            text: `The Millennium will be a time of great transformation! Echoes of our past lives will be reaching out at this time to help align human consciousness towards a more harmonious future.`
+          },
+          {
+            author: "TruthWolf23",
+            userTitle: "Poster Boy",
+            joinDate: "Nov 1997",
+            postCount: 744,
+            location: "SOVEREIGN",
+            avatar: "https://placehold.co/80x80",
+            signature: "The Irreplaceable Spark[link to this diary]",
+            text: `Or just maybe they are using the Y2K SCAM to control YOUR life? Couldn’t be that, must be a bunch of hippy shit…`
+          },
+          {
+            author: "❀Rosicrucian❊Druid⏾࣪",
+            userTitle: "Poster Boy",
+            joinDate: "Dec 1997",
+            postCount: 513,
+            location: "Starship Earth",
+            avatar: "https://placehold.co/80x80",
+            signature: "Night of Pan[link to this diary]",
+            text: `You are stuck in the old paradigms. We don’t need to worry about all these petty political arguments when the future is so much bigger than politics. Join with me, for my party and project is the HUMAN project!`
+          },
+          {
+            author: "TruthWolf23",
+            userTitle: "Poster Boy",
+            joinDate: "Nov 1997",
+            postCount: 744,
+            location: "SOVEREIGN",
+            avatar: "https://placehold.co/80x80",
+            signature: "The Irreplaceable Spark[link to this diary]",
+            text: `How about you put down the reefer for ONE SECOND and OPEN your EYES. You think all they want with your computer is to ADD an extra DIGIT in the SOURCE CODE? If your brain isn’t completely cooked from Pynchon and Microdots you need to WAKE UP!`
+          },
+          {
+            author: "Potemkin_prince",
+            userTitle: "Admin",
+            joinDate: "Oct 1998",
+            postCount: 277,
+            location: "Right here, right now",
+            avatar: "https://placehold.co/80x80",
+            signature: "Praise loudly, blame quietly.",
+            text: `This thread has been locked by the moderator. Please review our forum rules and keep things civil.
+Yes, you. If you want to keep your account don’t make me explain this again.`
           }
         ]
       },
