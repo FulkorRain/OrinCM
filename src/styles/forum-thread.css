@@ -13,7 +13,6 @@ a:hover { color: #cc0000; }
   margin: 20px auto;
 }
 
-
 .top-header {
   width: 85%;
   background: #f0f0f0;
@@ -65,14 +64,13 @@ a:hover { color: #cc0000; }
   font-weight: bold;
 }
 
-
 .forum-table {
   width: 75%;
   padding-left: 10%;
 }
 
 .forum-header th {
-  background: #003399;
+  background: #e2ac5b;
   color: white;
   font-size: 20px;
 }
@@ -108,7 +106,7 @@ a:hover { color: #cc0000; }
 
 
 .thread-title {
-  background: #003399;
+  background: #ca8020;
   color: white;
   padding: 8px;
   font-weight: bold;
@@ -180,7 +178,7 @@ a:hover { color: #cc0000; }
 }
 
 .forum-category-header th {
-  background: #336699;
+  background: #ca8020;
   color: white;
   font-size: 12px;
   padding: 5px 6px;
