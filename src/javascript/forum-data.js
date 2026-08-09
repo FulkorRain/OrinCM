@@ -77,7 +77,7 @@ const FORUMS = [
             avatar: "https://placehold.co/80x80",
             signature: "Feelin fine",
             text: `I remember reading something that the main architect was like a total freak and delayed the construction a bunch with unreasonable demands and whatnot, so maybe wouled never have opened anyway…`
-          }
+          },
              {
             author: "mike83",
             userTitle: "Poster Boy",
