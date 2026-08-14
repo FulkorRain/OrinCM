@@ -15,7 +15,7 @@ const FORUMS = [
         author: "Butterfly♡Kisser",
         posts: 7,
         views: 212,
-        lastPost: "1999-12-04",
+        lastPost: "12-04-1999",
         type: "thread",
         content: [
           {
@@ -96,7 +96,7 @@ const FORUMS = [
         author: "i_wok_alone",
         posts: 10,
         views: 489,
-        lastPost: "1999-11-17",
+        lastPost: "11-17-1999",
         type: "thread",
         content: [
           {
@@ -154,9 +154,9 @@ const FORUMS = [
             userTitle: "Poster Boy",
             joinDate: "Dec 1997",
             postCount: 513,
-            location: "Starship Earth",
+            location: "Night of Pan[link to this diary]",
             avatar: "https://placehold.co/80x80",
-            signature: "Night of Pan[link to this diary]",
+            signature: "Citizen of Starship Earth",
             text: `The Millennium will be a time of great transformation! Echoes of our past lives will be reaching out at this time to help align human consciousness towards a more harmonious future.`
           },
           {
@@ -164,9 +164,9 @@ const FORUMS = [
             userTitle: "Poster Boy",
             joinDate: "Nov 1997",
             postCount: 744,
-            location: "SOVEREIGN",
+            location: "The Irreplaceable Spark[link to this diary]",
             avatar: "https://placehold.co/80x80",
-            signature: "The Irreplaceable Spark[link to this diary]",
+            signature: "SOVEREIGN",
             text: `Or just maybe they are using the Y2K SCAM to control YOUR life? Couldn’t be that, must be a bunch of hippy shit…`
           },
           {
@@ -174,9 +174,9 @@ const FORUMS = [
             userTitle: "Poster Boy",
             joinDate: "Dec 1997",
             postCount: 513,
-            location: "Starship Earth",
+            location: "Night of Pan[link to this diary]",
             avatar: "https://placehold.co/80x80",
-            signature: "Night of Pan[link to this diary]",
+            signature: "Citizen of Starship Earth",
             text: `You are stuck in the old paradigms. We don’t need to worry about all these petty political arguments when the future is so much bigger than politics. Join with me, for my party and project is the HUMAN project!`
           },
           {
@@ -184,9 +184,9 @@ const FORUMS = [
             userTitle: "Poster Boy",
             joinDate: "Nov 1997",
             postCount: 744,
-            location: "SOVEREIGN",
+            location: "The Irreplaceable Spark[link to this diary]",
             avatar: "https://placehold.co/80x80",
-            signature: "The Irreplaceable Spark[link to this diary]",
+            signature: "SOVEREIGN",
             text: `How about you put down the reefer for ONE SECOND and OPEN your EYES. You think all they want with your computer is to ADD an extra DIGIT in the SOURCE CODE? If your brain isn’t completely cooked from Pynchon and Microdots you need to WAKE UP!`
           },
           {
@@ -204,50 +204,233 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
       },
       {
         id: "forum-upgrade-notice",
-        title: "Forum upgraded to TotallyNotvBulletin 1.0",
-        author: "CoolGuy2004",
-        date: "2004-06-10",
-        displayDate: "06-10-2004",
-        posts: 3,
-        views: 88,
-        lastPost: "2004-06-11 14:02",
+        title: "Vietnamese Coffee",
+        author: "Britney_Baby1",
+        posts: 11,
+        views: 249,
+        lastPost: "11-03-1999",
         type: "thread",
         content: [
           {
-            author: "CoolGuy2004",
-            userTitle: "Admin",
-            joinDate: "Jun 2004",
-            postCount: 1,
-            location: "The Internet",
-            avatar: "https://placehold.co/80x80",
-            date: "06-10-2004, 11:00 AM",
-            signature: "Windows XP Professional User",
-            text: `just upgraded the forum software. let me know if anything is broken<br><br>
-                   also the new avatars should work now. max size is 80x80`
-          },
-          {
-            author: "xXShadowKnightXx",
-            userTitle: "banned from school computers",
-            joinDate: "May 2004",
+            author: "Britney_Baby1",
+            userTitle: "Poster Girl",
+            joinDate: "Mar 1988",
             postCount: 183,
-            location: "unknown",
+            location: "Possibly in Michigan",
             avatar: "https://placehold.co/80x80",
-            date: "06-11-2004, 09:42 AM",
-            signature: "AOL Instant Messenger: shadowknight420",
-            text: `my avatar still doesnt work<br><br>
-                   also the theme looks different did u change something`
+            signature: "Springtime Soul",
+            text: `I tried Vietnamese coffee for the first time yesterday and I love it! Does anyone know a good source near Lansing?`
           },
           {
-            author: "CoolGuy2004",
-            userTitle: "Admin",
-            joinDate: "Jun 2004",
-            postCount: 1,
-            location: "The Internet",
+            author: "hedgehog420",
+            userTitle: "Lurker",
+            joinDate: "Feb 1999",
+            postCount: 14,
+            location: "Green Zone",
             avatar: "https://placehold.co/80x80",
-            date: "06-11-2004, 14:02 PM",
-            signature: "Windows XP Professional User",
-            text: `clear ur cache dude<br><br>
-                   ctrl+f5`
+            signature: "AOL Instant Messenger: hedgehog_420",
+            text: `Not sure but I have seen canned condensed milk at Wrigley’s, that’s the main ingredient.`
+          },
+          {
+            author: "Gabr1EL",
+            userTitle: "Admin",
+            joinDate: "Mar 1999",
+            postCount: 144,
+            location: "San Fran",
+            avatar: "https://placehold.co/80x80",
+            signature: "Think Different",
+            text: `That is not the main ingredient lol. The important ingredient is the coffee and specifically robusta beans, might as well be drinking a latte otherwise.`
+          },
+          {
+            author: "hedgehog420",
+            userTitle: "Lurker",
+            joinDate: "Feb 1999",
+            postCount: 14,
+            location: "Green Zone",
+            avatar: "https://placehold.co/80x80",
+            signature: "AOL Instant Messenger: hedgehog_420",
+            text: `Hey don’t knock a good latte ;)`
+          },
+          {
+            author: "Gabr1EL",
+            userTitle: "Admin",
+            joinDate: "Mar 1999",
+            postCount: 144,
+            location: "San Fran",
+            avatar: "https://placehold.co/80x80",
+            signature: "Think Different",
+            text: `Watch me, bitch.`
+          },
+          {
+            author: "Xx_Legatus_xX",
+            userTitle: "Lurker",
+            joinDate: "Aug 1999",
+            postCount: 66,
+            location: "Manitoba",
+            avatar: "https://placehold.co/80x80",
+            signature: "Alea iacta est",
+            text: `Did you know Vietnamese coffee plantations only started like 10 years ago? It was a because East Germany couldn’t get decent coffee, and they were cutting it with stuff like pea flower (hard on the ol’ coffee maker lol), so they massively invested in Vietnamese plantations with the promise of a bunch of free coffee, but then the USSR fell apart so the contracts were void and Vietnam basically got a free coffee industry!`
+          },
+          {
+            author: "Alondra69",
+            userTitle: "Poster Girl",
+            joinDate: "Dec 1997",
+            postCount: 182,
+            location: "Vancouver",
+            avatar: "https://placehold.co/80x80",
+            signature: "We leave the whole club jazzy, Why the CIA wanna watch us?",
+            text: `This thread is giving me Nam flashbacks (to my vacation last spring)`
+          },
+          {
+            author: "Debora_Miller",
+            userTitle: "Lurker",
+            joinDate: "Sep 1999",
+            postCount: 8,
+            location: "USA",
+            avatar: "https://placehold.co/80x80",
+            signature: "Always Learning",
+            text: `It is a beautiful country. We bussed around Hanoi a couple years ago, did the Mua cave tour, and also saw this temple that had preserved monks that had undergone a process of self-mummification, eating next to nothing for years then drinking a tea containing basically wood varnish that would preserve their body and keep bugs away. Really something to imagine, painstakingly turning yourself into something that transcends humanity in a way. I don’t really know what to think about it but the image sticks with me, even if I could never do something like this.`
+          },
+          {
+            author: "Gabr1EL",
+            userTitle: "Admin",
+            joinDate: "Mar 1999",
+            postCount: 144,
+            location: "San Fran",
+            avatar: "https://placehold.co/80x80",
+            signature: "Think Different",
+            text: `This is actually misinformation, while there are mummified monks in Vietnam the process of ritual self-mummification you are describing was only practiced in Japan.`
+          },
+          {
+            author: "Debora_Miller",
+            userTitle: "Lurker",
+            joinDate: "Sep 1999",
+            postCount: 8,
+            location: "USA",
+            avatar: "https://placehold.co/80x80",
+            signature: "Always Learning",
+            text: `Well were you there? They looked self-mummified to us.`
+          },
+          {
+            author: "gl0rk",
+            userTitle: "Lurker",
+            joinDate: "Oct 1988",
+            postCount: 74,
+            location: "A Strange Land",
+            avatar: "https://placehold.co/80x80",
+            signature: "down too long in the midnight sea",
+            text: `Dude that stuff is so gross, I much prefer Arabica beans.`
+          }
+        ]
+      },
+      {
+        id: "forum-upgrade-notice",
+        title: "Immortal Dog",
+        author: "beb",
+        posts: 10,
+        views: 311,
+        lastPost: "10-13-1999",
+        type: "thread",
+        content: [
+          {
+            author: "beb",
+            userTitle: "Lurker",
+            joinDate: "Mar 1988",
+            postCount: 96,
+            location: "Colorado",
+            avatar: "https://placehold.co/80x80",
+            signature: ".",
+            text: `Today I learned that a dog who lived 11,000 years ago got cancer, and that cancer adapted to become a venereal disease that spread to other dogs so that it’s still around to this day. It’s technically still dog cells though, but like a weird immortal dog that infects other dogs?`
+          },
+          {
+            author: "Cntrl_心_Perk",
+            userTitle: "Admin",
+            joinDate: "Mar 1999",
+            postCount: 182,
+            location: "Ontario",
+            avatar: "https://placehold.co/80x80",
+            signature: "Still in bed at ten, And work began at eight",
+            text: `Whoa that’s so crazy.`
+          },
+          {
+            author: "Alondra69",
+            userTitle: "Poster Girl",
+            joinDate: "Dec 1997",
+            postCount: 182,
+            location: "Vancouver",
+            avatar: "https://placehold.co/80x80",
+            signature: "We leave the whole club jazzy, Why the CIA wanna watch us?",
+            text: `If this cancer counts as a dog, then in a way if you think about it it’s the most successful dog that ever lived. If the “goal” of a cell is to propagate its genes, usually they do this by willfully self-terminating at the right time to serve the higher organism, and the cells that are too selfish and refuse become cancer but then they die anyway. Except this dog cell found a way to be selfish yet outlive the host by becoming a totally new type of dog.`
+          },
+          {
+            author: "Beeblebrox42",
+            userTitle: "Lurker",
+            joinDate: "Jan 1998",
+            postCount: 14,
+            location: "Belfast",
+            avatar: "https://placehold.co/80x80",
+            signature: "Don't Panic",
+            text: `Imagine you make a cell and tell it to do its job as part of your kidney, then it’s just like “naw I’m doin’ my own thing.”`
+          },
+          {
+            author: "Cntrl_心_Perk",
+            userTitle: "Admin",
+            joinDate: "Mar 1999",
+            postCount: 182,
+            location: "Ontario",
+            avatar: "https://placehold.co/80x80",
+            signature: "Still in bed at ten, And work began at eight",
+            text: `It’s actually kinda crazy so many cells don’t do that to be honest, but thankfully those types of paradigm-rejecting cells aren’t usually good at accomplishing much on their own I guess, or cooperating with other cancer cells.`
+          },
+          {
+            author: "Beeblebrox42",
+            userTitle: "Lurker",
+            joinDate: "Jan 1998",
+            postCount: 14,
+            location: "Belfast",
+            avatar: "https://placehold.co/80x80",
+            signature: "Don't Panic",
+            text: `See also: every failed radical political project.`
+          },
+          {
+            author: "XXavier",
+            userTitle: "Lurker",
+            joinDate: "Jul 1999",
+            postCount: 61,
+            location: "USA",
+            avatar: "https://placehold.co/80x80",
+            signature: "talk to the hand ☜☜",
+            text: `[broken jpeg]`
+          },
+          {
+            author: "beb",
+            userTitle: "Lurker",
+            joinDate: "Mar 1988",
+            postCount: 96,
+            location: "Colorado",
+            avatar: "https://placehold.co/80x80",
+            signature: ".",
+            text: `Dude why?`
+          },
+          {
+            author: "Gabr1EL",
+            userTitle: "Admin",
+            joinDate: "Mar 1999",
+            postCount: 144,
+            location: "San Fran",
+            avatar: "https://placehold.co/80x80",
+            signature: "Think Different",
+            text: `XXavier I have warned you twice now about posting graphic images. Your account will be suspended upon the next infraction.`
+          },
+          {
+            author: "e1337_streetmeat",
+            userTitle: "Lurker",
+            joinDate: "Nov 1997",
+            postCount: 95,
+            location: "The Feydark",
+            avatar: "https://placehold.co/80x80",
+            signature: "I have come to chew ass and kick bubblegum... and I'm all out of ass.",
+            text: `3 years ago my aunt got a cancer diagnosis. Growing up she was always the person I knew I could talk to about anything, and I guess part of me got just used to this and thought that could continue forever. I started to struggle in school feeling isolated, had a falling out with my friendgroup and sort of hit rock bottom for a while, hiding out in my room all the time just playing online games to drown everything out. Everything just felt pointless to me I guess. And then one day I just kinda looked around at where I was and said fuck it, she wouldn’t want this for me. I started with little things like eating better going for walks, started studying a bit again, and I joined a soccer league and met a lot of really cool people that way. At times things still felt hard, but I felt like I had reasons to keep going now. Two months ago my Aunt saw my graduation ceremony, cancer-free for just over two years now. So I guess I just wanted to say if you are struggling with whatever, health or mental health or other stuff, it’s okay to take time you need and go at your pace, just know that sometimes it really does get better and don’t give up, because there are people cheering for you who care about you and want you to find a path through it (even people like myself out here on the web), even if you maybe can’t see them or they aren’t with you now.`
           }
         ]
       },
