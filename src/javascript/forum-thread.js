@@ -1,49 +1,52 @@
-const SEARCH_MAX_LENGTH = 100;
+const SEARCH_MAX_LENGTH  = 100;
 const SEARCH_COOLDOWN_MS = 1000;
+
+const SAFE_PATH_REGEX = /^\/[a-zA-Z0-9\-_/.]*$|^#$/;
 
 let lastSearchTime = 0;
 
-function searchForums(query) {
+
+function searchThreads(query) {
   const results = [];
-  
-  FORUMS.forEach(function (forum) {
-    const forumNameMatch = forum.name.toLowerCase().includes(query);
 
-    forum.threads.forEach(function (thread) {
-      const titleMatch = thread.title.toLowerCase().includes(query);
-
-      if (titleMatch || forumNameMatch) {
-        results.push({thread: thread, forumName: forum.name});
-      }
-    });
-  });
+  for (let i = 0; i < SEARCH_THREADS.length; i++) {
+    if (SEARCH_THREADS[i].keyword === query) {
+      results.push(SEARCH_THREADS[i]);
+    }
+  }
 
   return results;
 }
 
-function renderSearchResults(results, query) {
-  const panel = document.getElementById("searchResults");
-  const forumContainer = document.getElementById("forumContainer");
-  if (!panel) return;
-
-  while (panel.firstChild) {
-    panel.removeChild(panel.firstChild);
+function buildThreadHref(thread) {
+  if (thread.type === "redirect") {
+    return isSafePath(thread.redirect) ? thread.redirect : "#";
   }
+  return THREAD_PAGE + "?id=" + encodeURIComponent(thread.id);
+}
 
-  panel.style.display = "block";
-  forumContainer.style.display = "none";
+function isSafePath(url) {
+  return typeof url === "string" && SAFE_PATH_REGEX.test(url);
+}
 
-  if (results.length === 0 ) {
-    const noResults = document.createElement("div");
-    noResults.className = "search-no-results";
-    noResults.appendChild(document.createTextNode('No Results found for "' + query + '".'));
-    panel.appendChild(noResults);
-    return;
-  }
+function showNoResults(panel, query) {
+  const msg = document.createElement("div");
+  msg.className = "search-no-results";
+  msg.appendChild(
+    document.createTextNode(
+      query ? 'No results found for "' + query + '".' : "No results found."
+    )
+  );
+  panel.appendChild(msg);
+  panel.appendChild(buildClearButton());
+}
 
+function showResultsTable(panel, results) {
   const heading = document.createElement("div");
   heading.className = "search-results-heading";
-  heading.appendChild(document.createTextNode('Search results for "' + query + '" - ' + results.length + ' thread(s) found'));
+  heading.appendChild(
+    document.createTextNode(results.length + " result(s) found")
+  );
   panel.appendChild(heading);
 
   const table = document.createElement("table");
@@ -55,42 +58,47 @@ function renderSearchResults(results, query) {
   headerRow.className = "forum-header";
   headerRow.innerHTML = `
     <th align="left">Thread</th>
-    <th align="left" width="15%">Forum</th>
     <th align="left" width="10%">Posts</th>
+    <th align="left" width="10%">Views</th>
     <th align="left" width="25%">Last Post</th>
   `;
   table.appendChild(headerRow);
 
-  results.forEach(function (result){
+  results.forEach(function (thread) {
     const row = document.createElement("tr");
     row.className = "forum-row";
 
     const titleCell = document.createElement("td");
     const link = document.createElement("a");
     link.className = "forum-link";
-    link.href = buildThreadHref(result.thread);
-    link.appendChild(document.createTextNode(result.thread.title));
+    link.href = buildThreadHref(thread);
+    link.appendChild(document.createTextNode(thread.title || "[ page ]"));
     titleCell.appendChild(link);
 
     const meta = document.createElement("div");
     meta.className = "forum-description";
-    meta.appendChild(document.createTextNode("by " + result.thread.author + " - " + result.thread.displayDate));
+    meta.appendChild(
+      document.createTextNode(
+        "by " + thread.author
+      )
+    );
     titleCell.appendChild(meta);
-
-    const forumCell = document.createElement("td");
-    forumCell.appendChild(document.createTextNode(result.forumName));
 
     const postsCell = document.createElement("td");
     postsCell.setAttribute("align", "center");
-    postsCell.appendChild(document.createTextNode(result.thread.posts));
+    postsCell.appendChild(document.createTextNode(thread.posts));
+
+    const viewsCell = document.createElement("td");
+    viewsCell.setAttribute("align", "center");
+    viewsCell.appendChild(document.createTextNode(thread.views));
 
     const lastPostCell = document.createElement("td");
     lastPostCell.setAttribute("align", "center");
-    lastPostCell.appendChild(document.createTextNode(result.thread.lastPost || "-"))
+    lastPostCell.appendChild(document.createTextNode(thread.lastPost || "—"));
 
     row.appendChild(titleCell);
-    row.appendChild(forumCell);
     row.appendChild(postsCell);
+    row.appendChild(viewsCell);
     row.appendChild(lastPostCell);
     table.appendChild(row);
   });
@@ -103,65 +111,74 @@ function buildClearButton() {
   const button = document.createElement("button");
   button.className = "retro-button";
   button.style.marginTop = "10px";
-  button.appendChild(document.createTextNode("Back to Forums"));
-
+  button.appendChild(document.createTextNode("← Back to Forums"));
   button.addEventListener("click", resetSearch);
-
   return button;
 }
 
-function resetSearch () {
-    const panel = document.getElementById("searchResults");
-    const forumContainer = document.getElementById("forumContainer");
-    const searchInput = document.getElementById("searchInput");
-    const errorElement = document.getElementById("searchError");
+function resetSearch() {
+  const panel = document.getElementById("searchResults");
+  const forumContainer = document.getElementById("forumContainer");
+  const searchInput = document.getElementById("searchInput");
+  const errorEl = document.getElementById("searchError");
 
-    panel.style.display = "none";
-    forumContainer.style.display = "block";
+  while (panel.firstChild) panel.removeChild(panel.firstChild);
+  panel.style.display = "none";
+  forumContainer.style.display = "block";
 
-    if (searchInput) searchInput.value = "";
-    if (errorElement) errorElement.value = "";
-}
-
-function buildThreadHref(thread) {
-  if (thread.type === "redirect") {
-    return thread.redirect || "#";
-  }
-
-  return THREAD_PAGE + "?id=" + encodeURIComponent(thread.id);
+  if (searchInput) searchInput.value = "";
+  if (errorEl) errorEl.textContent = "";
 }
 
 const searchForm = document.getElementById("searchForm");
+
 if (searchForm) {
   searchForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const errorElement = document.getElementById("searchError");
+    const errorEl    = document.getElementById("searchError");
+    const panel      = document.getElementById("searchResults");
+    const forumContainer = document.getElementById("forumContainer");
 
     const now = Date.now();
     if (now - lastSearchTime < SEARCH_COOLDOWN_MS) {
-      errorElement.textContent = "Please wait a moment before searching again.";
+      errorEl.textContent = "Please wait a moment before searching again.";
       return;
     }
     lastSearchTime = now;
 
     const rawInput = document.getElementById("searchInput").value;
-
     if (rawInput.length > SEARCH_MAX_LENGTH) {
-      errorElement.textContent = "Search query is too long";
+      errorEl.textContent = "Search query is too long.";
       return;
     }
 
     const query = rawInput.trim().toLowerCase();
 
+    errorEl.textContent = "";
+    while (panel.firstChild) panel.removeChild(panel.firstChild);
+
     if (!query) {
-      resetSearch();
+      panel.style.display = "block";
+      forumContainer.style.display = "none";
+      showNoResults(panel, "");
       return;
     }
 
-    errorElement.textContent = "";
-    
-    const results = searchForums(query);
-    renderSearchResults(results, query);
+    const results = searchThreads(query);
+
+    if (results.length === 1 && results[0].type === "redirect") {
+      window.location.href = buildThreadHref(results[0]);
+      return;
+    }
+
+    panel.style.display = "block";
+    forumContainer.style.display = "none";
+
+    if (results.length === 0) {
+      showNoResults(panel, query);
+    } else {
+      showResultsTable(panel, results);
+    }
   });
 }

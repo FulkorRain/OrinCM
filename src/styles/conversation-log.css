@@ -1,0 +1,91 @@
+:root {
+  --txt-page-max-width: 680px;
+
+  --txt-page-bg: #ffffff;
+  --txt-page-text: #1a1a1a;
+
+  --txt-font: 'Courier New', Courier, monospace;
+  --txt-font-size: 14px;
+  --txt-line-height: 1.7;
+
+  --speaker-vic-color: #0033aa;
+  --speaker-amber-color: #a30000;
+
+  --distort-bg: #000000;
+  --distort-text: #ff2b2b;
+
+  --outer-bg: #e9e9e9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--outer-bg);
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+  font-family: var(--txt-font);
+}
+
+.txt-page {
+  width: 100%;
+  max-width: var(--txt-page-max-width);
+  background: var(--txt-page-bg);
+  color: var(--txt-page-text);
+  font-size: var(--txt-font-size);
+  line-height: var(--txt-line-height);
+  padding: 32px 24px;
+  transition: background-color 1.2s ease;
+}
+
+.message-line {
+  margin: 0 0 4px 0;
+  word-wrap: break-word;
+}
+
+.speaker-vic {
+  color: var(--speaker-vic-color);
+  font-weight: bold;
+}
+
+.speaker-amber {
+  color: var(--speaker-amber-color);
+  font-weight: bold;
+}
+
+#distortZone.pre-reveal {
+  opacity: 0.15;
+  filter: blur(1px);
+}
+
+#distortZone.distort-active .message-line {
+  animation: glitch-jitter 0.15s infinite;
+  color: var(--distort-text);
+  text-shadow: 2px 0 #00eaff, -2px 0 #ff00c8;
+}
+
+.txt-page.distort-active-bg {
+  background-color: var(--distort-bg);
+}
+
+@keyframes glitch-jitter {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-2px, 1px); }
+  50%  { transform: translate(2px, -1px); }
+  75%  { transform: translate(-1px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 16px 8px;
+  }
+  .txt-page {
+    padding: 20px 16px;
+    font-size: 13px;
+  }
+}
