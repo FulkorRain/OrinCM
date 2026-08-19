@@ -1,6 +1,6 @@
-function buildThreadPage(thread, forumName) {
+function buildThreadPage(thread) {
     const container = document.getElementById("threadContainer");
-    if(!container) return;
+    if (!container) return;
 
     document.title = "Bulletin Bytes - " + thread.title;
 
@@ -12,8 +12,6 @@ function buildThreadPage(thread, forumName) {
     homeLink.href = "forum.html";
     homeLink.appendChild(document.createTextNode("Forum"));
     breadcrumb.appendChild(homeLink);
-    breadcrumb.appendChild(document.createTextNode(" >> "));
-    breadcrumb.appendChild(document.createTextNode(forumName));
     breadcrumb.appendChild(document.createTextNode(" >> "));
     breadcrumb.appendChild(document.createTextNode(thread.title));
     fragment.appendChild(breadcrumb);
@@ -101,7 +99,6 @@ function buildPostTable(post) {
     return table;
 }
 
-//TODO: Change this to go to the 404 page.
 function buildNotFound() {
     const container = document.getElementById("threadContainer");
     if (!container) return;
@@ -135,28 +132,30 @@ function getThreadIdFromUrl() {
 }
 
 function findThread(id) {
-    for (let i = 0; i < FORUMS.length; i++) {
-        const forum = FORUMS[i];
-        for (let j = 0; j < forum.threads.length; j++) {
-            if(forum.threads[j].id === id) {
-                return {thread: forum.threads[j], forumName: forum.name};
-            }
-        }
+  for (let i = 0; i < SEARCH_THREADS.length; i++) {
+    if (SEARCH_THREADS[i].type === "thread" && SEARCH_THREADS[i].id === id) {
+      return SEARCH_THREADS[i];
     }
-    return null;
+  }
+
+  for (let i = 0; i < PUBLIC_THREADS.length; i++) {
+    if (PUBLIC_THREADS[i].id === id) {
+      return PUBLIC_THREADS[i];
+    }
+  }
+
+  return null;
 }
 
 const threadId = getThreadIdFromUrl();
 
 if (!threadId) {
-    buildNotFound();
+  buildNotFound();
 } else {
-    const result = findThread(threadId);
-    if (!result) {
-        buildNotFound();
-    } else if (result.thread.type === "redirect") {
-        window.location.href = result.thread.redirect || "forum.html";
-    } else {
-        buildThreadPage(result.thread, result.forumName);
-    }
+  const thread = findThread(threadId);
+  if (!thread) {
+    buildNotFound();
+  } else {
+    buildThreadPage(thread);
+  }
 }

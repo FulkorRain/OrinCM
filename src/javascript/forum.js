@@ -1,99 +1,62 @@
-const THREAD_PAGE = 'thread.html';
-const PLACEHOLDER_LABEL = '[content coming soon]';
+const THREAD_PAGE = "/src/html/thread.html";
 
 function buildForumIndex() {
-    const container = document.getElementById("forumContainer");
-    if (!container) return;
+  const container = document.getElementById("forumContainer");
+  if (!container) return;
 
-    const fragment = document.createDocumentFragment();
-    FORUMS.forEach(function (forum) {
-        const categoryTable = document.createElement("table");
-        categoryTable.className = "forum-table";
-        categoryTable.setAttribute("cellspacing", "0");
-        categoryTable.setAttribute("cellpadding", "6");
-        categoryTable.style.marginBottom = "15px";
+  const table = document.createElement("table");
+  table.className = "forum-table";
+  table.setAttribute("cellspacing", "0");
+  table.setAttribute("cellpadding", "6");
 
-        const headerRow = document.createElement("tr");
-        headerRow.className = "forum-category-header";
-        headerRow.innerHTML = `
-            <th align="left" colspan="4">${escapeHTML(forum.name)}</th>
-        `;
-        categoryTable.appendChild(headerRow);
+  const colRow = document.createElement("tr");
+  colRow.className = "forum-header";
+  colRow.innerHTML = `
+    <th align="left">Thread</th>
+    <th align="left" width="10%">Posts</th>
+    <th align="left" width="10%">Views</th>
+    <th align="left" width="25%">Last Post</th>
+  `;
+  table.appendChild(colRow);
 
-        const colRow = document.createElement("tr");
-        colRow.className = "forum-header";
-        colRow.innerHTML = `
-            <th align="left">Thread</th>
-            <th align="left" width="10%">Posts</th>
-            <th align="left" width="10%">Views</th>
-            <th align="left" width="25%">Last Post</th>
-        `;
-        categoryTable.appendChild(colRow);
+  PUBLIC_THREADS.forEach(function (thread) {
+    const row = document.createElement("tr");
+    row.className = "forum-row";
 
-        forum.threads.forEach(function (thread) {
-            const row = document.createElement("tr");
-            row.className = "forum-row";
+    const titleCell = document.createElement("td");
+    const link = document.createElement("a");
+    link.className = "forum-link";
+    link.href = THREAD_PAGE + "?id=" + encodeURIComponent(thread.id);
+    link.appendChild(document.createTextNode(thread.title));
+    titleCell.appendChild(link);
 
-            const href = buildThreadHref(thread);
+    const meta = document.createElement("div");
+    meta.className = "forum-description";
+    meta.appendChild(
+      document.createTextNode("by " + thread.author + " — " + thread.displayDate)
+    );
+    titleCell.appendChild(meta);
 
-            const titleCell = document.createElement("td");
-            
-            const link = document.createElement("a");
-            link.className = "forum-link";
-            link.href = href;
-            link.appendChild(document.createTextNode(thread.title));
+    const postsCell = document.createElement("td");
+    postsCell.setAttribute("align", "center");
+    postsCell.appendChild(document.createTextNode(thread.posts));
 
-            titleCell.appendChild(link);
-            if (thread.type === "redirect" && thread.placeholder) {
-                const badge = document.createElement("span");
-                badge.className = "placeholder-badge";
-                badge.appendChild(document.createTextNode(" " + PLACEHOLDER_LABEL));
-                titleCell.appendChild(badge);
-            }
+    const viewsCell = document.createElement("td");
+    viewsCell.setAttribute("align", "center");
+    viewsCell.appendChild(document.createTextNode(thread.views));
 
-            const meta = document.createElement("div");
-            meta.className = "forum-description";
-            meta.appendChild(document.createTextNode("by " + thread.author + " - " + thread.displayDate));
-            titleCell.appendChild(meta);
+    const lastPostCell = document.createElement("td");
+    lastPostCell.setAttribute("align", "center");
+    lastPostCell.appendChild(document.createTextNode(thread.lastPost || "—"));
 
+    row.appendChild(titleCell);
+    row.appendChild(postsCell);
+    row.appendChild(viewsCell);
+    row.appendChild(lastPostCell);
+    table.appendChild(row);
+  });
 
-            const postsCell = document.createElement("td");
-            postsCell.setAttribute("align", "center");
-            postsCell.appendChild(document.createTextNode(thread.posts));
-
-            const viewsCell = document.createElement("td");
-            viewsCell.setAttribute("align", "center");
-            viewsCell.appendChild(document.createTextNode(thread.views));
-
-            const lastPostCell = document.createElement("td");
-            lastPostCell.setAttribute("algin", "center");
-            lastPostCell.appendChild(document.createTextNode(thread.lastPost || "-"));
-
-            row.appendChild(titleCell);
-            row.appendChild(postsCell);
-            row.appendChild(viewsCell);
-            row.appendChild(lastPostCell);
-
-            categoryTable.appendChild(row);
-        });
-
-        fragment.appendChild(categoryTable);
-    });
-
-    container.appendChild(fragment);
-}
-
-function buildThreadHref(thread) {
-    if (thread.type === 'redirect'){
-        return thread.redirect || "#";
-    }
-    return THREAD_PAGE + "?id=" + encodeURIComponent(thread.id);
-}
-
-function escapeHTML(string) {
-    const div = document.createElement("div");
-    div.appendChild(document.createTextNode(string));
-    return div.innerHTML;
+  container.appendChild(table);
 }
 
 buildForumIndex();
