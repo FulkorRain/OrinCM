@@ -61,7 +61,7 @@ const PUBLIC_THREADS = [
           avatar: "https://placehold.co/80x80",
           date: "12-04-1999, 03:05 PM",
           signature: "How do you like your eggs?",
-          text: `Here’s some more info on it if you are curious. I agree it is too bad they couldn’t finish.[hyperlink to hidden news article]`
+          text: `Here’s some more info on it if you are curious. I agree it is too bad they couldn’t finish. <a href="../html/news.html">[News Article]</a>`
         },
             {
           author: "gherKen",

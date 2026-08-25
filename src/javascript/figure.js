@@ -96,7 +96,7 @@ function playFigureRise() {
         }, null, waveStartDelaySeconds + soundDelaySeconds);
 
         // TODO: implement once we have landing page to redirect to
-        const redirectUrl = "/index.html";
+        const redirectUrl = "../index.html";
         const redirectDelaySeconds = 1;
         timeline.call(() => {
             window.location.href = redirectUrl;
