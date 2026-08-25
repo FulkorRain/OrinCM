@@ -1,4 +1,4 @@
-import {gsap} from "gsap";
+import {gsap} from "https://cdn.jsdelivr.net/npm/gsap@3.15.0/index.js";
 
 const startDelayMs = 100;
 const travelDuration = 2.5;
