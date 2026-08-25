@@ -1,6 +1,6 @@
 const pageGlitchDelayMs = 2000;
 const pageGlitchPlayDurationMs = 1500;
-const jumpscareRedirectUrl = "/src/html/404pages/jumpscare-404.html";
+const jumpscareRedirectUrl = "../404pages/jumpscare-404.html";
 
 let pageGlitchStartTimeoutId = null;
 let pageGlitchEndTimeoutId = null;
