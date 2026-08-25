@@ -1,6 +1,6 @@
 /* style.css */
 body {
-    background-image: url('/src/assets/images/ranger_page_background.png');
+    background-image: url('/images/ranger_page_background.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -13,7 +13,7 @@ body {
 }
 
 .page-container {
-    background-image: url('/src/assets/images/animal_tile_bg.png');
+    background-image: url('/images/animal_tile_bg.png');
     background-size: 300px 300px;
     background-position: center;
     background-repeat: repeat;

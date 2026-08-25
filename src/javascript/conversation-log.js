@@ -1,6 +1,6 @@
 const STORAGE_KEY = 'conversationFixed';
 
-const JUMPSCARE_REDIRECT_URL = '/src/html/404pages/diary-404.html';
+const JUMPSCARE_REDIRECT_URL = '/src/html/404pages/diary-jumpscare-404.html';
 
 const DISTORTION_DURATION_MS = 1400;
 

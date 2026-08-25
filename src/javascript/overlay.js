@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.getElementById("overlay-button").addEventListener("click", () => {
-        localStorage.setItem("contentWarningAccepted", "true");
+        // localStorage.setItem("contentWarningAccepted", "true");
 
         overlay.remove();
         document.body.classList.remove("no-scroll");

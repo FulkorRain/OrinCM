@@ -10,8 +10,9 @@ function searchThreads(query) {
   const results = [];
 
   for (let i = 0; i < SEARCH_THREADS.length; i++) {
-    if (SEARCH_THREADS[i].keyword === query) {
-      results.push(SEARCH_THREADS[i]);
+    const thread = SEARCH_THREADS[i];
+    if(thread.keywords.includes(query)) {
+      results.push(thread);
     }
   }
 

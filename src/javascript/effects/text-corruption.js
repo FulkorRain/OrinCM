@@ -4,11 +4,11 @@ const GLITCH_CHARS = '𓇋 𓋴𓅂𓅂 𓀀𓀁𓀂𓀃𓀄𓀅𓀆𓀇𓀈𓀉
 const CHARS_PER_INTENSITY = 2;
 const TICK_MS = 500;
 
-const BURST_MIN_MS = 800;
-const BURST_MAX_MS = 3000;
+const BURST_MIN_MS = 2000;
+const BURST_MAX_MS = 6000;
 
-const PAUSE_MIN_MS = 10000;
-const PAUSE_MAX_MS = 30000;
+const PAUSE_MIN_MS = 5000;
+const PAUSE_MAX_MS = 10000;
 
 let isActive = false;
 let tickTimer = null;
