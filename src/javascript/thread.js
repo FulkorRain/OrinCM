@@ -68,7 +68,7 @@ function buildPostTable(post) {
         <div class="user-stats">
             Join Date: ${escapeHTML(post.joinDate)}<br>
             Posts: ${post.postCount}<br>
-            Location: ${escapeHTML(post.location)}
+            Location: ${(post.location)}
         </div>
     `;
 
