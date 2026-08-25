@@ -15,6 +15,7 @@ const PUBLIC_THREADS = [
           postCount: 4,
           location: "The Internet",
           avatar: "https://placehold.co/80x80",
+          date: "12-04-1999, 01:12 PM",
           signature: "Pretty High (for a Butterfly)",
           text: `Does anyone remember those weird ads for that mall in Alberta? I forgot the name but always found the ads so odd lol like they kinda gave me a funny feeling whenever they came on. Does anyone else remember this?`
         },
@@ -25,6 +26,7 @@ const PUBLIC_THREADS = [
           postCount: 16,
           location: "Nice try",
           avatar: "https://placehold.co/80x80",
+          date: "12-04-1999, 01:44 PM",
           signature: "...",
           text: `Blast from the past lol, yeah super weird vibe I don’t know the name either but I remember what you’re talking about. MINI GOOOLF`
         },
@@ -35,6 +37,7 @@ const PUBLIC_THREADS = [
           postCount: 87,
           location: "Montana",
           avatar: "https://placehold.co/80x80",
+          date: "12-04-1999, 02:20 PM",
           signature: "Hangin' loose.",
           text: `I believe you mean Myriad Mall which was being built in Hartsorn Creek Alberta. It did not get finished, for obvious reasons. Kinda sad because from the photos we do have it looks pretty sick lol`
         },
@@ -45,6 +48,7 @@ const PUBLIC_THREADS = [
           postCount: 4,
           location: "The Internet",
           avatar: "https://placehold.co/80x80",
+          date: "12-04-1999, 02:31 PM",
           signature: "Pretty High (for a Butterfly)",
           text: `Yes that’s the one! Amazing!`
         },
@@ -55,6 +59,7 @@ const PUBLIC_THREADS = [
           postCount: 108,
           location: "Spain",
           avatar: "https://placehold.co/80x80",
+          date: "12-04-1999, 03:05 PM",
           signature: "How do you like your eggs?",
           text: `Here’s some more info on it if you are curious. I agree it is too bad they couldn’t finish.[hyperlink to hidden news article]`
         },
@@ -65,6 +70,7 @@ const PUBLIC_THREADS = [
           postCount: 33,
           location: "Brine",
           avatar: "https://placehold.co/80x80",
+          date: "12-04-1999, 03:47 PM",
           signature: "Feelin fine",
           text: `I remember reading something that the main architect was like a total freak and delayed the construction a bunch with unreasonable demands and whatnot, so maybe wouled never have opened anyway…`
         },
@@ -75,6 +81,7 @@ const PUBLIC_THREADS = [
           postCount: 148,
           location: "Alberta",
           avatar: "https://placehold.co/80x80",
+          date: "12-04-1999, 04:19 PM",
           signature: "IT Professional",
           text: `Yo man I remember these too! I always thought the popcorn one was so weird like I don’t need to drive three hours to some hick town for popcorn lol we have plenty of that here in civilization.`
         }
@@ -96,6 +103,7 @@ const PUBLIC_THREADS = [
           postCount: 63,
           location: "Illinois",
           avatar: "https://placehold.co/80x80",
+          date: "11-15-1999, 09:02 AM",
           signature: "We are ☆star-stuff☆",
           text: `Do you think this is all overblown? I get the basic idea off two many chars in the Date and a text overflow error but don’t understand why would that be such a big deal?`
         },
@@ -106,6 +114,7 @@ const PUBLIC_THREADS = [
           postCount: 3,
           location: "Florida",
           avatar: "https://placehold.co/80x80",
+          date: "11-15-1999, 10:14 AM",
           signature: "Roush 5-car",
           text: `We will be abkle to deal with it but consequences would be pretty bnd if we didn’t lol`
         },
@@ -116,6 +125,7 @@ const PUBLIC_THREADS = [
           postCount: 89,
           location: "The Web",
           avatar: "https://placehold.co/80x80",
+          date: "11-15-1999, 11:33 AM",
           signature: "There goes the neighborhood.",
           text: `Basically you need to go into the source code on every device and update so there’s enough space for the date change or at least change the way the date updates`
         },
@@ -126,6 +136,7 @@ const PUBLIC_THREADS = [
           postCount: 9,
           location: "Manitoba",
           avatar: "https://placehold.co/80x80",
+          date: "11-15-1999, 01:47 PM",
           signature: "Nü metal 4 lyfe",
           text: `Couldn’t they send some kind of update like you said but wirelessly somehow, like beam it into all the computers instead of going door to door?`
         },
@@ -136,6 +147,7 @@ const PUBLIC_THREADS = [
           postCount: 89,
           location: "The Web",
           avatar: "https://placehold.co/80x80",
+          date: "11-15-1999, 02:10 PM",
           signature: "There goes the neighborhood.",
           text: `Sure wireless beaming. That might be the dumbest thing I have ever read on this site and that is saying something (¬_¬)`
         },
@@ -144,8 +156,9 @@ const PUBLIC_THREADS = [
           userTitle: "Poster Boy",
           joinDate: "Dec 1997",
           postCount: 513,
-          location: "Night of Pan[link to this diary]",
+          location: '<a href="../html/night-of-pan-diary.html">Night of Pan</a>',
           avatar: "https://placehold.co/80x80",
+          date: "11-16-1999, 12:05 AM",
           signature: "Citizen of Starship Earth",
           text: `The Millennium will be a time of great transformation! Echoes of our past lives will be reaching out at this time to help align human consciousness towards a more harmonious future.`
         },
@@ -154,8 +167,9 @@ const PUBLIC_THREADS = [
           userTitle: "Poster Boy",
           joinDate: "Nov 1997",
           postCount: 744,
-          location: "The Irreplaceable Spark[link to this diary]",
+          location: '<a href="../html/spark.html">The Irreplaceable Spark</a>',
           avatar: "https://placehold.co/80x80",
+          date: "11-16-1999, 12:41 AM",
           signature: "SOVEREIGN",
           text: `Or just maybe they are using the Y2K SCAM to control YOUR life? Couldn’t be that, must be a bunch of hippy shit…`
         },
@@ -164,8 +178,9 @@ const PUBLIC_THREADS = [
           userTitle: "Poster Boy",
           joinDate: "Dec 1997",
           postCount: 513,
-          location: "Night of Pan[link to this diary]",
+          location: '<a href="../html/night-of-pan-diary.html">Night of Pan</a>',
           avatar: "https://placehold.co/80x80",
+          date: "11-16-1999, 01:03 AM",
           signature: "Citizen of Starship Earth",
           text: `You are stuck in the old paradigms. We don’t need to worry about all these petty political arguments when the future is so much bigger than politics. Join with me, for my party and project is the HUMAN project!`
         },
@@ -174,8 +189,9 @@ const PUBLIC_THREADS = [
           userTitle: "Poster Boy",
           joinDate: "Nov 1997",
           postCount: 744,
-          location: "The Irreplaceable Spark[link to this diary]",
+          location: '<a href="../html/spark.html">The Irreplaceable Spark</a>',
           avatar: "https://placehold.co/80x80",
+          date: "11-16-1999, 01:22 AM",
           signature: "SOVEREIGN",
           text: `How about you put down the reefer for ONE SECOND and OPEN your EYES. You think all they want with your computer is to ADD an extra DIGIT in the SOURCE CODE? If your brain isn’t completely cooked from Pynchon and Microdots you need to WAKE UP!`
         },
@@ -186,6 +202,7 @@ const PUBLIC_THREADS = [
           postCount: 277,
           location: "Right here, right now",
           avatar: "https://placehold.co/80x80",
+          date: "11-17-1999, 08:50 AM",
           signature: "Praise loudly, blame quietly.",
           text: `This thread has been locked by the moderator. Please review our forum rules and keep things civil.
 Yes, you. If you want to keep your account don’t make me explain this again.`
@@ -208,6 +225,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 183,
           location: "Possibly in Michigan",
           avatar: "https://placehold.co/80x80",
+          date: "11-01-1999, 07:15 PM",
           signature: "Springtime Soul",
           text: `I tried Vietnamese coffee for the first time yesterday and I love it! Does anyone know a good source near Lansing?`
         },
@@ -218,6 +236,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 14,
           location: "Green Zone",
           avatar: "https://placehold.co/80x80",
+          date: "11-01-1999, 08:02 PM",
           signature: "AOL Instant Messenger: hedgehog_420",
           text: `Not sure but I have seen canned condensed milk at Wrigley’s, that’s the main ingredient.`
         },
@@ -228,6 +247,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 144,
           location: "San Fran",
           avatar: "https://placehold.co/80x80",
+          date: "11-01-1999, 08:40 PM",
           signature: "Think Different",
           text: `That is not the main ingredient lol. The important ingredient is the coffee and specifically robusta beans, might as well be drinking a latte otherwise.`
         },
@@ -238,6 +258,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 14,
           location: "Green Zone",
           avatar: "https://placehold.co/80x80",
+          date: "11-01-1999, 08:52 PM",
           signature: "AOL Instant Messenger: hedgehog_420",
           text: `Hey don’t knock a good latte ;)`
         },
@@ -248,6 +269,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 144,
           location: "San Fran",
           avatar: "https://placehold.co/80x80",
+          date: "11-01-1999, 09:01 PM",
           signature: "Think Different",
           text: `Watch me, bitch.`
         },
@@ -258,6 +280,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 66,
           location: "Manitoba",
           avatar: "https://placehold.co/80x80",
+          date: "11-02-1999, 10:18 AM",
           signature: "Alea iacta est",
           text: `Did you know Vietnamese coffee plantations only started like 10 years ago? It was a because East Germany couldn’t get decent coffee, and they were cutting it with stuff like pea flower (hard on the ol’ coffee maker lol), so they massively invested in Vietnamese plantations with the promise of a bunch of free coffee, but then the USSR fell apart so the contracts were void and Vietnam basically got a free coffee industry!`
         },
@@ -268,6 +291,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 182,
           location: "Vancouver",
           avatar: "https://placehold.co/80x80",
+          date: "11-02-1999, 11:05 AM",
           signature: "We leave the whole club jazzy, Why the CIA wanna watch us?",
           text: `This thread is giving me Nam flashbacks (to my vacation last spring)`
         },
@@ -278,6 +302,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 8,
           location: "USA",
           avatar: "https://placehold.co/80x80",
+          date: "11-02-1999, 12:30 PM",
           signature: "Always Learning",
           text: `It is a beautiful country. We bussed around Hanoi a couple years ago, did the Mua cave tour, and also saw this temple that had preserved monks that had undergone a process of self-mummification, eating next to nothing for years then drinking a tea containing basically wood varnish that would preserve their body and keep bugs away. Really something to imagine, painstakingly turning yourself into something that transcends humanity in a way. I don’t really know what to think about it but the image sticks with me, even if I could never do something like this.`
         },
@@ -288,6 +313,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 144,
           location: "San Fran",
           avatar: "https://placehold.co/80x80",
+          date: "11-02-1999, 01:15 PM",
           signature: "Think Different",
           text: `This is actually misinformation, while there are mummified monks in Vietnam the process of ritual self-mummification you are describing was only practiced in Japan.`
         },
@@ -298,6 +324,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 8,
           location: "USA",
           avatar: "https://placehold.co/80x80",
+          date: "11-02-1999, 01:48 PM",
           signature: "Always Learning",
           text: `Well were you there? They looked self-mummified to us.`
         },
@@ -308,6 +335,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 74,
           location: "A Strange Land",
           avatar: "https://placehold.co/80x80",
+          date: "11-03-1999, 09:40 AM",
           signature: "down too long in the midnight sea",
           text: `Dude that stuff is so gross, I much prefer Arabica beans.`
         }
@@ -329,6 +357,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 96,
           location: "Colorado",
           avatar: "https://placehold.co/80x80",
+          date: "10-12-1999, 06:22 PM",
           signature: ".",
           text: `Today I learned that a dog who lived 11,000 years ago got cancer, and that cancer adapted to become a venereal disease that spread to other dogs so that it’s still around to this day. It’s technically still dog cells though, but like a weird immortal dog that infects other dogs?`
         },
@@ -339,6 +368,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 182,
           location: "Ontario",
           avatar: "https://placehold.co/80x80",
+          date: "10-12-1999, 06:47 PM",
           signature: "Still in bed at ten, And work began at eight",
           text: `Whoa that’s so crazy.`
         },
@@ -349,6 +379,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 182,
           location: "Vancouver",
           avatar: "https://placehold.co/80x80",
+          date: "10-12-1999, 07:19 PM",
           signature: "We leave the whole club jazzy, Why the CIA wanna watch us?",
           text: `If this cancer counts as a dog, then in a way if you think about it it’s the most successful dog that ever lived. If the “goal” of a cell is to propagate its genes, usually they do this by willfully self-terminating at the right time to serve the higher organism, and the cells that are too selfish and refuse become cancer but then they die anyway. Except this dog cell found a way to be selfish yet outlive the host by becoming a totally new type of dog.`
         },
@@ -359,6 +390,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 14,
           location: "Belfast",
           avatar: "https://placehold.co/80x80",
+          date: "10-12-1999, 07:55 PM",
           signature: "Don't Panic",
           text: `Imagine you make a cell and tell it to do its job as part of your kidney, then it’s just like “naw I’m doin’ my own thing.”`
         },
@@ -369,6 +401,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 182,
           location: "Ontario",
           avatar: "https://placehold.co/80x80",
+          date: "10-12-1999, 08:14 PM",
           signature: "Still in bed at ten, And work began at eight",
           text: `It’s actually kinda crazy so many cells don’t do that to be honest, but thankfully those types of paradigm-rejecting cells aren’t usually good at accomplishing much on their own I guess, or cooperating with other cancer cells.`
         },
@@ -379,6 +412,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 14,
           location: "Belfast",
           avatar: "https://placehold.co/80x80",
+          date: "10-12-1999, 08:30 PM",
           signature: "Don't Panic",
           text: `See also: every failed radical political project.`
         },
@@ -389,6 +423,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 61,
           location: "USA",
           avatar: "https://placehold.co/80x80",
+          date: "10-12-1999, 09:02 PM",
           signature: "talk to the hand ☜☜",
           text: `[broken jpeg]`
         },
@@ -399,6 +434,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 96,
           location: "Colorado",
           avatar: "https://placehold.co/80x80",
+          date: "10-12-1999, 09:10 PM",
           signature: ".",
           text: `Dude why?`
         },
@@ -409,6 +445,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 144,
           location: "San Fran",
           avatar: "https://placehold.co/80x80",
+          date: "10-12-1999, 09:31 PM",
           signature: "Think Different",
           text: `XXavier I have warned you twice now about posting graphic images. Your account will be suspended upon the next infraction.`
         },
@@ -419,6 +456,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
           postCount: 95,
           location: "The Feydark",
           avatar: "https://placehold.co/80x80",
+          date: "10-13-1999, 11:48 AM",
           signature: "I have come to chew ass and kick bubblegum... and I'm all out of ass.",
           text: `3 years ago my aunt got a cancer diagnosis. Growing up she was always the person I knew I could talk to about anything, and I guess part of me got just used to this and thought that could continue forever. I started to struggle in school feeling isolated, had a falling out with my friendgroup and sort of hit rock bottom for a while, hiding out in my room all the time just playing online games to drown everything out. Everything just felt pointless to me I guess. And then one day I just kinda looked around at where I was and said fuck it, she wouldn’t want this for me. I started with little things like eating better going for walks, started studying a bit again, and I joined a soccer league and met a lot of really cool people that way. At times things still felt hard, but I felt like I had reasons to keep going now. Two months ago my Aunt saw my graduation ceremony, cancer-free for just over two years now. So I guess I just wanted to say if you are struggling with whatever, health or mental health or other stuff, it’s okay to take time you need and go at your pace, just know that sometimes it really does get better and don’t give up, because there are people cheering for you who care about you and want you to find a path through it (even people like myself out here on the web), even if you maybe can’t see them or they aren’t with you now.`
         }
@@ -529,7 +567,7 @@ const SEARCH_THREADS = [
         location: "SOVEREIGN",
         avatar: "https://placehold.co/80x80",
         date: "05-27-1999, 03:00 PM",
-        signature: "The Irreplaceable Spark [link to diary]",
+        signature: '<a href="../html/spark.html">The Irreplaceable Spark</a>',
         text: `Hmm I guess you SHEEP PEOPLE still haven't figured out that "COMMUNISM" is a CIA PSYOP, yet you gobble up every file drop like TEAT MILK. Disappointing yet expected. If any of you are thirsty for an actual breakdown of what the "government" is doing to us I explain it all on THE IRREPLACEABLE SPARK [website link]`
       },
       {
@@ -632,7 +670,7 @@ const SEARCH_THREADS = [
         avatar: "https://placehold.co/80x80",
         date: "03-20-2000, 02:15 PM",
         signature: "",
-        text: `Probably a long shot but a good friend of mine hasn't responded in a few weeks, last talked to her in January, wondering if anyone on here happens to know her. We played Anachrony Online almost daily, then she just stopped logging on. I've been watching the news, including Alberta news, and nothing. Wondering if maybe someone has a family contact? All I have is her MSN login and the recent chat log is really weird, I don't know who abr051a is but I'm kinda starting to get freaked out. [link to chat log, hyperlink looks more like an actual download page url]`
+        text: `Probably a long shot but a good friend of mine hasn't responded in a few weeks, last talked to her in January, wondering if anyone on here happens to know her. We played Anachrony Online almost daily, then she just stopped logging on. I've been watching the news, including Alberta news, and nothing. Wondering if maybe someone has a family contact? All I have is her MSN login and the recent chat log is really weird, I don't know who abr051a is but I'm kinda starting to get freaked out. <a href="../html/conversation-log.html">Click here to download.</a>`
       },
       {
         author: "gherKen",
