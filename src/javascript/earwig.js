@@ -38,7 +38,7 @@
       if (p.charAt(p.length - 1) !== '/') p += '/';
       return p;
     }
-    return '/src/assets/images/earwig/';
+    return '/OrinCM/images/earwig/';
   }
 
   function rand(min, max) {
@@ -299,9 +299,23 @@
     scheduleFirstAppearance();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  var ENTRY_TRIGGER_PAGE = '/OrinCM/src/html/spark.html';
+
+  function cameFromTriggerPage() {
+    if (!document.referrer) return false; // no referrer = typed URL, bookmark, reload, or new tab
+    try {
+      var refUrl = new URL(document.referrer);
+      return refUrl.pathname === ENTRY_TRIGGER_PAGE;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  if (cameFromTriggerPage()) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
   }
 })();
