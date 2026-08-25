@@ -38,7 +38,7 @@
       if (p.charAt(p.length - 1) !== '/') p += '/';
       return p;
     }
-    return '/OrinCM/images/earwig/';
+    return '/OrinCM/public/images/earwig/';
   }
 
   function rand(min, max) {
