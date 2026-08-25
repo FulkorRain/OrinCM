@@ -429,7 +429,7 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
 const SEARCH_THREADS = [
   {
     type: "redirect",
-    keyword: "triptych",
+    keywords: ["triptych"],
     redirect: "/src/html/404pages/forum-404.html"
   },
 
@@ -437,7 +437,7 @@ const SEARCH_THREADS = [
     id: "apollo-transcripts-114",
     title: "transcripts page 114",
     type: "thread",
-    keyword: "apollo",
+    keywords: ["apollo"],
     author: "apollo-11",
     posts: 1,
     views: 4,
@@ -471,7 +471,7 @@ const SEARCH_THREADS = [
     id: "horrors-of-the-space-race",
     title: "Horrors of the Space Race?",
     type: "thread",
-    keyword: "apollo",
+    keywords: ["apollo"],
     author: "_aco1Yte_",
     posts: 9,
     views: 212,
@@ -583,7 +583,7 @@ const SEARCH_THREADS = [
     id: "vintage-musical-theatre-review",
     title: "Vintage Musical Theatre Review",
     type: "thread",
-    keyword: "matador",
+    keywords: ["matador"],
     author: "Daaé",
     posts: 1,
     views: 17,
@@ -617,7 +617,7 @@ const SEARCH_THREADS = [
     id: "anyone-heard-from-victoria-byatt",
     title: "Anyone heard from Victoria Byatt?",
     type: "thread",
-    keyword: "ambr051a",
+    keywords: ["ambr051a"],
     author: "Elinor__Dashwood",
     posts: 3,
     views: 6,
@@ -663,7 +663,7 @@ const SEARCH_THREADS = [
     id: "the-statue-in-hartsorn-creek",
     title: "The Statue in Hartsorn Creek",
     type: "thread",
-    keyword: "emet",
+    keywords: ["emet", "emmet"],
     author: "millenium_bug",
     posts: 3,
     views: 2,
@@ -708,7 +708,7 @@ const SEARCH_THREADS = [
     id: "important-warning",
     title: "IMPORTANT!!",
     type: "thread",
-    keyword: "ra1nger",
+    keywords: ["ra1nger"],
     author: "ulangershovich",
     posts: 5,
     views: 19,
@@ -771,38 +771,38 @@ const SEARCH_THREADS = [
       }
     ]
   },
-  {
-    id: "weird-flood-dreams",
-    title: "Weird Flood Dreams",
-    type: "thread",
-    keyword: "ra1nger",
-    author: "Butterfly♡Kisser",
-    posts: 2,
-    views: 9,
-    lastPost: "11-06-1999",
-    content: [
-      {
-        author: "Butterfly♡Kisser",
-        userTitle: "Lurker",
-        joinDate: "Nov 1998",
-        postCount: 4,
-        location: "The Internet",
-        avatar: "https://placehold.co/80x80",
-        date: "11-06-1999, 06:00 PM",
-        signature: "Pretty High (for a Butterfly)",
-        text: `What does it mean when you keep having recurring vivid dreams about flooding? And black skies?`
-      },
-      {
-        author: "de0rdra",
-        userTitle: "Lurker",
-        joinDate: "Mar 1999",
-        postCount: 16,
-        location: "Nice try",
-        avatar: "https://placehold.co/80x80",
-        date: "11-06-1999, 06:44 PM",
-        signature: "...",
-        text: `Probably means drink less water before bed bro`
-      }
-    ]
-  }
+  // {
+  //   id: "weird-flood-dreams",
+  //   title: "Weird Flood Dreams",
+  //   type: "thread",
+  //   keywords: ["ra1nger"],
+  //   author: "Butterfly♡Kisser",
+  //   posts: 2,
+  //   views: 9,
+  //   lastPost: "11-06-1999",
+  //   content: [
+  //     {
+  //       author: "Butterfly♡Kisser",
+  //       userTitle: "Lurker",
+  //       joinDate: "Nov 1998",
+  //       postCount: 4,
+  //       location: "The Internet",
+  //       avatar: "https://placehold.co/80x80",
+  //       date: "11-06-1999, 06:00 PM",
+  //       signature: "Pretty High (for a Butterfly)",
+  //       text: `What does it mean when you keep having recurring vivid dreams about flooding? And black skies?`
+  //     },
+  //     {
+  //       author: "de0rdra",
+  //       userTitle: "Lurker",
+  //       joinDate: "Mar 1999",
+  //       postCount: 16,
+  //       location: "Nice try",
+  //       avatar: "https://placehold.co/80x80",
+  //       date: "11-06-1999, 06:44 PM",
+  //       signature: "...",
+  //       text: `Probably means drink less water before bed bro`
+  //     }
+  //   ]
+  // }
 ]

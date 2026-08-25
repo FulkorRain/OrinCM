@@ -1,4 +1,4 @@
-const THREAD_PAGE = "/src/html/thread.html";
+const THREAD_PAGE = "../html/thread.html";
 
 function buildForumIndex() {
   const container = document.getElementById("forumContainer");
