@@ -105,6 +105,12 @@ main {
   align-self: center;
 }
 
+.news-img-pub {
+  width: 50%;
+  height: auto;
+  align-self: center;
+}
+
 #signup-button {
     background-color: #808080;
     color: white;
