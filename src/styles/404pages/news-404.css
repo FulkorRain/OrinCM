@@ -39,10 +39,10 @@ hr {
 
 
 
-.skull-placeholder {
+.skull-img img {
     margin-top: 120px;
-    font-size: 18px;
-    font-weight: bold;
+    width: 15%;
+    height: auto;
 }
 
 
