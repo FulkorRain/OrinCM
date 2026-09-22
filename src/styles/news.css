@@ -36,12 +36,16 @@ body {
     list-style: none;
     padding: 0;
     background-color: #b7b9a8;
-    border: 2px solid #333; 
+box-shadow: 
+  0 0 0 2px #999,
+  0 0 0 3px lightgray,
+  0 0 0 5px  black; 
+    /* border: 2px solid #333; 
     
     outline: 2px solid #999;
     outline-offset: -4px; 
     
-    box-shadow: inset 1px 1px 0px #fff, 2px 2px 0px #000;
+    box-shadow: inset 1px 1px 0px #fff, 2px 2px 0px #000; */
 }
 
 .left-sidebar li,
