@@ -27,8 +27,8 @@ h1 {
     color: black;
 }
 
-.flame-icon {
-    width: 80px;
+.spark-header {
+    width: 35%;
     height: auto;
 }
 
@@ -130,8 +130,14 @@ a:hover {
     text-decoration: underline; 
 }
 
-.eagle-icon {
-    width: 90px;
+.footer-eagle-icon {
+    width: 120px;
     height: auto;
     margin-top: 20px;
+}
+
+.header-eagle-icon {
+    margin-top: 60px;
+    width: 120px;
+    height: auto;
 }
