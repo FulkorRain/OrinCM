@@ -1,5 +1,5 @@
 body {
-    background-color: #b8b8b8; 
+    background-image: url(../assets/images/spark_background.png);
     font-family: 'Times New Roman', Times, serif; 
     text-align: center;
     margin: 0;
@@ -42,7 +42,6 @@ h1 {
 
 
 .rant-box {
-    background-color: white; 
     display: inline-block;
     padding: 5px 10px;
     font-size: 20px;
