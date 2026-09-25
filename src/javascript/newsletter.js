@@ -1,7 +1,6 @@
 const CONFIG = {
   companyName: "Prairie Golem Press",
   tagline: "Prairie Golem Press is a boutique publisher dedicated to bringing you the finest in speculative fiction, with a focus on unique voices and unforgettable stories that push the boundaries of imagination.",
-  companyInitials: "PGP",
   contactEmail: "orinbishop@gmail.com",
 
   privacyPolicyUrl: "#privacy",
@@ -22,11 +21,8 @@ const CONFIG = {
 
   document.title = `${CONFIG.companyName} Newsletter`;
 
-  set("logoInitials", CONFIG.companyInitials);
   set("companyName", CONFIG.companyName);
   set("companyTagline", CONFIG.tagline);
-  set('consentCompanyName', CONFIG.companyName);
-  set("contactEmail", CONFIG.contactEmail);
   set('footerAddress', CONFIG.physicalAddress);
 
   href("privacyLink", CONFIG.privacyPolicyUrl);
@@ -192,3 +188,12 @@ document.getElementById('consentMarketing').addEventListener('change', () => doc
 document.getElementById('consentPrivacy').addEventListener('change', () => document.getElementById('privacyError').classList.remove('visible'));
 
 
+const backBtn = document.getElementById('backBtn');
+if (backBtn) {
+  backBtn.addEventListener('click', (e) => {
+    if (window.history.length > 1) {
+      e.preventDefault();
+      window.history.back();
+    }
+  })
+}

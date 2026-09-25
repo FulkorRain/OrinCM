@@ -67,12 +67,17 @@
 }
 
 .mailing-list-button {
+    display: inline-block;
     margin-top: 50px;
     font-size: 36px;
     height: auto;
     border: 2px solid black;
     padding: 10px 20px;
     place-self: center;
+    text-decoration: none;
+    color: black;
+    background: white;
+    cursor: pointer;
 }
 
 
