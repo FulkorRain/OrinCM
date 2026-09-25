@@ -7,8 +7,8 @@
   --white: #FFFFFF;
   --success: #3F7D4A;
   --error: #B23A2E;
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Lato', system-ui, sans-serif;
+  --font-display: 'Bookman Old Style', Georgia, serif;
+  --font-body: 'Bookman Old Style', Georgia, serif;
 }
 
 * {
@@ -70,16 +70,28 @@ body {
   align-self: flex-start;
   top: 0;
   height: 100vh;
+  container-type: inline-size;
 }
 
-.brand-wordmark-images {
+/* .brand-wordmark-images {
   padding: clamp(40px, 7vw, 72px) clamp(24px, 5vw, 40px) 0;
 }
-
 .brand-wordmark-images img {
   display: block;
   width: 80%;
   margin-inline: auto;
+} */
+
+.brand-tagline {
+  padding: clamp(40px, 7vw, 72px) clamp(20px, 5vw, 40px) 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--white);
+  font-size: clamp(48px, 19cqw, 120px);
+  line-height: 0.98;
+  letter-spacing: -1px;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .brand-illustration {
@@ -439,10 +451,16 @@ body {
   }
 
 
-  .brand-wordmark-images {
+  /* .brand-wordmark-images {
     padding: 0;
     width: 180px;
     flex: none;
+  } */
+
+  .brand-tagline {
+    padding: 0;
+    max-width: 200px;
+    font-size: 40px;
   }
 
   .brand-illustration {

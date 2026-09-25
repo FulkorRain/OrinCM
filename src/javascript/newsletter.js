@@ -59,7 +59,6 @@ function resetForm() {
 
   document.getElementById('consentMarketing').checked = false;
   document.getElementById('consentPrivacy').checked = false;
-  document.getElementById('consentAge').checked = false;
 
   document.getElementById('emailError').classList.remove('visible');
   document.getElementById('consentError').classList.remove('visible');
