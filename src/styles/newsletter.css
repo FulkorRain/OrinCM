@@ -42,10 +42,13 @@ body {
   gap: 8px;
   font-size: .85rem;
   font-weight: 600;
-  color: var(--white);
+  color: var(--ink);
+  background: var(--white);
   text-decoration: none;
-  padding: 8px 14px;
-  transition: opacity .2s ease, transform .2s ease;
+  padding: 10px 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
 }
 
 .back-btn:hover {
@@ -87,11 +90,23 @@ body {
   font-family: var(--font-display);
   font-weight: 600;
   color: var(--white);
-  font-size: clamp(48px, 19cqw, 120px);
+  font-size: clamp(25px, 15cqw, 65px);
   line-height: 0.98;
   letter-spacing: -1px;
   text-align: center;
   overflow-wrap: anywhere;
+}
+
+.tagline-last {
+  position: relative;
+  display: inline-block;
+}
+
+.tagline-dots {
+  position: absolute;
+  left: 100%;
+  white-space: nowrap;
+  margin-left: 0.06em;
 }
 
 .brand-illustration {
@@ -459,8 +474,9 @@ body {
 
   .brand-tagline {
     padding: 0;
+    padding-right: 30px;
     max-width: 200px;
-    font-size: 40px;
+    font-size: 35px;
   }
 
   .brand-illustration {
