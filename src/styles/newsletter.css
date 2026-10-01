@@ -90,11 +90,15 @@ body {
   font-family: var(--font-display);
   font-weight: 600;
   color: var(--white);
-  font-size: clamp(25px, 15cqw, 65px);
+  font-size: clamp(35px, 15cqw, 75px);
   line-height: 0.98;
   letter-spacing: -1px;
   text-align: center;
   overflow-wrap: anywhere;
+}
+
+.tilt-whole {
+  transform: rotate(-6deg);
 }
 
 .tagline-last {
