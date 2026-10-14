@@ -1,141 +1,138 @@
-import {stateManager} from "../managers/state-manager.js";
+import {stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INFECTION_CHANGED, EVENT_INFECTION_CURED, EVENT_INTENSITY_CHANGED} from '../managers/state-manager.js';
+import {getTextTargets, getRestingText, showRestingText, pickRandom} from '../managers/effect-config.js';
+import { TEXT_CORRUPTION as DEFAULTS } from '../managers/effect-config.js';
 
-const GLITCH_CHARS = '𓇋 𓋴𓅂𓅂 𓀀𓀁𓀂𓀃𓀄𓀅𓀆𓀇𓀈𓀉𓀊𓀋𓀌𓀍𓀎𓀏𓀐𓀑𓀒𓀓𓀔𓀕𓀖𓀗𓀘𓀙𓀚𓀛𓀜𓀝𓀞𓀟𓁀𓁁𓁂𓁃𓁄𓁅𓁆𓁇𓁈𓁉𓁊𓁋𓁌𓁍𓁎𓁏𓂀𓂁𓂂𓂃𓂄𓂅𓂆𓂇𓂈𓂉𓂊𓂋𓂌𓂍𓂎𓂏𓃀𓃁𓃂𓃃𓃄𓃅𓃆𓃇𓃈𓃉𓃊𓃋𓃌𓃍𓃎𓃏';
-const CHARS_PER_INTENSITY = 2;
-const TICK_MS = 500;
+const EFFECT_ID = 'text-corruption';
 
-const BURST_MIN_MS = 2000;
-const BURST_MAX_MS = 6000;
-
-const PAUSE_MIN_MS = 5000;
-const PAUSE_MAX_MS = 10000;
+const GLYPHS = [...newSet([...DEFAULTS.glitchChars].filter(char => !/\s/.test(char)))];
 
 let isActive = false;
 let tickTimer = null;
 let cycleTimer = null;
-let targets = null;
-
-let config = {
-    tickMs: TICK_MS,
-    burstMinMs: BURST_MIN_MS,
-    burstMaxMs: BURST_MAX_MS,
-    pauseMinMs: PAUSE_MIN_MS,
-    pauseMaxMs: PAUSE_MAX_MS,
-}
-
-function _getGlitchChar() {
-    const chars = [...GLITCH_CHARS];
-    return chars[Math.floor(Math.random() * chars.length)];
-}
-
-function _tick (targets, corruptCount) {
-    targets.forEach(element => {
-        if (!element.dataset.original) return;
-
-        const original = element.dataset.original;
-        const arr = [...original];
-
-        const corruptablePositions = arr.map((char, i) => char !== ' ' ? i : null).filter(i => i !==null);
-
-        for (let i = corruptablePositions.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [corruptablePositions[i], corruptablePositions[j]] = [corruptablePositions[j], corruptablePositions[i]];
-        }
-
-        corruptablePositions.slice(0, corruptCount).forEach(pos => {
-            arr[pos] = Math.random() > 0.5 ? _getGlitchChar() : original[pos];
-        });
-
-        element.textContent = arr.join('');
-    });
-}
-
-
-function _restore(targets) {
-    targets.forEach(element => {
-        if (element.dataset.originalHTML) {
-            element.innerHTML = element.dataset.originalHTML;
-        }
-    });
-}
+let targets = [];
+let scopeRoot;
+let config = {...DEFAULTS};
 
 function _randomBetween(min, max) {
-    return min + Math.random() * (max - min);
+    return min + Math.random() * (max-min);
+}
+
+function _randomGlyph() {
+    return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+}
+
+function _scramble(text, count) {
+    const chars = [...text];
+    const positions = [];
+    chars.forEach((char, i) => {
+        if (!/\s/.test(char)) positions.push(i);
+    });
+
+    pickRandom(positions, count).forEach(pos => {
+        if (Math.random() < config.glitchChance) chars[pos] = _randomGlyph();
+    });
+    return chars.join('');
+}
+
+function _getPauseMs() {
+    const intensity = stateManager.getIntensity();
+    const progress = Math.max(0, (intensity - MIN_INTENSITY) / (MAX_INTENSITY - MIN_INTENSITY));
+    const scale = 1 - progress * (1- config.pauseScaleAtMax);
+    return _randomBetween(config.pauseMinMs, config.pauseMaxMs) * scale;
+}
+
+function _restoreTargets() {
+    targets.forEach(node => {
+        if (node.isConnected) showRestingText(node);
+    });
+    targets = [];
+}
+
+function _tick() {
+    const count = stateManager.getIntensity() * config.charsPerIntensity;
+    targets.forEach(node => {
+        if (!node.isConnected) return;
+        node.nodeValue = _scramble (getRestingText(node), count);
+    });
+}
+
+function _schedulePause() {
+    cycleTimer = setTimeout(_startBurst, _getPauseMs());
 }
 
 function _startBurst() {
     if (!isActive) return;
+    if (stateManager.getIntensity === 0) {
+        stop ({notify: true});
+        return;
+    }
 
-    const intensity = stateManager.getIntensity();
-    const corruptCount = intensity * CHARS_PER_INTENSITY;
+    const found = getTextTargets({root: scopeRoot, max: config.maxTextNodes});
+    if (found.length === 0) {
+        _schedulePause();
+        return;
+    }
 
-    tickTimer = setInterval(() => _tick(targets, corruptCount), config.tickMs);
-
-    const burstDuration = _randomBetween(config.burstMinMs, config.burstMaxMs);
-    cycleTimer = setTimeout(() => {
-        _stopBurst();
-    }, burstDuration);
+    targets = found;
+    _tick();
+    tickTimer = setInterval(_tick, config.tickMs);
+    cycleTimer = setTimeout(_endBurst, _randomBetween(config.burstMinMs, config.burstMaxMs));
 }
 
-function _stopBurst() {
+function _endBurst() {
     if (!isActive) return;
-
     clearInterval(tickTimer);
     tickTimer = null;
-    _restore(targets);
-
-    const pauseDuration = _randomBetween(config.pauseMinMs, config.pauseMaxMs);
-    cycleTimer = setTimeout(() => {
-        _startBurst();
-    }, pauseDuration);
+    _restoreTargets();
+    _schedulePause();
 }
 
-function _stopAll() {
+function stop({notify = false} = {}) {
+    if (!isActive) return;
+
     clearInterval(tickTimer);
     clearTimeout(cycleTimer);
     tickTimer = null;
     cycleTimer = null;
-    if(targets) _restore(targets);
-     document.dispatchEvent(new CustomEvent('effect-ended', {
-            detail: {id: 'text-corruption'}
-    }));
+
+    _restoreTargets();
+    isActive = false;
+
+    if (notify) {
+        document.dispatchEvent(new CustomEvent('effect-ended', {
+            detail: {id: EFFECT_ID}
+        }));
+    }
 }
 
-function corruptText(
-    sectionElement, 
-    options = {}
-) {
-    isActive = !isActive;
+function start(root, options = {}) {
+    if (isActive) return false;
+    if (stateManager.getIntensity() === 0) return false;
 
-    targets = sectionElement.querySelectorAll('.corruptable-text');
-
-    if (!isActive) {
-        clearInterval(tickTimer);
-        tickTimer = null;
-        _restore(targets);
-        return isActive;
-    }
-
-    config = {
-        tickMs: options.tickMs ?? TICK_MS, 
-        burstMinMs: options.burstMinMs ?? BURST_MIN_MS,
-        burstMaxMs: options.burstMaxMs ?? BURST_MAX_MS,
-        pauseMinMs: options.pauseMinMs ?? PAUSE_MIN_MS,
-        pauseMaxMs: options.pauseMaxMs ?? PAUSE_MAX_MS
-    };
-
-    targets.forEach(element => {
-        if (!element.dataset.original) {
-            element.dataset.original = element.textContent;
-            element.dataset.originalHTML = element.innerHTML;
-        }
-    });
-
+    config = {...DEFAULTS, ...options};
+    scopeRoot = root;
+    isActive = true;
     _startBurst();
+    return true;
+}
 
+function corruptText(root, options = {}) {
+    if (isActive) stop();
+    else start(root, options);
     return isActive;
 }
 
+corruptText.id = EFFECT_ID;
+corruptText.minIntensity = DEFAULTS.minIntensity;
+corruptText.permanent = false;
+corruptText.continuous = true;
+corruptText.start = start;
+corruptText.stop = stop;
 corruptText.isActive = () => isActive;
 
-export {corruptText}
+document.addEventListener(EVENT_INFECTION_CURED, () => stop({notify: true}));
+document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
+    if (event.detail.intensity === 0) stop ({notify: true});
+});
+
+export {corruptText};
