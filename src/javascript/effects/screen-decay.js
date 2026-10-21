@@ -30,7 +30,7 @@ function _createCanvas() {
         position: fixed;
         inset: 0;
         width: 100%;
-        height: 100%
+        height: 100%;
         pointer-events: none;
         z-index: ${SETTINGS.zIndex};
         opacity: 1;
@@ -52,6 +52,10 @@ function _removeCanvas(element) {
 function _setupGrid() {
     width = window.innerWidth;
     height = window.innerHeight;
+    cellSize = width < SETTINGS.mobileBelowPx ? SETTINGS.cellSizeMobile : SETTINGS.cellSizeDesktop;
+
+    canvas.width = width;
+    canvas.height = height;
 
     cols = Math.ceil(width / cellSize);
     rows = Math.ceil(height / cellSize);

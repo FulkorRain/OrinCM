@@ -1,18 +1,12 @@
 const CONFIG = {
   companyName: "Prairie Golem Press",
-  tagline: "Prairie Golem Press is a boutique publisher dedicated to bringing you the finest in speculative fiction, with a focus on unique voices and unforgettable stories that push the boundaries of imagination.",
   contactEmail: "orinbishop@gmail.com",
 
   privacyPolicyUrl: "#privacy",
   termsUrl: "#terms",
   physicalAddress: import.meta.env.VITE_PHYSICAL_ADDRESS,
 
-  emailOctopus: {
-    apiKey: import.meta.env.VITE_EMAILOCTOPUS_API_KEY,
-    listId: import.meta.env.VITE_EMAILOCTOPUS_LIST_ID,
-    tags: [],
-    doubleOptIn: true,
-  },
+  subscribeUrl: "https://us-central1-prairiegolem.cloudfunctions.net/subscribe",
 };
 
 (function applyConfig() {
@@ -21,8 +15,6 @@ const CONFIG = {
 
   document.title = `${CONFIG.companyName} Newsletter`;
 
-  set("companyName", CONFIG.companyName);
-  set("companyTagline", CONFIG.tagline);
   set('footerAddress', CONFIG.physicalAddress);
 
   href("privacyLink", CONFIG.privacyPolicyUrl);
@@ -30,8 +22,9 @@ const CONFIG = {
   href('footerPrivacy', CONFIG.privacyPolicyUrl);
   href('footerTerms', CONFIG.termsUrl);
   href('footerContact', `mailto:${CONFIG.contactEmail}`);
-
-  document.getElementById('footerUnsubscribe').href = `mailto:${CONFIG.contactEmail}?subject=Unsubscribe from ${CONFIG.companyName} Newsletter&body=Please unsubscribe me from the ${CONFIG.companyName} newsletter.`;
+  const unsubSubject = encodeURIComponent(`Unsubscribe from ${CONFIG.companyName} Newsletter`);
+  const unsubBody = encodeURIComponent(`Please unsubscribe me from the ${CONFIG.companyName} newsletter.`);
+  href('footerUnsubscribe', `mailto:${CONFIG.contactEmail}?subject=${unsubSubject}&body=${unsubBody}`);
 })();
 
 
@@ -72,7 +65,7 @@ function validateForm() {
   let valid = true;
 
   const email = document.getElementById('emailInput').value?.trim();
-  const emailRegex = /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(email)) {
     showError('emailInput', 'emailError', true);
     valid = false;
@@ -91,55 +84,23 @@ function validateForm() {
   return valid;
 }
 
-//TODO: Change this after launch
 async function subscribeToEmailOctopus(data) {
-  const { apiKey, listId, tags, doubleOptIn } = CONFIG.emailOctopus;
-  const url = `https://emailoctopus.com/api/1.6/lists/${listId}/contacts`;
-
-  const body = {
-    api_key: apiKey,
-    email_address: data.email,
-    status: doubleOptIn ? 'PENDING' : 'SUBSCRIBED',
-    fields: {
-      FirstName: data.firstName || "",
-      LastName: data.lastName || "",
-    },
-    tags: tags,
-  };
-
-  const response = await fetch(url, {
+  const response = await fetch(CONFIG.subscribeUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(data),
   });
 
-  const result = await response.json();
-  if (!response.ok) {
-    const code = result?.error?.code || '';
-    if (code === 'MEMBER_EXISTS_WITH_EMAIL_ADDRESS') {
-      return {success:true, alreadySubscribed: true };
-    }
-
-    throw new Error(result.error?.message || 'Subscription failed. Please try again');
+  console.log('Subscribe status', response.status);
+  const result = await response.json().catch(() => null);
+  console.log('Subscribe response:', result);
+  if (!response.ok || !result?.success) {
+    throw new Error(result?.error || 'Subscription failed. Please try again');
   }
-  return {success: true};
+  return result;
 }
-
-//TODO: switch over for production
-// async function subscribeToEmailOctopus(data) {
-//   const response = await fetch('/api/subscribe', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(data)
-//   });
-//   const result = await response.json();
-//   if (!result.success) throw new Error(result.error);
-//   return result;
-// }
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -152,8 +113,8 @@ form.addEventListener('submit', async (e) => {
     alertErr.classList.add('visible');
     return;
   }
-  sessionStorage.setItem('lastSubmit', Date.now());
   if (!validateForm()) return;
+  sessionStorage.setItem('lastSubmit', Date.now());
 
   submitBtn.disabled = true;
   submitBtn.classList.add('loading');
@@ -167,7 +128,7 @@ form.addEventListener('submit', async (e) => {
   try {
     const result = await subscribeToEmailOctopus(data);
     if (result.alreadySubscribed) {
-      document.getElementById('successMsg').textContent = "You're already subscribed! Thanks for being part of our community.";
+      document.getElementById('successText').textContent = "You're already subscribed! Thanks for being part of our community.";
     }
     signupCard.classList.add('hidden');
     successCard.classList.add('visible');

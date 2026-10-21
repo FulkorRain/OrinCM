@@ -4,6 +4,10 @@
     font-family: 'Bookman Old Style', serif;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 .content {
     display: flex;
 }
@@ -231,6 +235,63 @@
     justify-content: center;
 }
 
+.cart-drawer__item-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;            
+}
+
+.cart-drawer__item-name {
+    font-weight: bold;
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
+
+.cart-drawer__item-qty {
+    font-size: 14px;
+    opacity: 0.75;
+}
+
+.cart-drawer__item-price {
+    font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap; 
+}
+
+.cart-drawer__item-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: red;
+    opacity: 0.6;
+}
+
+.cart-drawer__item-remove:hover {
+    opacity: 1;
+}
+
+.cart-drawer__empty {
+    flex: 1;
+    padding: 20px;
+    font-size: 18px;
+    opacity: 0.7;
+}
+
+.cart-drawer__items:empty {
+    display: none;
+}
+
+.cart-drawer__subtotal {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-top: 2px solid black;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .sidebar li:hover {
     background-color: #b30000;
     transform: scale(1.05);
@@ -250,10 +311,28 @@
     transition: background-color 0.2s ease;
 }
 
+.sidebar a.active {
+    background-color: #f3d3d0
+}
+
 .header-container img {
     width: 100%;
     height: 350px;
 
+}
+
+.corruptable-text {
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: baseline;
+    overflow: clip;
+}
+
+.cta-btns {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 body {
@@ -270,6 +349,11 @@ body {
     margin: 20px auto;
     padding: 0 20px;
     box-sizing: border-box;
+}
+
+.checkout-title {
+    font-size: 32px;
+    margin-bottom: 25px;
 }
 
 

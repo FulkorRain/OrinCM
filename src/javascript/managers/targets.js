@@ -1,6 +1,29 @@
-import {TARGETS, LIMITS} from './effect-config.js';
+import {TARGETS, LIMITS, MASTER_SWITCH} from './effect-config.js';
+
+const OVERRIDE_KEY = 'golem_effects_override';
+
+function _isOverridenOff() {
+    if (!MASTER_SWITCH.allowUrlOverride) return false;
+
+    const param = new URLSearchParams(location.search).get(MASTER_SWITCH.urlParam);
+    try {
+        const store = MASTER_SWITCH.rememberFor === 'local' ? localStorage : sessionStorage;
+        if (param === 'off') store.setItem(OVERRIDE_KEY, 'off');
+        else if (param === 'on') store.removeItem(OVERRIDE_KEY);
+        return store.getItem(OVERRIDE_KEY) === 'off';
+     } catch {
+        return param === 'off';
+     }
+
+}
+
+const masterOff = !MASTER_SWITCH.enabled || _isOverridenOff();
+if (masterOff && MASTER_SWITCH.enabled) {
+    console.info(`Effects are switched off.`)
+}
 
 function isEffectsEnabled() {
+    if (masterOff) return false;
     return !(document.body && document.body.matches(TARGETS.pageOff));
 }
 
@@ -22,7 +45,7 @@ function _isOnScreen(rect) {
 
 function _textNodeRect(node) {
     const range = document.createRange();
-    RangeError.selectNodeContents(node);
+    range.selectNodeContents(node);
     return range.getBoundingClientRect();
 }
 
@@ -37,19 +60,19 @@ function _getRoots(root) {
     return roots.filter(element => element && !element.closest(TARGETS.exclude));
 }
 
-function _collectTextNodes(root) {
+function _collectTextNodes(root, textInclude = TARGETS.textInclude) {
     const nodes = [];
     const walker = document.createTreeWalker(
         root,
         NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
         {
             acceptNode(node) {
-                if (node.nodeType === Node.ELEMENT_NODE) {
+                if (node instanceof Element) {
                     return node.matches(TARGETS.exclude) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_SKIP;
                 }
                 if (node.nodeValue.trim().length < TARGETS.minTextLength) return NodeFilter.FILTER_REJECT;
                 const parent = node.parentElement;
-                if (!parent || !parent.closest(TARGETS.textInclude)) return NodeFilter.FILTER_REJECT;
+                if (!parent || !parent.closest(textInclude)) return NodeFilter.FILTER_REJECT;
                 return NodeFilter.FILTER_ACCEPT;
             }
         }
@@ -87,12 +110,12 @@ function revertToPristine(node) {
     node.nodeValue = record.pristine;
 }
 
-function getTextTargets({root, max = LIMITS.maxTextNodes, onlyVisible = LIMITS.onlyVisible} = {}) {
+function getTextTargets({root = null, max = LIMITS.maxTextNodes, onlyVisible = LIMITS.onlyVisible, textInclude = TARGETS.textInclude} = {}) {
     if (!isEffectsEnabled()) return [];
     
     let nodes = [];
     for (const searchRoot of _getRoots(root)) {
-        nodes = nodes.concat(_collectTextNodes(searchRoot));
+        nodes = nodes.concat(_collectTextNodes(searchRoot, textInclude));
     }
     nodes = [...new Set(nodes)];
 
@@ -103,14 +126,14 @@ function getTextTargets({root, max = LIMITS.maxTextNodes, onlyVisible = LIMITS.o
     return nodes;
 }
 
-function getImageTargets({root, max = LIMITS.maxImages, onlyVisible = LIMITS.onlyVisible} = {}) {
+function getImageTargets({root = null, max = LIMITS.maxImages, onlyVisible = LIMITS.onlyVisible} = {}) {
     if (!isEffectsEnabled()) return [];
 
     let images = [];
     for (const searchRoot of _getRoots(root)) {
         images = images.concat(Array.from(searchRoot.querySelectorAll(TARGETS.imageInclude)));
     }
-    images = [...newSet(images)].filter(image => !image.closest(TARGETS.exclude));
+    images = [...new Set(images)].filter(image => !image.closest(TARGETS.exclude));
 
     if (onlyVisible) images = images.filter(image => _isOnScreen(image.getBoundingClientRect()));
     if (images.length > max) images = pickRandom(images, max);

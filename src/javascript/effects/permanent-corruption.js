@@ -1,11 +1,11 @@
 import {stateManager, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager.js';
-import {getTextTargets, getPristineText, getRestingText, setRestingText, revertToPristine} from '../managers/targets.js';
+import {getTextTargets, getPristineText, getRestingText, setRestingText, revertToPristine, isEffectsEnabled} from '../managers/targets.js';
 import {createSeededRandom, newSeed} from '../managers/seeded-random.js';
-import { TARGETS } from '../managers/effect-config.js';
+import { PERMANENT_CORRUPTION as SETTINGS } from '../managers/effect-config.js';
 
 const EFFECT_ID = 'permanent-corruption';
 
-const GLYPHS = [...new Set([...settings.glitchChars].filter(char => !/\s/.test(char)))];
+const GLYPHS = [...new Set([...SETTINGS.glitchChars].filter(char => !/\s/.test(char)))];
 
 let isActive = false;
 let seed = 0;
@@ -28,7 +28,7 @@ function _corrupt(text, count) {
     }
 
     const glyphs = positions.map(() => GLYPHS[Math.floor(random() * GLYPHS.length)]);
-    const limit = Math.max(1, Math.floor(positions.length * settings.maxFraction));
+    const limit = Math.max(1, Math.floor(positions.length * SETTINGS.maxFraction));
     const howMany = Math.min(count, limit);
     for (let k = 0; k < howMany; k++) {
         chars[positions[k]] = glyphs[k];
@@ -40,7 +40,7 @@ function _apply() {
     if (!isActive) return;
     const intensity = stateManager.getIntensity();
     if (intensity === 0) return;
-    const count = intensity * settings.charsPerIntensity;
+    const count = intensity * SETTINGS.charsPerIntensity;
 
     const nodes = getTextTargets({root: scopeRoot, max: Infinity, onlyVisible: false});
     nodes.forEach(node => {
@@ -77,6 +77,7 @@ function _shutdown({notify = false, clearSaved = false} = {}) {
 
 function enable(root) {
     if (isActive) return false;
+    if (!isEffectsEnabled()) return false;
     if (stateManager.getIntensity() === 0) return false;
     _begin(root, newSeed());
     stateManager.saveEffectState(EFFECT_ID, {seed});
@@ -88,8 +89,9 @@ function disable() {
 }
 
 function restore(root) {
-    if (isActive) return true;
-    if (stateManager.getIntensity === 0) return false;
+    if (isActive) return false;
+    if (!isEffectsEnabled()) return false;
+    if (stateManager.getIntensity() === 0) return false;
     const saved = stateManager.loadEffectState(EFFECT_ID);
     if (!saved || !Number.isFinite(saved.seed)) return false;
     _begin(root, saved.seed);
@@ -103,7 +105,7 @@ function permanentCorruption(root) {
 }
 
 permanentCorruption.id = EFFECT_ID;
-permanentCorruption.minIntensity = settings.minIntensity;
+permanentCorruption.minIntensity = SETTINGS.minIntensity;
 permanentCorruption.permanent = true;
 permanentCorruption.continuous = true;
 permanentCorruption.start = enable;

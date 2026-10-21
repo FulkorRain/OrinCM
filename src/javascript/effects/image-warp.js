@@ -56,6 +56,7 @@ function stop({notify = false} = {}) {
             filter: NEUTRAL_FILTER,
             ease: 'power2.out',
             overwrite: 'auto',
+            clearProps: 'transform,filter'
         });
     });
     targets = [];
@@ -72,7 +73,6 @@ function start(root) {
     if (isActive) return false;
     if (!isEffectsEnabled()) return false;
     if (stateManager.getIntensity() === 0) return false;
-    if (_motionBlocked()) return false;
 
     const found = getImageTargets({root, max: SETTINGS.maxImages});
     if (found.length === 0) return false;
@@ -92,10 +92,10 @@ function imageWarp(root) {
     return isActive;
 }
 
-imageWarp.id = EFFECT_ID,
+imageWarp.id = EFFECT_ID;
 imageWarp.minIntensity = SETTINGS.minIntensity;
 imageWarp.permanent = false;
-imageWarp.continuous = false;
+imageWarp.continuous = true;
 imageWarp.start = start;
 imageWarp.stop = stop;
 imageWarp.isActive = () => isActive;

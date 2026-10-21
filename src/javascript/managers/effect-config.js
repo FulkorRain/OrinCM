@@ -3,7 +3,7 @@ export const TARGETS = {
         'h1, h2, h3, h4, h5, h6',
         'p, li, blockquote, figcaption',
         'a, span, label, button',
-        'dt, dd, td, tth'
+        'dt, dd, td, th'
     ].join(', '),
 
     imageInclude: 'img',
@@ -11,9 +11,9 @@ export const TARGETS = {
     exclude: [
         '[data-no-effects]',
         '[data-effect-ui]',
-        'script, sttyle, noscript, template',
-        'input, textarea, select, section, iframe',
-        'contenteditable',
+        'script, style, noscript, template',
+        'input, textarea, select, option, iframe',
+        '[contenteditable]',
         '.price, .cart, .checkout',
     ].join(', '),
 
@@ -25,7 +25,7 @@ export const TARGETS = {
 };
 
 export const LIMITS = {
-    maxTextNodes: 40, 
+    maxTextNodes: 40,
     maxImages: 6,
     onlyVisible: true,
     viewportMargin: 100,
@@ -50,14 +50,14 @@ export const TEXT_CORRUPTION = {
     tickMs: 500,
     burstMinMs: 2000,
     burstMaxMs: 6000,
-    pauseMinMs: 5000,
-    pauseMaxMs: 10000,
+    pauseMinMs: 15000,
+    pauseMaxMs: 20000,
     pauseScaleAtMax: 0.4,
     maxTextNodes: 25,
 };
 
 export const PERMANENT_CORRUPTION = {
-    minIntensity: 1,
+    minIntensity: 2,
     glitchChars: '█▓▒░▄▀■□▪▫◆◇○●∆∇∞≈≠≤≥⟁⌂⌘⌛⚡ĦŦŒŊƱɣʍʘʃʈ',
     charsPerIntensity: 2,
     maxFraction: 0.6,
@@ -72,14 +72,14 @@ export const FLICKER = {
 };
 
 export const SCREEN_SHAKE = {
-    minIntensity: 5,
-    midFrom: 4,
+    minIntensity: 3,
+    midFrom: 3,
     highFrom: 8,
     targets: ['#app', 'main']
 };
 
 export const IMAGE_WARP = {
-    minIntensity: 3,
+    minIntensity: 4,
     maxImages: 3,
     intervalMs: 400,
     warpSeconds: 0.3,
@@ -131,9 +131,12 @@ export const PERMANENT_DISSOLVE = {
 }
 
 export const PERMANENT_DECAY = {
+    minIntensity: 5,
+    candidates: 'section, article, aside',
     cellSizeDesktop: 6,
     cellSizeMobile: 14,
     mobileBelowPx: 768,
+    maxSquares: 6000,
     tickMs: 80,
     cellsPerTick: 3,
     maxDecayPercent: 0.7,
@@ -145,3 +148,57 @@ export const PERMANENT_DECAY = {
     fadeInMs: 300,
     zIndex: 10,
 };
+
+export const DIRECTOR = {
+    startDelayMs: 5000,
+    tickMinMs: 3000,
+    tickMaxMs: 6000,
+    chanceAtLowest: 0.15,
+    chanceAtHighest: 0.8,
+    levelsPerExtraEffect: 3,
+    maxConcurrent: 4,
+    retryAfterFailMs: 10000,
+    skipAttribute: 'data-effects-skip'
+};
+
+export const DIRECTOR_EFFECTS = {
+    'chaos-text': { enabled: true, mode: 'once', cooldownMs: [15000, 40000] },
+    'text-corruption': { enabled: true, mode: 'ambient' },
+    'flicker': { enabled: true, mode: 'burst', durationMs: [3000, 8000], cooldownMs: [15000, 40000] },
+    'screen-shake': { enabled: true, mode: 'burst', durationMs: [1500, 4000], cooldownMs: [20000, 50000] },
+    'image-warp': { enabled: true, mode: 'burst', durationMs: [3000, 7000], cooldownMs: [15000, 40000] },
+    'screen-decay': { enabled: true, mode: 'burst', durationMs: [8000, 15000], cooldownMs: [30000, 60000] },
+    'permanent-corruption': { enabled: true, mode: 'permanent' },
+    'permanent-dissolve': { enabled: true, mode: 'permanent' },
+};
+
+export const ESCALATION = {
+    enabled: true,
+    startChance: 0.10,
+    chanceGrowthPerVisit: 0.05,
+    maxChance: 0.5,
+    levelsPerIncrease: 1,
+    maxLevelFromVisits: 7,
+}
+
+export const JUMP_PAGES = {
+    'mall': {level: 7},
+    'jumpscare-404': {level: 10},
+}
+
+export const BAIT = {
+    enabled: true,
+    tag: 'div',
+    id: 'the-mall-sees-you',
+    text: 'Webpage structural integrity in critical condition',
+    glitchChars: TEXT_CORRUPTION.glitchChars,
+    glitchTickMs: 140,
+    glitchFraction: 0.35,
+};
+
+export const MASTER_SWITCH = {
+    enabled: true, // ON & OFF SWITCH
+    allowUrlOverride: true,
+    urlParam: 'effects',
+    rememberFor: 'session'
+}

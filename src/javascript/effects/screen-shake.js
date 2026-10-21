@@ -68,7 +68,8 @@ screenShake.start = start;
 screenShake.stop = stop;
 screenShake.isActive = () => isActive;
 
-document.addEventListener(EVENT_INFECTION_CURED, () => (event) => {
+document.addEventListener(EVENT_INFECTION_CURED, () => stop ({notify: true}));
+document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
     if (event.detail.intensity === 0) stop({ notify: true });
     else if (isActive) _apply();
 });

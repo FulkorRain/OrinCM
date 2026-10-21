@@ -1,5 +1,5 @@
 import {stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager.js';
-import {getTextTargets, getRestingText, showRestingText, pickRandom} from '../managers/targets.js';
+import {getTextTargets, getRestingText, showRestingText, pickRandom, isEffectsEnabled} from '../managers/targets.js';
 import {CHAOS_TEXT as SETTINGS} from '../managers/effect-config.js';
 
 const EFFECT_ID = 'chaos-text';
@@ -61,6 +61,7 @@ function stop ({notify = false} = {}) {
 
 function start (root) {
     if (isActive) return false;
+    if (!isEffectsEnabled()) return false;
     if (stateManager.getIntensity() === 0) return false;
 
     const found = getTextTargets({root, max: SETTINGS.maxTextNodes});

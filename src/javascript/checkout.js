@@ -1,12 +1,13 @@
 import {getCart, removeFromCart, formatPrice, cartTotal} from "./cart.js";
 
-const CHECKOUT_API_URL = "";
+const CHECKOUT_API_URL = "https://us-central1-prairiegolem.cloudfunctions.net/checkout/create-checkout-session";
 
 const checkoutItemsElement = document.getElementById("checkout-items");
 const checkoutEmptyMessageElement = document.getElementById("checkout-empty-message");
 const checkoutTotalRowElement = document.getElementById("checkout-total-row");
 const checkoutTotalAmountElement = document.getElementById("checkout-total-amount");
 const placeOrderButton = document.getElementById("place-order-button");
+const PLACE_ORDER_LABEL = placeOrderButton.textContent;
 
 function renderCheckout() {
     const cart = getCart();
@@ -62,7 +63,7 @@ placeOrderButton.addEventListener("click", async () => {
         });
 
         if (!response.ok) {
-            throw new Error(`Server responded  with ${response.status}`);
+            throw new Error(`Server responded with ${response.status}`);
         }
 
         const data = await response.json();
@@ -76,7 +77,7 @@ placeOrderButton.addEventListener("click", async () => {
         console.error("Checkout failed:", err);
         alert("Something went wrong starting checkout. Please try again.");
         placeOrderButton.disabled = false;
-        placeOrderButton.textContent = "Complete Purchase";
+        placeOrderButton.textContent = PLACE_ORDER_LABEL;
     }
 });
 

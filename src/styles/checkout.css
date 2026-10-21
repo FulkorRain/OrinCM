@@ -4,6 +4,10 @@
     font-family: 'Bookman Old Style', serif;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 body {
     margin: 0;
     padding: 0;

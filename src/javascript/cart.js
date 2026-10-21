@@ -58,7 +58,7 @@ function updateCartBadge() {
     const totalQty = cart.reduce((total, item) => total + item.qty, 0);
 
     cartCountElement.textContent = totalQty;
-    cartCountElement.hiden = totalQty === 0;
+    cartCountElement.hidden = totalQty === 0;
 }
 
 const cartFab = document.getElementById("cart-fab");
@@ -86,7 +86,7 @@ function renderCartDrawer() {
 
     cartDrawerItemsElement.innerHTML = cart.map(item => 
     `
-    <div class="cart-drawer__item>
+    <div class="cart-drawer__item">
         <div class="cart-drawer__item-info">
             <span class="cart-drawer__item-name">${item.name}</span>
             <span class="cart-drawer__item-qty">x ${item.qty}</span>

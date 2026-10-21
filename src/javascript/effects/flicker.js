@@ -1,5 +1,5 @@
 import {stateManager, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager';
-import { isEffectsEnabled } from '../managers/targets';
+import { isEffectsEnabled } from '../managers/targets.js';
 import {FLICKER as SETTINGS} from '../managers/effect-config.js';
 
 const EFFECT_ID = 'flicker';

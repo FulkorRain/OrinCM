@@ -1,10 +1,10 @@
-import {stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INFECTION_CHANGED, EVENT_INFECTION_CURED, EVENT_INTENSITY_CHANGED} from '../managers/state-manager.js';
-import {getTextTargets, getRestingText, showRestingText, pickRandom} from '../managers/effect-config.js';
+import {stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INFECTION_CURED, EVENT_INTENSITY_CHANGED} from '../managers/state-manager.js';
+import {getTextTargets, getRestingText, showRestingText, pickRandom, isEffectsEnabled} from '../managers/targets.js';
 import { TEXT_CORRUPTION as DEFAULTS } from '../managers/effect-config.js';
 
 const EFFECT_ID = 'text-corruption';
 
-const GLYPHS = [...newSet([...DEFAULTS.glitchChars].filter(char => !/\s/.test(char)))];
+const GLYPHS = [...new Set([...DEFAULTS.glitchChars].filter(char => !/\s/.test(char)))];
 
 let isActive = false;
 let tickTimer = null;
@@ -62,12 +62,12 @@ function _schedulePause() {
 
 function _startBurst() {
     if (!isActive) return;
-    if (stateManager.getIntensity === 0) {
+    if (stateManager.getIntensity() === 0) {
         stop ({notify: true});
         return;
     }
 
-    const found = getTextTargets({root: scopeRoot, max: config.maxTextNodes});
+    const found = getTextTargets({root: scopeRoot, max: config.maxTextNodes, textInclude: config.textInclude});
     if (found.length === 0) {
         _schedulePause();
         return;
@@ -107,6 +107,7 @@ function stop({notify = false} = {}) {
 
 function start(root, options = {}) {
     if (isActive) return false;
+    if (!isEffectsEnabled()) return false;
     if (stateManager.getIntensity() === 0) return false;
 
     config = {...DEFAULTS, ...options};
