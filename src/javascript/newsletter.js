@@ -128,7 +128,7 @@ form.addEventListener('submit', async (e) => {
   try {
     const result = await subscribeToEmailOctopus(data);
     if (result.alreadySubscribed) {
-      document.getElementById('successText').textContent = "You're already subscribed! Thanks for being part of our community.";
+      document.getElementById('successText').textContent = "This email is already on our list. If you haven't confirmed yet, check your inbox (and spam folder) for our confirmation email.";
     }
     signupCard.classList.add('hidden');
     successCard.classList.add('visible');

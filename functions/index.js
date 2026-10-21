@@ -46,6 +46,9 @@ exports.subscribe = onRequest(
             console.log('EmailOctopus Replied:', eoResponse.status, eoBody);
 
             if (eoResponse.ok) return res.status(200).json({success: true});
+            if (eoResponse.status === 409) {
+                return res.status(200).json({success:true, alreadySubscribed: true});
+            }
             return res.status(eoResponse.status).json({success: false, error: 'Subscription failed'});
         } catch (err) {
             console.error('Subscribe failed:', err);
