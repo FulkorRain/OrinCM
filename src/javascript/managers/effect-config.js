@@ -196,6 +196,15 @@ export const BAIT = {
     glitchFraction: 0.35,
 };
 
+export const MESSAGE_SWAP = {
+    minIntensity: 2,
+    messages: ['Something has noticed you'],
+    count: 1,
+    minTextLength: 30,
+    showMinMs: 4000,
+    showMaxMs: 9000,
+}
+
 export const MASTER_SWITCH = {
     enabled: true, // ON & OFF SWITCH
     allowUrlOverride: true,

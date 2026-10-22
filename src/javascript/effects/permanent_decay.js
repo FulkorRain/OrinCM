@@ -1,6 +1,6 @@
-import {stateManager, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager.js';
-import { isEffectsEnabled } from '../managers/targets.js';
-import { PERMANENT_DECAY as SETTINGS } from '../managers/effect-config.js';
+import { stateManager, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED } from '../managers/state-manager.js';
+import { isEffectsEnabled, pickRandom } from '../managers/targets.js';
+import { PERMANENT_DECAY as SETTINGS, TARGETS } from '../managers/effect-config.js';
 
 
 const EFFECT_ID = 'permanent-decay';
@@ -11,7 +11,7 @@ let overlayElement = null;
 let hostElement = null;
 let changedPosition = false;
 let previousPosition = '';
-let grid = {cols: 0, rows: 0};
+let grid = { cols: 0, rows: 0 };
 let deadIndicies = [];
 let deadSet = new Set();
 let cellsRef = [];
@@ -29,7 +29,7 @@ function _isUsable(element) {
 }
 
 function _pickSection() {
-    const usable = _allCandidates().map((element, index) => ({element, index})).filter(item => _isUsable(item.element));
+    const usable = _allCandidates().map((element, index) => ({ element, index })).filter(item => _isUsable(item.element));
     if (usable.length === 0) return null;
     return pickRandom(usable, 1)[0];
 }
@@ -40,12 +40,12 @@ function _buildGrid(sectionElement) {
     if (!width || !height) return false;
 
     const baseSize = window.innerWidth < SETTINGS.mobileBelowPx ? SETTINGS.cellSizeMobile : SETTINGS.cellSizeDesktop;
-    const cellSize = Math.max(baseSize, Math.ceil(Math.sqrt((width * height) / SETTINGS.maxSquares )));
+    const cellSize = Math.max(baseSize, Math.ceil(Math.sqrt((width * height) / SETTINGS.maxSquares)));
 
     const cols = Math.ceil(sectionElement.offsetWidth / cellSize);
     const rows = Math.ceil(sectionElement.offsetHeight / cellSize);
     const total = cols * rows;
-    if (total === 0) return null;
+    if (total === 0) return false;
 
     const overlay = document.createElement('div');
     overlay.setAttribute('data-effect-ui', '');
@@ -74,7 +74,7 @@ function _buildGrid(sectionElement) {
                 background: ${SETTINGS.deadColor};
             `;
             fragment.appendChild(cell);
-            cells.push({element: cell, dead: false});
+            cells.push({ element: cell });
         }
     }
 
@@ -90,7 +90,7 @@ function _buildGrid(sectionElement) {
     sectionElement.appendChild(overlay);
 
     overlayElement = overlay;
-    grid = {cols, rows};
+    grid = { cols, rows };
     cellsRef = cells;
     totalCells = total;
 
@@ -104,7 +104,7 @@ function _markDead(index) {
 
 function _killCellsInstantly(indicies) {
     indicies.forEach(index => {
-        if(!cells[index]) return;
+        if (!cellsRef[index]) return;
         cellsRef[index].element.style.transition = 'none';
         cellsRef[index].element.style.background = SETTINGS.deadColor;
         cellsRef[index].element.style.opacity = '1';
@@ -147,7 +147,7 @@ function _beginGrowth() {
     if (intensity === 0 || totalCells === 0) return;
 
     const decayPercent = (intensity / MAX_INTENSITY) * SETTINGS.maxDecayPercent;
-    const targetDead = Math.floor(totalCells *decayPercent);
+    const targetDead = Math.floor(totalCells * decayPercent);
     if (deadIndicies.length >= targetDead) return;
 
     const remaining = [];
@@ -159,7 +159,7 @@ function _beginGrowth() {
 
     let pointer = 0;
     const tickMs = Math.max(10, SETTINGS.tickMs / intensity);
-    const cellsThisTick = Math.ceil(SETTINGS.cellsPerTick * (intensity /3 ));
+    const cellsThisTick = Math.ceil(SETTINGS.cellsPerTick * (intensity / 3));
 
     intervalId = setInterval(() => {
         for (let i = 0; i < cellsThisTick; i++) {
@@ -186,7 +186,7 @@ function _beginGrowth() {
     }, tickMs);
 }
 
-function _stop({notify = false, clearSaved = false} = {}) {
+function _stop({ notify = false, clearSaved = false } = {}) {
     if (!isActive) return;
     clearInterval(intervalId);
     intervalId = null;
@@ -201,12 +201,16 @@ function _stop({notify = false, clearSaved = false} = {}) {
     hostElement = null;
     changedPosition = false;
     deadIndicies = [];
+    deadSet = new Set();
+    cellsRef = [];
+    totalCells = 0;
+    sectionIndex = -1;
     isActive = false;
 
     if (clearSaved) stateManager.clearEffectState(EFFECT_ID);
     if (notify) {
         document.dispatchEvent(new CustomEvent('effect-ended', {
-            detail: {id: EFFECT_ID}
+            detail: { id: EFFECT_ID }
         }));
     }
 }
@@ -222,7 +226,8 @@ function _start(sectionElement) {
         index = _allCandidates().indexOf(host);
     } else {
         if (stateManager.hasEffectState(EFFECT_ID)) return false;
-        const pick =  _pickSection();
+        const pick = _pickSection();
+        if (!pick) return false;
         host = pick.element;
         index = pick.index;
     }
@@ -247,8 +252,8 @@ function restorePermanentDecay(sectionElement) {
     const saved = stateManager.loadEffectState(EFFECT_ID);
     if (!saved || !Array.isArray(saved.deadIndicies)) return false;
 
-    const host = sectionElement;
-    const index = Number.isInteger(saved.index) ? saved.index: -1;
+    let host = sectionElement;
+    const index = Number.isInteger(saved.index) ? saved.index : -1;
     if (!host) {
         if (index < 0) return false;
         host = _allCandidates()[index];
@@ -260,18 +265,18 @@ function restorePermanentDecay(sectionElement) {
     sectionIndex = index;
     deadIndicies = _fitToGrid(saved);
     deadSet = new Set(deadIndicies);
-    _killCellsInstantly(built.cells, deadIndicies);
+    _killCellsInstantly(deadIndicies);
     window.addEventListener('pagehide', _saveProgress);
     _beginGrowth();
     return true;
 }
 
 function disable() {
-    _stop({clearSaved: true});
+    _stop({ clearSaved: true });
 }
 
 function permanentDecay(sectionElement) {
-    if (isActive) _stop({clearSaved: true});
+    if (isActive) _stop({ clearSaved: true });
     else _start(sectionElement);
     return isActive;
 }
@@ -285,9 +290,10 @@ permanentDecay.stop = disable;
 permanentDecay.restore = restorePermanentDecay;
 permanentDecay.isActive = () => isActive;
 
-document.addEventListener(EVENT_INFECTION_CURED, () => _stop({notify: true}));
+document.addEventListener(EVENT_INFECTION_CURED, () => _stop({ notify: true }));
 document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
-    if (event.detail.intensity === 0) _stop({notify: true});
+    if (event.detail.intensity === 0) _stop({ notify: true });
+    else if (isActive) _beginGrowth();
 });
 
-export {permanentDecay};
+export { permanentDecay };
