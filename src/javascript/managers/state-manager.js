@@ -1,3 +1,5 @@
+import {LOGGING} from './effect-config.js';
+
 const MIN_INTENSITY = 1;
 const MAX_INTENSITY = 10;
 const CURED_INTENSITY = 0;
@@ -35,6 +37,10 @@ function _storageRemove(key) {
 }
 
 function _emit(name, detail= {}) {
+    if (name === EVENT_INTENSITY_CHANGED && LOGGING.logLevelChanges) {
+        const note = detail.suppressed ? ' (suppressed by Inspect, a reload brings it back)' : detail.intensity === CURED_INTENSITY ? ' (cured) ' : '';
+        console.log(`[effects] level ${detail.previous} -> ${detail.intensity}${note}`);
+    }
     document.dispatchEvent(new CustomEvent(name, {detail}));
 }
 

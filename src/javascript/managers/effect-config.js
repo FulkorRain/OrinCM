@@ -53,7 +53,7 @@ export const TEXT_CORRUPTION = {
     pauseMinMs: 15000,
     pauseMaxMs: 20000,
     pauseScaleAtMax: 0.4,
-    maxTextNodes: 25,
+    maxTextNodes: 2,
 };
 
 export const PERMANENT_CORRUPTION = {
@@ -64,7 +64,7 @@ export const PERMANENT_CORRUPTION = {
 };
 
 export const FLICKER = {
-    minIntensity: 2,
+    minIntensity: 1,
     midFrom: 4,
     highFrom: 8,
     scanlinesFrom: 4,
@@ -72,16 +72,16 @@ export const FLICKER = {
 };
 
 export const SCREEN_SHAKE = {
-    minIntensity: 3,
+    minIntensity: 1,
     midFrom: 3,
     highFrom: 8,
     targets: ['#app', 'main']
 };
 
 export const IMAGE_WARP = {
-    minIntensity: 4,
-    maxImages: 3,
-    intervalMs: 400,
+    minIntensity: 1,
+    maxImages: 1,
+    intervalMs: 100,
     warpSeconds: 0.3,
     resetSeconds: 0.4,
     scaleXPerLevel: 0.06,
@@ -178,12 +178,12 @@ export const ESCALATION = {
     chanceGrowthPerVisit: 0.05,
     maxChance: 0.5,
     levelsPerIncrease: 1,
-    maxLevelFromVisits: 7,
+    maxLevelFromVisits: 2,
 }
 
 export const JUMP_PAGES = {
-    'mall': {level: 7},
-    'jumpscare-404': {level: 10},
+    'mall': {level: 1},
+    'jumpscare-404': {level: 8},
 }
 
 export const BAIT = {
@@ -206,8 +206,12 @@ export const MESSAGE_SWAP = {
 }
 
 export const MASTER_SWITCH = {
-    enabled: true, // ON & OFF SWITCH
+    enabled: false, // ON & OFF SWITCH
     allowUrlOverride: true,
     urlParam: 'effects',
     rememberFor: 'session'
+}
+
+export const LOGGING = {
+    logLevelChanges: true,
 }

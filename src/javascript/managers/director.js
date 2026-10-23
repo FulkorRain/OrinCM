@@ -4,7 +4,7 @@ import {DIRECTOR, DIRECTOR_EFFECTS} from './effect-config.js';
 
 import { chaosText } from '../effects/chaos-text.js';
 import { corruptText } from '../effects/text-corruption.js';
-import { permanentCorruption } from '../effects/permanent-corruption.js';
+// import { permanentCorruption } from '../effects/permanent-corruption.js';
 import { flicker } from '../effects/flicker.js';
 import { screenShake } from '../effects/screen-shake.js';
 import { imageWarp } from '../effects/image-warp.js';
@@ -12,7 +12,7 @@ import { screenDecay } from '../effects/screen-decay.js';
 import { permanentDissolve } from '../effects/permanent-dissolve.js';
 
 const registry = [];
-[chaosText, corruptText, permanentCorruption, flicker, screenShake, imageWarp, screenDecay, permanentDissolve].forEach(effect => {
+[chaosText, corruptText, flicker, screenShake, imageWarp, screenDecay, permanentDissolve].forEach(effect => {
     const settings = DIRECTOR_EFFECTS[effect.id];
     if (!settings) {
         console.warn(`No entry for ${effect.id} in DIRECTOR_EFFECTS`);
