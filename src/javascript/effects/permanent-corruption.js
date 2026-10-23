@@ -40,7 +40,7 @@ function _apply() {
     if (!isActive) return;
     const intensity = stateManager.getIntensity();
     if (intensity === 0) return;
-    const count = intensity * SETTINGS.charsPerIntensity;
+    const count = Math.max(1, Math.round(intensity * SETTINGS.charsPerIntensity));
 
     const nodes = getTextTargets({root: scopeRoot, max: Infinity, onlyVisible: false});
     nodes.forEach(node => {
@@ -106,8 +106,6 @@ function permanentCorruption(root) {
 
 permanentCorruption.id = EFFECT_ID;
 permanentCorruption.minIntensity = SETTINGS.minIntensity;
-permanentCorruption.permanent = true;
-permanentCorruption.continuous = true;
 permanentCorruption.start = enable;
 permanentCorruption.stop = disable;
 permanentCorruption.restore = restore;

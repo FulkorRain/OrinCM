@@ -36,6 +36,7 @@ function stop({notify = false} = {}) {
 function start(root) {
     if (isActive) return false;
     if (!isEffectsEnabled()) return false;
+    if (stateManager.getIntensity() === 0) return false;
     if (SETTINGS.messages.length === 0) return false;
     
     const eligible = getTextTargets({root, max: Infinity}).filter(_isEligible);
@@ -49,7 +50,7 @@ function start(root) {
         node.nodeValue = leading + pickRandom(SETTINGS.messages, 1)[0] + trailing;
     });
 
-    let isActive = true;
+    isActive = true;
     endTimer = setTimeout(() => stop({notify: true}), _randomBetween(SETTINGS.showMinMs, SETTINGS.showMaxMs));
     return true;
 }
@@ -62,8 +63,6 @@ function messageSwap(root) {
 
 messageSwap.id = EFFECT_ID;
 messageSwap.minIntensity = SETTINGS.minIntensity;
-messageSwap.permanent = false;
-messageSwap.continuous = false;
 messageSwap.start = start;
 messageSwap.stop = stop;
 messageSwap.isActive = () => isActive;

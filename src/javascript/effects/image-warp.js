@@ -94,8 +94,6 @@ function imageWarp(root) {
 
 imageWarp.id = EFFECT_ID;
 imageWarp.minIntensity = SETTINGS.minIntensity;
-imageWarp.permanent = false;
-imageWarp.continuous = true;
 imageWarp.start = start;
 imageWarp.stop = stop;
 imageWarp.isActive = () => isActive;

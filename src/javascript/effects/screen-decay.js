@@ -176,8 +176,6 @@ function screenDecay() {
 
 screenDecay.id = EFFECT_ID;
 screenDecay.minIntensity = SETTINGS.minIntensity;
-screenDecay.permanent = false;
-screenDecay.continuous = true;
 screenDecay.start = start;
 screenDecay.stop = stop;
 screenDecay.isActive = () => isActive;

@@ -61,6 +61,7 @@ function _rollForEscalation(visits) {
     if (!ESCALATION.enabled) return;
     if (!isEffectsEnabled()) return;
     if (stateManager.isCured()) return;
+    if (stateManager.isUninfected()) return;
 
     if (Math.random() >= _getChance(visits)) return;
 

@@ -1,18 +1,20 @@
-import {stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from './state-manager';
+import {stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from './state-manager.js';
 import {isEffectsEnabled, pickRandom} from './targets.js';
 import {DIRECTOR, DIRECTOR_EFFECTS} from './effect-config.js';
 
 import { chaosText } from '../effects/chaos-text.js';
 import { corruptText } from '../effects/text-corruption.js';
-// import { permanentCorruption } from '../effects/permanent-corruption.js';
+import { permanentCorruption } from '../effects/permanent-corruption.js';
 import { flicker } from '../effects/flicker.js';
 import { screenShake } from '../effects/screen-shake.js';
 import { imageWarp } from '../effects/image-warp.js';
 import { screenDecay } from '../effects/screen-decay.js';
 import { permanentDissolve } from '../effects/permanent-dissolve.js';
+import {messageSwap} from '../effects/message-swap.js';
+import {permanentDecay} from '../effects/permanent_decay.js';
 
 const registry = [];
-[chaosText, corruptText, flicker, screenShake, imageWarp, screenDecay, permanentDissolve].forEach(effect => {
+[chaosText, corruptText, permanentCorruption, flicker, screenShake, imageWarp, screenDecay, permanentDissolve, messageSwap, permanentDecay].forEach(effect => {
     const settings = DIRECTOR_EFFECTS[effect.id];
     if (!settings) {
         console.warn(`No entry for ${effect.id} in DIRECTOR_EFFECTS`);
@@ -23,6 +25,7 @@ const registry = [];
 
 let running = false;
 let tickTimer = null;
+let quietUntil = 0;
 const cooldownUntil = {};
 const burstTimers = {};
 
@@ -40,8 +43,36 @@ function _progress() {
 }
 
 function _maxConcurrent() {
-    const extra = Math.floor((stateManager.getIntensity() - MIN_INTENSITY) / DIRECTOR.levelsPerExtraEffect);
-    return Math.min(DIRECTOR.maxConcurrent, 1 + extra);
+    let intensity = stateManager.getIntensity();
+    let max = 0;
+    DIRECTOR.concurrencyTiers.forEach(tier => {
+        if (intensity >= tier.fromLevel) max = tier.max;
+    });
+    return max;
+}
+
+function _countActive() {
+    return registry.filter(entry => {
+        if (!entry.effect.isActive()) return false;
+        return DIRECTOR.countPermanentInCap || entry.settings.mode !== 'permanent';
+    }).length;
+}
+
+function _hasRoom() {
+    return _countActive() < _maxConcurrent();
+}
+
+
+function _gapMs() {
+    return DIRECTOR.gapAtLowestMs + _progress() * (DIRECTOR.gapAtHighestMs - DIRECTOR.gapAtLowestMs);
+}
+
+function _isQuiet() {
+    return performance.now() < quietUntil;
+}
+
+function _noteEffectStarted() {
+    quietUntil = performance.now() + _gapMs();
 }
 
 function _getSkipped() {
@@ -50,7 +81,7 @@ function _getSkipped() {
 }
 
 function _isAllowed (entry, skipped) {
-    return entry.settings.enabled !== false && !skipped.has(entry.effect.id);
+    return entry.settings.enabled !== false && !skipped.has(entry.effect.id) && !skipped.has('all');
 }
 
 function _isEligible(entry, skipped) {
@@ -69,13 +100,20 @@ function _clearBurstTimers() {
 }
 
 function _syncPermanent(skipped) {
+    let startedNew = false;
     registry.forEach(entry => {
         const {effect, settings} = entry;
         if (settings.mode !== 'permanent') return;
         if (effect.isActive() || !_isAllowed(entry, skipped)) return;
         if (effect.restore()) return;
-        if (stateManager.getIntensity() >= effect.minIntensity) effect.start();
-    })
+
+        if (startedNew || _isQuiet() || !_hasRoom()) return;
+        if (stateManager.getIntensity() < effect.minIntensity) return;
+        if (effect.start()) {
+            startedNew = true;
+            _noteEffectStarted();
+        }
+    });
 }
 
 function _syncAmbient(skipped) {
@@ -84,8 +122,11 @@ function _syncAmbient(skipped) {
         const {effect} = entry;
         const eligible = _isEligible(entry, skipped);
 
-        if (eligible && !effect.isActive()) effect.start();
-        else if (!eligible && effect.isActive()) effect.stop();
+        if (!eligible && effect.isActive()) {
+            effect.stop();
+        } else if (eligible && !effect.isActive() && !_isQuiet() && _hasRoom()) {
+            if (effect.start()) _noteEffectStarted();
+        }
     });
 }
 
@@ -107,18 +148,19 @@ function _fire(entry) {
         return;
     }
 
+    _noteEffectStarted();
+
     if (settings.mode === 'burst') {
         burstTimers[effect.id] = setTimeout(() => _endBurst(effect.id), _pickFromRange(settings.durationMs));
     }
 }
 
 function _rollTemporary(skipped) {
+    if (_isQuiet() || !_hasRoom()) return;
+
     const now = performance.now();
     const temporary = registry.filter(entry => entry.settings.mode === 'burst' || entry.settings.mode === 'once');
 
-    const runningNow = temporary.filter(entry => entry.effect.isActive()).length;
-    if (runningNow >= _maxConcurrent()) return;
-    
     const chance = DIRECTOR.chanceAtLowest + _progress() * (DIRECTOR.chanceAtHighest - DIRECTOR.chanceAtLowest);
     if (Math.random() > chance) return;
 
@@ -159,12 +201,13 @@ function startDirector() {
     if (running) return;
     running = true;
 
+    quietUntil = performance.now() + _randomBetween(DIRECTOR.startDelayMinMs, DIRECTOR.startDelayMaxMs);
     if (isEffectsEnabled() && stateManager.getIntensity() > 0) {
         const skipped = _getSkipped();
         _syncPermanent(skipped);
         _syncAmbient(skipped);
     }
-    _scheduleTick(DIRECTOR.startDelayMs);
+    _scheduleTick(_randomBetween(DIRECTOR.tickMinMs, DIRECTOR.tickMaxMs));
 }
 
 function stopDirector() {

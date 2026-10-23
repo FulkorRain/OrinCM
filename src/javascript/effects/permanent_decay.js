@@ -7,10 +7,14 @@ const EFFECT_ID = 'permanent-decay';
 
 let isActive = false;
 let intervalId = null;
+let resizeTimer = null;
+let resizeObserver = null;
 let overlayElement = null;
 let hostElement = null;
 let changedPosition = false;
 let previousPosition = '';
+let builtWidth = 0;
+let builtHeight = 0;
 let grid = { cols: 0, rows: 0 };
 let deadIndicies = [];
 let deadSet = new Set();
@@ -80,12 +84,14 @@ function _buildGrid(sectionElement) {
 
     overlay.appendChild(fragment);
 
-    hostElement = sectionElement;
-    changedPosition = false;
-    if (getComputedStyle(sectionElement).position === 'static') {
-        previousPosition = sectionElement.style.position;
-        sectionElement.style.position = 'relative';
-        changedPosition = true;
+    if (hostElement !== sectionElement) {
+        hostElement = sectionElement;
+        changedPosition = false;
+        if (getComputedStyle(sectionElement).position === 'static') {
+            previousPosition = sectionElement.style.position;
+            sectionElement.style.position = 'relative';
+            changedPosition = true;
+        }
     }
     sectionElement.appendChild(overlay);
 
@@ -93,6 +99,8 @@ function _buildGrid(sectionElement) {
     grid = { cols, rows };
     cellsRef = cells;
     totalCells = total;
+    builtWidth = width;
+    builtHeight = height;
 
     return true;
 }
@@ -186,11 +194,65 @@ function _beginGrowth() {
     }, tickMs);
 }
 
+function _rebuildGrid() {
+    clearInterval(intervalId);
+    intervalId = null;
+
+    const oldGrid = {cols: grid.cols, rows: grid.rows, deadIndicies: deadIndicies.slice()};
+    const oldOverlay = overlayElement;
+
+    if (!_buildGrid(hostElement)) {
+        _beginGrowth();
+        return;
+    }
+
+    if (oldOverlay) oldOverlay.remove();
+
+    deadIndicies = _fitToGrid(oldGrid);
+    deadSet = new Set(deadIndicies);
+    _killCellsInstantly(deadIndicies);
+    _beginGrowth();
+}
+
+function _onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        if (!isActive || !hostElement) return;
+
+        const width = hostElement.offsetWidth;
+        const height = hostElement.offsetHeight;
+        if (!width || !height) return;
+        if (width === builtWidth && height === builtHeight) return;
+
+        try {
+            _rebuildGrid();
+        } catch (error) {
+            console.error('Permanent decay resize failed', error);
+        }
+    }, SETTINGS.resizeDebounceMs);
+}
+
+function _attachListeners() {
+    window.addEventListener('pagehide', _saveProgress);
+    resizeObserver = new ResizeObserver(_onResize);
+    resizeObserver.observe(hostElement);
+}
+
+function _detachListeners() {
+    window.removeEventListener('pagehide', _saveProgress);
+    clearTimeout(resizeTimer);
+    resizeTimer = null;
+    if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+    }
+}
+
 function _stop({ notify = false, clearSaved = false } = {}) {
     if (!isActive) return;
     clearInterval(intervalId);
     intervalId = null;
-    window.removeEventListener('pagehide', _saveProgress);
+    _detachListeners();
 
     if (overlayElement) {
         overlayElement.remove();
@@ -238,7 +300,7 @@ function _start(sectionElement) {
     sectionIndex = index;
     deadIndicies = [];
     deadSet = new Set();
-    window.addEventListener('pagehide', _saveProgress);
+    _attachListeners();
 
     _beginGrowth();
     return true;
@@ -266,7 +328,7 @@ function restorePermanentDecay(sectionElement) {
     deadIndicies = _fitToGrid(saved);
     deadSet = new Set(deadIndicies);
     _killCellsInstantly(deadIndicies);
-    window.addEventListener('pagehide', _saveProgress);
+    _attachListeners();
     _beginGrowth();
     return true;
 }
@@ -283,8 +345,6 @@ function permanentDecay(sectionElement) {
 
 permanentDecay.id = EFFECT_ID;
 permanentDecay.minIntensity = SETTINGS.minIntensity;
-permanentDecay.permanent = true;
-permanentDecay.continuous = true;
 permanentDecay.start = _start;
 permanentDecay.stop = disable;
 permanentDecay.restore = restorePermanentDecay;

@@ -3,8 +3,10 @@ import {LOGGING} from './effect-config.js';
 const MIN_INTENSITY = 1;
 const MAX_INTENSITY = 10;
 const CURED_INTENSITY = 0;
+const START_INTENSITY = 0;
 const STORAGE_KEY = 'golem_spooky_intensity';
 const EFFECTS_KEY = 'golem_effects_state';
+const CURED_KEY = 'golem_infection_cured';
 const DEFAULT_PAGE_ID = 'home';
 
 const EVENT_INTENSITY_CHANGED = 'intensity-changed';
@@ -50,8 +52,12 @@ function _clamp(value) {
 
 function _readStoredIntensity() {
     const parsed = parseInt(_storageGet(STORAGE_KEY), 10);
-    if (Number.isNaN(parsed)) return MIN_INTENSITY;
+    if (Number.isNaN(parsed)) return START_INTENSITY;
     return Math.min(MAX_INTENSITY, Math.max(CURED_INTENSITY, parsed));
+}
+
+function _readCured() {
+    return _storageGet(CURED_KEY) === '1';
 }
 
 function _getPageId() {
@@ -76,11 +82,12 @@ function _saveAllEffects(all) {
 
 const stateManager = (() => {
     let intensity = _readStoredIntensity();
+    let cured = _readCured();
     let suppressed = false;
 
     function _setIntensity(next) {
         if (suppressed) return;
-        if (intensity === CURED_INTENSITY) return;
+        if (cured) return;
         if (!Number.isFinite(next)) return;
         next = _clamp(Math.round(next));
         if (next === intensity) return;
@@ -92,7 +99,9 @@ const stateManager = (() => {
     }
 
     window.addEventListener('storage', (event) => {
-        if (event.key === STORAGE_KEY) {
+        if (event.key === CURED_KEY) {
+            cured = _readCured();
+        } else if (event.key === STORAGE_KEY) {
             const previous = intensity;
             intensity = _readStoredIntensity();
             if (!suppressed && intensity !== previous) {
@@ -117,7 +126,10 @@ const stateManager = (() => {
             return suppressed;
         },
         isCured() {
-            return intensity === CURED_INTENSITY;
+            return cured;
+        },
+        isUninfected() {
+            return !cured && intensity === START_INTENSITY;
         },
         getPageId() {
             return _getPageId();
@@ -129,6 +141,7 @@ const stateManager = (() => {
             _setIntensity(intensity + 1); 
         },
         decreaseIntensity() {
+            if (intensity === START_INTENSITY) return;
             _setIntensity(intensity - 1);
         },
         suppress() {
@@ -139,8 +152,10 @@ const stateManager = (() => {
         },
         cure() {
             if (suppressed) return;
-            if (intensity === CURED_INTENSITY) return;
+            if (cured || intensity === CURED_INTENSITY) return;
             const previous = intensity;
+            cured = true;
+            _storageSet(CURED_KEY, '1');
             _storageRemove(EFFECTS_KEY);
             _emit(EVENT_INFECTION_CURED);
 
@@ -149,7 +164,7 @@ const stateManager = (() => {
             _emit(EVENT_INTENSITY_CHANGED, {intensity, previous, suppressed: false});
         },
         saveEffectState(effectId, data) {
-            if (suppressed || intensity === CURED_INTENSITY) return;
+            if (suppressed || intensity === START_INTENSITY) return;
             const all = _loadAllEffects();
             const pageId = _getPageId();
             if (!all[pageId]) all[pageId] = {};

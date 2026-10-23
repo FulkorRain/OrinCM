@@ -1,4 +1,4 @@
-import {stateManager, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager';
+import {stateManager, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager.js';
 import { isEffectsEnabled } from '../managers/targets.js';
 import {FLICKER as SETTINGS} from '../managers/effect-config.js';
 
@@ -60,8 +60,6 @@ function flicker() {
 
 flicker.id = EFFECT_ID;
 flicker.minIntensity = SETTINGS.minIntensity;
-flicker.permanent = false;
-flicker.continuous = true;
 flicker.start = start;
 flicker.stop = stop;
 flicker.isActive = () => isActive;

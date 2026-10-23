@@ -49,7 +49,7 @@ function _restoreTargets() {
 }
 
 function _tick() {
-    const count = stateManager.getIntensity() * config.charsPerIntensity;
+    const count = Math.max(1, Math.round(stateManager.getIntensity() * config.charsPerIntensity));
     targets.forEach(node => {
         if (!node.isConnected) return;
         node.nodeValue = _scramble (getRestingText(node), count);
@@ -57,7 +57,14 @@ function _tick() {
 }
 
 function _schedulePause() {
-    cycleTimer = setTimeout(_startBurst, _getPauseMs());
+    cycleTimer = setTimeout(() => {
+        try {
+            _startBurst();
+        } catch (error) {
+            console.error('Text Corruption burst failed', error);
+            if (isActive) _schedulePause();
+        }
+    }, _getPauseMs());
 }
 
 function _startBurst() {
@@ -125,8 +132,6 @@ function corruptText(root, options = {}) {
 
 corruptText.id = EFFECT_ID;
 corruptText.minIntensity = DEFAULTS.minIntensity;
-corruptText.permanent = false;
-corruptText.continuous = true;
 corruptText.start = start;
 corruptText.stop = stop;
 corruptText.isActive = () => isActive;

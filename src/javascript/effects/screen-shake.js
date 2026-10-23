@@ -62,8 +62,6 @@ function screenShake() {
 
 screenShake.id = EFFECT_ID;
 screenShake.minIntensity = SETTINGS.minIntensity;
-screenShake.permanent = false;
-screenShake.continuous = true;
 screenShake.start = start;
 screenShake.stop = stop;
 screenShake.isActive = () => isActive;

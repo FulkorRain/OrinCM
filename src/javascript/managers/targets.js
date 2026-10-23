@@ -19,7 +19,7 @@ function _isOverridenOff() {
 
 const masterOff = !MASTER_SWITCH.enabled || _isOverridenOff();
 if (masterOff && MASTER_SWITCH.enabled) {
-    console.info(`Effects are switched off.`)
+    console.info('Effects are switched off');
 }
 
 function isEffectsEnabled() {

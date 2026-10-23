@@ -1,7 +1,7 @@
-import {stateManager, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED, MAX_INTENSITY} from '../managers/state-manager.js';
+import { stateManager, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED, MAX_INTENSITY } from '../managers/state-manager.js';
 import { PERMANENT_DISSOLVE as SETTINGS } from '../managers/effect-config.js';
-import {isEffectsEnabled} from '../managers/targets.js';
-import {createSeededRandom, newSeed} from '../managers/seeded-random.js';
+import { isEffectsEnabled } from '../managers/targets.js';
+import { createSeededRandom, newSeed } from '../managers/seeded-random.js';
 
 const EFFECT_ID = 'permanent-dissolve';
 
@@ -38,7 +38,7 @@ let maskFrameId = null;
 let resizeTimer = null;
 let lastFrame = 0;
 
-const rect = {x: 0, y: 0, w: 0, h: 0};
+const rect = { x: 0, y: 0, w: 0, h: 0 };
 
 function _createCanvas() {
     const element = document.createElement('canvas');
@@ -101,11 +101,11 @@ function _drawCover(targetCtx, source, w, h) {
     const sourceH = source.naturalHeight || source.height;
     const scale = Math.max(w / sourceW, h / sourceH) * SETTINGS.imageZoom;
     const drawW = sourceW * scale;
-    const drawH = sourceH  * scale;
+    const drawH = sourceH * scale;
 
     targetCtx.fillStyle = SETTINGS.imageBackground;
-    targetCtx.fillRect(0,0, w, h);
-    targetCtx.drawImage(source, (w - drawW) / 2, (h - drawH) /2, drawW, drawH);
+    targetCtx.fillRect(0, 0, w, h);
+    targetCtx.drawImage(source, (w - drawW) / 2, (h - drawH) / 2, drawW, drawH);
 }
 
 function _buildImageLayer() {
@@ -134,7 +134,7 @@ function _buildOrder(random) {
     const claimed = new Uint8Array(total);
     const result = new Uint32Array(total);
 
-    const fallback = Array.from({length: total}, (_, i) => i);
+    const fallback = Array.from({ length: total }, (_, i) => i);
     for (let i = total - 1; i > 0; i--) {
         const j = Math.floor(random() * (i + 1));
         [fallback[i], fallback[j]] = [fallback[j], fallback[i]];
@@ -145,19 +145,19 @@ function _buildOrder(random) {
         let pick = -1;
         if (count > 0 && random() < SETTINGS.spreadChance) {
             for (let attempt = 0; attempt < 8; attempt++) {
-                const from = result [Math.floor(random() * count)];
+                const from = result[Math.floor(random() * count)];
                 const col = (from % cols) + Math.floor(random() * 3) - 1;
-                const row = Math.floor(from/ cols) + Math.floor(random() * 3) - 1;
+                const row = Math.floor(from / cols) + Math.floor(random() * 3) - 1;
                 if (col < 0 || col >= cols || row < 0 || row >= rows) continue;
                 const neighbour = row * cols + col;
-                if (!claimed[neighbour]) {pick = neighbour; break}
+                if (!claimed[neighbour]) { pick = neighbour; break }
             }
         }
         if (pick === -1) {
             while (claimed[fallback[fallbackPos]]) fallbackPos++;
             pick = fallback[fallbackPos++];
         }
-    
+
         claimed[pick] = 1;
         result[count] = pick;
     }
@@ -205,16 +205,16 @@ function _computeProtectedMask() {
     const elements = document.querySelectorAll(SETTINGS.protect);
     for (const element of elements) {
         const box = element.getBoundingClientRect();
-        if(box.width === 0 || box.height === 0) continue;
+        if (box.width === 0 || box.height === 0) continue;
 
         const left = Math.max(0, Math.floor((box.left - pad) / size));
         const right = Math.min(cols - 1, Math.floor((box.right + pad) / size));
-        const top = Math.max(0, Math.floor((box.top - pad) /size));
+        const top = Math.max(0, Math.floor((box.top - pad) / size));
         const bottom = Math.min(rows - 1, Math.floor((box.bottom + pad) / size));
 
         for (let row = top; row <= bottom; row++) {
             for (let col = left; col <= right; col++) {
-                mask[row*cols + col] = 1;
+                mask[row * cols + col] = 1;
             }
         }
     }
@@ -226,7 +226,7 @@ function _refreshProtectedMask() {
     if (!ready) return;
 
     const newMask = _computeProtectedMask();
-    for(let i = 0; i < newMask.length; i++) {
+    for (let i = 0; i < newMask.length; i++) {
         if (newMask[i] === protectedMask[i]) continue;
         protectedMask[i] = newMask[i];
         if (state[i] === ALIVE) continue;
@@ -262,7 +262,7 @@ function _paintDeadCell(index) {
         ctx.fillStyle = `rgb(${blockColors[p]}, ${blockColors[p + 1]}, ${blockColors[p + 2]})`;
         ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
     } else {
-        ctx.drawImage (
+        ctx.drawImage(
             imageLayer,
             rect.x * dpr, rect.y * dpr, rect.w * dpr, rect.h * dpr, rect.x, rect.y, rect.w, rect.h
         );
@@ -299,7 +299,7 @@ function _getTargetCells() {
 function _claim(pos, now) {
     const index = order[pos];
     state[index] = DYING;
-    dying.push({pos, index, bornAt: now, life: SETTINGS.dyingMs * (1- SETTINGS.dyingJitter + Math.random())});
+    dying.push({ pos, index, bornAt: now, life: SETTINGS.dyingMs * (1 - SETTINGS.dyingJitter + Math.random() * SETTINGS.dyingJitter * 2) });
 }
 
 function _grow(elapsedMs, now) {
@@ -313,8 +313,8 @@ function _grow(elapsedMs, now) {
     const count = Math.min(Math.floor(carry), remaining);
     carry -= count;
 
-    for (let i = 0; i < count; i ++) {
-        _claim (pointer, now);
+    for (let i = 0; i < count; i++) {
+        _claim(pointer, now);
         pointer++;
     }
 }
@@ -406,7 +406,7 @@ function _begin(withSeed, instant) {
         ready = true;
 
         window.addEventListener('resize', _onResize);
-        window.addEventListener('scroll', _scheduleMaskRefresh, {passive: true});
+        window.addEventListener('scroll', _scheduleMaskRefresh, { passive: true });
         window.addEventListener('load', _scheduleMaskRefresh);
         if (document.fonts) document.fonts.ready.then(_scheduleMaskRefresh);
         _scheduleMaskRefresh();
@@ -415,7 +415,7 @@ function _begin(withSeed, instant) {
     });
 }
 
-function _shutdown({notify = false, clearSaved = false} = {}) {
+function _shutdown({ notify = false, clearSaved = false } = {}) {
     if (!isActive) return;
 
     runId++;
@@ -440,24 +440,24 @@ function _shutdown({notify = false, clearSaved = false} = {}) {
     if (clearSaved) stateManager.clearEffectState(EFFECT_ID);
     if (notify) {
         document.dispatchEvent(new CustomEvent('effect-ended', {
-            detail: {id: EFFECT_ID}
+            detail: { id: EFFECT_ID }
         }));
     }
 }
 
-function start () {
+function start() {
     if (isActive) return false;
-    if (!isEffectsEnabled())  return false;
+    if (!isEffectsEnabled()) return false;
     if (stateManager.getIntensity() === 0) return false;
 
     const freshSeed = newSeed();
-    stateManager.saveEffectState(EFFECT_ID, {seed: freshSeed});
+    stateManager.saveEffectState(EFFECT_ID, { seed: freshSeed });
     _begin(freshSeed, false);
     return true;
 }
 
 function stop() {
-    _shutdown({clearSaved: true});
+    _shutdown({ clearSaved: true });
 }
 
 function restore() {
@@ -478,17 +478,15 @@ function permanentDissolve() {
 
 permanentDissolve.id = EFFECT_ID;
 permanentDissolve.minIntensity = SETTINGS.minIntensity;
-permanentDissolve.permanent = true;
-permanentDissolve.continuous = true;
 permanentDissolve.start = start;
 permanentDissolve.stop = stop;
 permanentDissolve.restore = restore;
 permanentDissolve.isActive = () => isActive;
 
-document.addEventListener(EVENT_INFECTION_CURED, () => _shutdown({notify: true}));
+document.addEventListener(EVENT_INFECTION_CURED, () => _shutdown({ notify: true }));
 document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
     if (event.detail.intensity === 0) {
-        _shutdown({notify: true});
+        _shutdown({ notify: true });
         return;
     }
 
@@ -499,4 +497,4 @@ document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
     _wake();
 });
 
-export {permanentDissolve};
+export { permanentDissolve };

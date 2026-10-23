@@ -29,7 +29,7 @@ function _scramble(text, count) {
 }
 
 function _tick() {
-    const count = stateManager.getIntensity() * SETTINGS.charsPerIntensity;
+    const count = Math.max(1, Math.round(stateManager.getIntensity() * SETTINGS.charsPerIntensity));
     targets.forEach(node => {
         if (!node.isConnected) return;
         node.nodeValue = _scramble(getRestingText(node), count);
@@ -83,7 +83,6 @@ function chaosText(root) {
 
 chaosText.id = EFFECT_ID;
 chaosText.minIntensity = SETTINGS.minIntensity;
-chaosText.permanent = false;
 chaosText.start = start;
 chaosText.stop = stop;
 chaosText.isActive = () => isActive;
