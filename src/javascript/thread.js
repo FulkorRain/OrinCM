@@ -1,3 +1,5 @@
+import {stateManager} from '../javascript/managers/state-manager';
+
 function buildThreadPage(thread) {
     const container = document.getElementById("threadContainer");
     if (!container) return;
@@ -159,4 +161,11 @@ if (!threadId) {
   } else {
     buildThreadPage(thread);
   }
+}
+
+const mallLink = document.querySelector();
+if (mallLink) {
+  mallLink.addEventListener('click', () => {
+    if (stateManager.getStoredIntensity() < 1) stateManager.setIntensity(1);
+  });
 }

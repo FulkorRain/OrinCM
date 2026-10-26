@@ -213,7 +213,7 @@ export const BAIT = {
     safetyCheckMs: 1000,
     glitchChars: TEXT_CORRUPTION.glitchChars,
     glitchTickMs: 140,
-    glitchFraction: 0.35,
+    glitchFraction: 0.65,
 };
 
 export const MESSAGE_SWAP = {
