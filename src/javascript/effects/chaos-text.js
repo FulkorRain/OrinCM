@@ -1,88 +1,95 @@
-import { stateManager } from "../managers/state-manager.js";
-
-const GLITCH_CHARS        = '█▓▒░▄▀■□▪▫◆◇○●∆∇∞≈≠≤≥⟁⌂⌘⌛⚡ĦŦŒŊƱɣʍʘʃʈ';
-const CHARS_PER_INTENSITY = 2;
-const TICK_MS = 180;
-const BASE_DURATION_MS = 2000;
-const MAX_DURATION_MS = 10000;
+import {stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager.js';
+import {getTextTargets, getRestingText, showRestingText, pickRandom, isEffectsEnabled} from '../managers/targets.js';
+import {CHAOS_TEXT as SETTINGS} from '../managers/effect-config.js';
 
 const EFFECT_ID = 'chaos-text';
+const GLYPHS = [...SETTINGS.glitchChars];
 
 let isActive = false;
 let tickTimer = null;
-let restoreTimer = null;
+let endTimer = null;
+let targets = [];
 
-function _getGlitchChar() {
-    return GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)];
+function _randomGlyph() {
+    return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
 }
 
-function _restore(targets) {
-    targets.forEach(element => {
-        if (element.dataset.original) element.textContent = element.dataset.original;
+function _scramble(text, count) {
+    const chars = [...text];
+    const positions = [];
+    chars.forEach((char, i) => {
+        if (!/\s/.test(char)) positions.push(i);
+    });
+
+    pickRandom(positions, count).forEach(pos => {
+        if (Math.random() < SETTINGS.glitchChance) chars[pos] = _randomGlyph();
+    });
+
+    return chars.join('');
+}
+
+function _tick() {
+    const count = Math.max(1, Math.round(stateManager.getIntensity() * SETTINGS.charsPerIntensity));
+    targets.forEach(node => {
+        if (!node.isConnected) return;
+        node.nodeValue = _scramble(getRestingText(node), count);
     });
 }
 
-
-function _tick(targets, corruptCount) {
-    targets.forEach(element => {
-        if (!element.dataset.original) return;
-
-        const original = element.dataset.original;
-        const arr = original.split('');
-
-        const corruptablePositions = arr.map((char, i) => char !== ' ' ? i : null).filter(i => i !==null);
-
-        for (let i = corruptablePositions.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [corruptablePositions[i], corruptablePositions[j]] = [corruptablePositions[j], corruptablePositions[i]];
-        }
-
-        corruptablePositions.slice(0, corruptCount).forEach(pos => {
-            arr[pos] = Math.random() > 0.5 ? _getGlitchChar() : original[pos];
-        });
-
-        element.textContent = arr.join('');
-    });
+function _getDuration() {
+    const intensity = stateManager.getIntensity();
+    const progress = Math.max(0, (intensity - MIN_INTENSITY) / (MAX_INTENSITY - MIN_INTENSITY));
+    return SETTINGS.baseDurationMs + progress * (SETTINGS.maxDurationMs - SETTINGS.baseDurationMs);
 }
 
-function _stop(targets) {
+function stop ({notify = false} = {}) {
+    if (!isActive) return;
+
     clearInterval(tickTimer);
-    clearTimeout(restoreTimer);
-    tickTimer = null;
-    restoreTimer = null;
-    _restore(targets);
+    clearTimeout(endTimer);
+
+    targets.forEach(node => {
+        if (node.isConnected) showRestingText(node);
+    });
+    targets = [];
+    isActive = false;
+
+    if (notify) {
+        document.dispatchEvent(new CustomEvent('effect-ended', {detail: {id: EFFECT_ID}}));
+    }
 }
 
-function chaosText(sectionElement) {
-    isActive = !isActive;
-    const targets = sectionElement.querySelectorAll('.corruptable-text');
+function start (root) {
+    if (isActive) return false;
+    if (!isEffectsEnabled()) return false;
+    if (stateManager.getIntensity() === 0) return false;
 
-    if (!isActive) {
-        _stop(targets);
-        return isActive;
-    }
+    const found = getTextTargets({root, max: SETTINGS.maxTextNodes});
+    if (found.length === 0) return false;
 
-    targets.forEach(element => {
-        if (!element.dataset.original) element.dataset.original = element.textContent;
+    targets = found;
+    isActive = true;
+    _tick();
+    tickTimer = setInterval(_tick, SETTINGS.tickMs);
+    endTimer = setTimeout(() => stop({notify: true}), _getDuration());
+    return true;
+}
 
-        const intensity = stateManager.getIntensity();
-        const corruptCount = intensity * CHARS_PER_INTENSITY;
-
-        tickTimer = setInterval(() => _tick(targets, corruptCount), TICK_MS);
-
-        const duration = BASE_DURATION_MS + ((intensity - 1) / 9) * (MAX_DURATION_MS - BASE_DURATION_MS);
-
-        restoreTimer = setTimeout(() => {
-            _stop(targets);
-            isActive = false;
-            document.dispatchEvent(new CustomEvent('effect-ended'), {
-                detail: {id: EFFECT_ID}
-            });
-        }, duration);
-
-    });
+function chaosText(root) {
+    if (isActive) stop();
+    else start(root);
     return isActive;
 }
 
+chaosText.id = EFFECT_ID;
+chaosText.minIntensity = SETTINGS.minIntensity;
+chaosText.start = start;
+chaosText.stop = stop;
 chaosText.isActive = () => isActive;
+
+document.addEventListener(EVENT_INFECTION_CURED, () => stop({ notify: true }));
+document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
+    if (event.detail.intensity === 0) stop({notify:true});
+});
+
 export {chaosText};

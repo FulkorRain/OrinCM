@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Prairie Golem Press</title>
+    <link rel="stylesheet" href="/src/styles/checkout.css">
+    <link href="https://fonts.cdnfonts.com/css/bookman-old-style" rel="stylesheet">
+    <script type="module" src="/src/javascript/cart.js" defer></script>
+    <script type="module" src="/src/javascript/checkout.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="header-container">
+                <img id="banner-image" src="/src/assets/images/index_banner.png" alt="Website Banner">
+            </div>
+        </header>
+
+        <div class="main-content-grid">
+            <div class="main-content" id="checkout-summary">
+                <h1 class="checkout-title">Your Order</h1>
+
+                <div class="checkout-items" id="checkout-items"></div>
+
+                <p class="checkout-empty-message" id="checkout-empty-message" hidden> Your cart is empty.</p>
+
+                <div class="checkout-total" id="checkout-total-row" hidden>
+                    <span>Total</span>
+                    <span id="checkout-total-amount">$0.00</span>
+                </div>
+            </div>
+
+            <div class="cta-btns">
+                <a href="/index.html" class="checkout-btn">Back to Store</a>
+                <button type="button" class="checkout-btn" id="place-order-button" hidden>Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

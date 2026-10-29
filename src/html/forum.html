@@ -10,9 +10,10 @@
 
   <script src="../javascript/forum-data.js"></script>
   <script defer src="../javascript/forum.js"></script>
-  <script defer src="../javascript/forum-thread.js"></script>
+  <script defer src="../javascript/forum-search.js"></script>
+  <script type="module" src="../javascript/managers/effect-boot.js"></script>
 </head>
-<body>
+<body data-page-id="forum">
 
   <div class="page-wrapper">
 
@@ -24,7 +25,7 @@
         <td class="nav-area">
           <a href="forum.html"><img src="../../public/images/home_forum_icon.png"></a>
           <a href="../html/404pages/forum-404.html"><img src="../../public/images/faq_forum_icon.png"></a>
-          <a href="../html/404pages/forum-404.html"><img src="../../public/images/log_in_forum_icon.png"></a>
+          <a href="newsletter.html"><img src="../../public/images/log_in_forum_icon.png"></a>
         </td>
       </tr>
     </table>
@@ -35,7 +36,7 @@
           type="text"
           id="searchInput"
           class="retro-search"
-          placeholder="Search forums..."
+          placeholder="Search for more forums!"
         />
         <button type="submit" class="retro-button">GO</button>
       </form>

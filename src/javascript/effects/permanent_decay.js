@@ -1,29 +1,63 @@
-import {stateManager} from '../managers/state-manager.js';
+import { stateManager, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED } from '../managers/state-manager.js';
+import { isEffectsEnabled, pickRandom } from '../managers/targets.js';
+import { PERMANENT_DECAY as SETTINGS, TARGETS } from '../managers/effect-config.js';
 
-const CELL_SIZE = window.innerWidth < 768 ? 14 : 6;
-const TICK_MS = 80;
-const CELLS_PER_TICK = 3;
-const MAX_DECAY_PERCENT = 0.7;
+
 const EFFECT_ID = 'permanent-decay';
 
 let isActive = false;
 let intervalId = null;
+let resizeTimer = null;
+let resizeObserver = null;
 let overlayElement = null;
-let sectionRef = null;
+let hostElement = null;
+let changedPosition = false;
+let previousPosition = '';
+let builtWidth = 0;
+let builtHeight = 0;
+let grid = { cols: 0, rows: 0 };
+let deadIndicies = [];
+let deadSet = new Set();
+let cellsRef = [];
+let totalCells = 0;
+let sectionIndex = -1;
+
+function _allCandidates() {
+    return Array.from(document.querySelectorAll(SETTINGS.candidates));
+}
+
+function _isUsable(element) {
+    if (element.closest(TARGETS.exclude)) return false;
+    if (element.querySelector(TARGETS.exclude)) return false;
+    return element.offsetWidth >= SETTINGS.minWidthPx && element.offsetHeight >= SETTINGS.minHeightPx;
+}
+
+function _pickSection() {
+    const usable = _allCandidates().map((element, index) => ({ element, index })).filter(item => _isUsable(item.element));
+    if (usable.length === 0) return null;
+    return pickRandom(usable, 1)[0];
+}
 
 function _buildGrid(sectionElement) {
-    const sectionWidth = sectionElement.offsetWidth;
-    const sectionHeight = sectionElement.offsetHeight;
-    const cols = Math.floor(sectionWidth / CELL_SIZE);
-    const rows = Math.floor(sectionHeight / CELL_SIZE);
+    const width = sectionElement.offsetWidth;
+    const height = sectionElement.offsetHeight;
+    if (!width || !height) return false;
+
+    const baseSize = window.innerWidth < SETTINGS.mobileBelowPx ? SETTINGS.cellSizeMobile : SETTINGS.cellSizeDesktop;
+    const cellSize = Math.max(baseSize, Math.ceil(Math.sqrt((width * height) / SETTINGS.maxSquares)));
+
+    const cols = Math.ceil(sectionElement.offsetWidth / cellSize);
+    const rows = Math.ceil(sectionElement.offsetHeight / cellSize);
     const total = cols * rows;
+    if (total === 0) return false;
 
     const overlay = document.createElement('div');
+    overlay.setAttribute('data-effect-ui', '');
     overlay.style.cssText = `
         position: absolute;
         inset: 0;
         pointer-events: none;
-        z-index: 10;
+        z-index: ${SETTINGS.zIndex};
         overflow: hidden;
         border-radius: inherit;
     `;
@@ -36,115 +70,290 @@ function _buildGrid(sectionElement) {
             const cell = document.createElement('div');
             cell.style.cssText = `
                 position: absolute;
-                left: ${col * CELL_SIZE}px;
-                top: ${row * CELL_SIZE}px;
-                width: ${CELL_SIZE}px;
-                height: ${CELL_SIZE}px;
+                left: ${col * cellSize}px;
+                top: ${row * cellSize}px;
+                width: ${cellSize}px;
+                height: ${cellSize}px;
                 opacity: 0;
-                background: #000;
+                background: ${SETTINGS.deadColor};
             `;
             fragment.appendChild(cell);
-            cells.push({element: cell, dead: false});
+            cells.push({ element: cell });
         }
     }
 
     overlay.appendChild(fragment);
-    sectionElement.style.position = 'relative';
+
+    if (hostElement !== sectionElement) {
+        hostElement = sectionElement;
+        changedPosition = false;
+        if (getComputedStyle(sectionElement).position === 'static') {
+            previousPosition = sectionElement.style.position;
+            sectionElement.style.position = 'relative';
+            changedPosition = true;
+        }
+    }
     sectionElement.appendChild(overlay);
 
-    return {overlay, cells, total};
-}
-
-function _killCellsInstantly(cells, deadIndicies) {
-    deadIndicies.forEach(index => {
-        if(!cells[index]) return;
-        cells[index].element.style.transition = 'none';
-        cells[index].element.style.background = '#000';
-        cells[index].element.style.opacity = '1';
-        cells[index].dead = true;
-    });
-}
-
-function restorePermanentDecay(sectionElement) {
-    const saved = stateManager.loadEffectState(EFFECT_ID);
-    if (!saved) return false;
-
-    sectionRef = sectionElement;
-
-    const {overlay, cells} = _buildGrid(sectionElement);
     overlayElement = overlay;
+    grid = { cols, rows };
+    cellsRef = cells;
+    totalCells = total;
+    builtWidth = width;
+    builtHeight = height;
 
-    _killCellsInstantly(cells, saved.deadIndicies);
-
-    isActive = true;
     return true;
 }
 
-function permanentDecay(sectionElement) {
-    isActive = !isActive;
-    sectionRef = sectionElement;
-    
-    if (!isActive) {
-        clearInterval(intervalId);
-        intervalId = null;
-        if (overlayElement) {
-            overlayElement.remove();
-            overlayElement = null;
-        }
-        stateManager.clearEffectState(EFFECT_ID);
-        return isActive;
-    }
+function _markDead(index) {
+    deadIndicies.push(index);
+    deadSet.add(index);
+}
 
-    const {overlay, cells, total} = _buildGrid(sectionElement);
-    overlayElement = overlay;
+function _killCellsInstantly(indicies) {
+    indicies.forEach(index => {
+        if (!cellsRef[index]) return;
+        cellsRef[index].element.style.transition = 'none';
+        cellsRef[index].element.style.background = SETTINGS.deadColor;
+        cellsRef[index].element.style.opacity = '1';
+    });
+}
+
+function _fitToGrid(saved) {
+    const savedCols = saved.cols;
+    const savedRows = saved.rows;
+    if (savedCols === grid.cols && savedRows === grid.rows) return saved.deadIndicies.slice();
+    if (!(savedCols > 0 && savedRows > 0)) return [];
+
+    const savedSet = new Set(saved.deadIndicies);
+    const fitted = [];
+    for (let row = 0; row < grid.rows; row++) {
+        for (let col = 0; col < grid.cols; col++) {
+            const oldCol = Math.min(savedCols - 1, Math.floor(col * savedCols / grid.cols));
+            const oldRow = Math.min(savedRows - 1, Math.floor(row * savedRows / grid.rows));
+            if (savedSet.has(oldRow * savedCols + oldCol)) fitted.push(row * grid.cols + col);
+        }
+    }
+    return fitted;
+}
+
+function _saveProgress() {
+    if (deadIndicies.length === 0) return;
+    stateManager.saveEffectState(EFFECT_ID, {
+        index: sectionIndex,
+        cols: grid.cols,
+        rows: grid.rows,
+        deadIndicies,
+    });
+}
+
+function _beginGrowth() {
+    clearInterval(intervalId);
+    intervalId = null;
 
     const intensity = stateManager.getIntensity();
-    const decayPercent = (intensity / 10) * MAX_DECAY_PERCENT;
-    const targetDead = Math.floor(total * decayPercent);
+    if (intensity === 0 || totalCells === 0) return;
 
-    const order = Array.from({length: total}, (_, i) => i);
-    for (let i = order.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i+1));
-        [order[i], order[j]] = [order[j], order[i]];
+    const decayPercent = (intensity / MAX_INTENSITY) * SETTINGS.maxDecayPercent;
+    const targetDead = Math.floor(totalCells * decayPercent);
+    if (deadIndicies.length >= targetDead) return;
+
+    const remaining = [];
+    for (let i = 0; i < totalCells; i++) {
+        if (!deadSet.has(i)) remaining.push(i);
     }
 
-    let pointer = 0;
-    let deadCount = 0;
-    const deadIndicies = [];
+    const order = pickRandom(remaining, remaining.length);
 
-    const tickMs = Math.max(10, TICK_MS / intensity);
-    const cellsThisTick = Math.ceil(CELLS_PER_TICK * (intensity/3));
+    let pointer = 0;
+    const tickMs = Math.max(10, SETTINGS.tickMs / intensity);
+    const cellsThisTick = Math.ceil(SETTINGS.cellsPerTick * (intensity / 3));
 
     intervalId = setInterval(() => {
         for (let i = 0; i < cellsThisTick; i++) {
-            if (deadCount >= targetDead || pointer >= total) {
+            if (deadIndicies.length >= targetDead || pointer >= order.length) {
                 clearInterval(intervalId);
                 intervalId = null;
-                stateManager.saveEffectState(EFFECT_ID, {deadIndicies});
+                _saveProgress();
                 return;
             }
 
             const index = order[pointer++];
-            const cell = cells[index];
-            cell.element.style.transition = 'opacity 0.3s ease';
-            cell.element.style.background = '#3a0a0a';
-            cell.element.style.opacity = '0.85';
+            const cell = cellsRef[index];
+            cell.element.style.transition = `opacity ${SETTINGS.fadeInMs}ms ease`;
+            cell.element.style.background = SETTINGS.flashColor;
+            cell.element.style.opacity = String(SETTINGS.flashAlpha);
 
             setTimeout(() => {
-                cell.element.style.background = '#000';
+                cell.element.style.background = SETTINGS.deadColor;
                 cell.element.style.opacity = '1';
-            }, 120 + Math.random() * 180);
+            }, SETTINGS.settleMinMs + Math.random() * (SETTINGS.settleMaxMs - SETTINGS.settleMinMs));
 
-            cell.dead = true;
-            deadIndicies.push(index);
-            deadCount++;
+            _markDead(index);
         }
     }, tickMs);
+}
 
+function _rebuildGrid() {
+    clearInterval(intervalId);
+    intervalId = null;
+
+    const oldGrid = {cols: grid.cols, rows: grid.rows, deadIndicies: deadIndicies.slice()};
+    const oldOverlay = overlayElement;
+
+    if (!_buildGrid(hostElement)) {
+        _beginGrowth();
+        return;
+    }
+
+    if (oldOverlay) oldOverlay.remove();
+
+    deadIndicies = _fitToGrid(oldGrid);
+    deadSet = new Set(deadIndicies);
+    _killCellsInstantly(deadIndicies);
+    _beginGrowth();
+}
+
+function _onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        if (!isActive || !hostElement) return;
+
+        const width = hostElement.offsetWidth;
+        const height = hostElement.offsetHeight;
+        if (!width || !height) return;
+        if (width === builtWidth && height === builtHeight) return;
+
+        try {
+            _rebuildGrid();
+        } catch (error) {
+            console.error('Permanent decay resize failed', error);
+        }
+    }, SETTINGS.resizeDebounceMs);
+}
+
+function _attachListeners() {
+    window.addEventListener('pagehide', _saveProgress);
+    resizeObserver = new ResizeObserver(_onResize);
+    resizeObserver.observe(hostElement);
+}
+
+function _detachListeners() {
+    window.removeEventListener('pagehide', _saveProgress);
+    clearTimeout(resizeTimer);
+    resizeTimer = null;
+    if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+    }
+}
+
+function _stop({ notify = false, clearSaved = false } = {}) {
+    if (!isActive) return;
+    clearInterval(intervalId);
+    intervalId = null;
+    _detachListeners();
+
+    if (overlayElement) {
+        overlayElement.remove();
+        overlayElement = null;
+    }
+
+    if (hostElement && changedPosition) hostElement.style.position = previousPosition;
+    hostElement = null;
+    changedPosition = false;
+    deadIndicies = [];
+    deadSet = new Set();
+    cellsRef = [];
+    totalCells = 0;
+    sectionIndex = -1;
+    isActive = false;
+
+    if (clearSaved) stateManager.clearEffectState(EFFECT_ID);
+    if (notify) {
+        document.dispatchEvent(new CustomEvent('effect-ended', {
+            detail: { id: EFFECT_ID }
+        }));
+    }
+}
+
+function _start(sectionElement) {
+    if (isActive) return false;
+    if (!isEffectsEnabled()) return false;
+    if (stateManager.getIntensity() === 0) return false;
+
+    let host = sectionElement;
+    let index = -1;
+    if (host) {
+        index = _allCandidates().indexOf(host);
+    } else {
+        if (stateManager.hasEffectState(EFFECT_ID)) return false;
+        const pick = _pickSection();
+        if (!pick) return false;
+        host = pick.element;
+        index = pick.index;
+    }
+
+    if (!_buildGrid(host)) return false;
+
+    isActive = true;
+    sectionIndex = index;
+    deadIndicies = [];
+    deadSet = new Set();
+    _attachListeners();
+
+    _beginGrowth();
+    return true;
+}
+
+function restorePermanentDecay(sectionElement) {
+    if (isActive) return false;
+    if (!isEffectsEnabled()) return false;
+    if (stateManager.getIntensity() === 0) return false;
+
+    const saved = stateManager.loadEffectState(EFFECT_ID);
+    if (!saved || !Array.isArray(saved.deadIndicies)) return false;
+
+    let host = sectionElement;
+    const index = Number.isInteger(saved.index) ? saved.index : -1;
+    if (!host) {
+        if (index < 0) return false;
+        host = _allCandidates()[index];
+        if (!host || !host.offsetWidth || !host.offsetHeight) return false;
+    }
+
+    if (!_buildGrid(host)) return false;
+    isActive = true;
+    sectionIndex = index;
+    deadIndicies = _fitToGrid(saved);
+    deadSet = new Set(deadIndicies);
+    _killCellsInstantly(deadIndicies);
+    _attachListeners();
+    _beginGrowth();
+    return true;
+}
+
+function disable() {
+    _stop({ clearSaved: true });
+}
+
+function permanentDecay(sectionElement) {
+    if (isActive) _stop({ clearSaved: true });
+    else _start(sectionElement);
     return isActive;
 }
 
-permanentDecay.isActive = () => isActive;
+permanentDecay.id = EFFECT_ID;
+permanentDecay.minIntensity = SETTINGS.minIntensity;
+permanentDecay.start = _start;
+permanentDecay.stop = disable;
 permanentDecay.restore = restorePermanentDecay;
+permanentDecay.isActive = () => isActive;
 
-export {permanentDecay};
+document.addEventListener(EVENT_INFECTION_CURED, () => _stop({ notify: true }));
+document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
+    if (event.detail.intensity === 0) _stop({ notify: true });
+    else if (isActive) _beginGrowth();
+});
+
+export { permanentDecay };

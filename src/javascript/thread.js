@@ -1,3 +1,5 @@
+import {stateManager} from '../javascript/managers/state-manager';
+
 function buildThreadPage(thread) {
     const container = document.getElementById("threadContainer");
     if (!container) return;
@@ -8,13 +10,14 @@ function buildThreadPage(thread) {
 
     const breadcrumb = document.createElement("div");
     breadcrumb.className = "breadcrumb";
-    const homeLink = document.createElement("a");
-    homeLink.href = "forum.html";
-    homeLink.appendChild(document.createTextNode("Forum"));
-    breadcrumb.appendChild(homeLink);
+    breadcrumb.appendChild(document.createTextNode("Forum"));
     breadcrumb.appendChild(document.createTextNode(" >> "));
     breadcrumb.appendChild(document.createTextNode(thread.title));
     fragment.appendChild(breadcrumb);
+
+    const strip = document.createElement("div");
+    strip.className = "thread-strip";
+    fragment.appendChild(strip);
 
     const titleBar = document.createElement("div");
     titleBar.className = "thread-title";
@@ -62,7 +65,7 @@ function buildPostTable(post) {
     const userPanel = document.createElement("td");
     userPanel.className = "user-panel";
     userPanel.innerHTML = `
-        <div class="username">${escapeHTML(post.author)}</div>
+        <a href="404pages/forum-404.html" class="username">${escapeHTML(post.author)}</a>
         <div class="user-title">${escapeHTML(post.userTitle)}</div>
         <img src="${escapeHTML(post.avatar)}" class="avatar" alt="avatar">
         <div class="user-stats">
@@ -158,4 +161,11 @@ if (!threadId) {
   } else {
     buildThreadPage(thread);
   }
+}
+
+const mallLink = document.querySelector();
+if (mallLink) {
+  mallLink.addEventListener('click', () => {
+    if (stateManager.getStoredIntensity() < 1) stateManager.setIntensity(1);
+  });
 }

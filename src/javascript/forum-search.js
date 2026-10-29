@@ -1,4 +1,4 @@
-const SEARCH_MAX_LENGTH  = 100;
+const SEARCH_MAX_LENGTH = 100;
 const SEARCH_COOLDOWN_MS = 1000;
 
 const SAFE_PATH_REGEX = /^\/[a-zA-Z0-9\-_/.]*$|^#$/;
@@ -6,12 +6,16 @@ const SAFE_PATH_REGEX = /^\/[a-zA-Z0-9\-_/.]*$|^#$/;
 let lastSearchTime = 0;
 
 
+function getMainContent() {
+  return (document.getElementById("forumContainer") || document.getElementById("threadContainer"));
+}
+
 function searchThreads(query) {
   const results = [];
 
   for (let i = 0; i < SEARCH_THREADS.length; i++) {
     const thread = SEARCH_THREADS[i];
-    if(thread.keywords.includes(query)) {
+    if (thread.keywords.includes(query)) {
       results.push(thread);
     }
   }
@@ -109,23 +113,29 @@ function showResultsTable(panel, results) {
 }
 
 function buildClearButton() {
+  const onForumPage = document.getElementById("forumContainer") !== null;
+  const label = onForumPage ? "Return to Forums" : "Return to Thread";
   const button = document.createElement("button");
   button.className = "retro-button";
   button.style.marginTop = "10px";
-  button.appendChild(document.createTextNode("← Back to Forums"));
+  button.appendChild(document.createTextNode(label));
   button.addEventListener("click", resetSearch);
   return button;
 }
 
+
 function resetSearch() {
   const panel = document.getElementById("searchResults");
-  const forumContainer = document.getElementById("forumContainer");
+  const mainContent = getMainContent();
   const searchInput = document.getElementById("searchInput");
   const errorEl = document.getElementById("searchError");
 
-  while (panel.firstChild) panel.removeChild(panel.firstChild);
-  panel.style.display = "none";
-  forumContainer.style.display = "block";
+  if (panel) {
+    while (panel.firstChild) panel.removeChild(panel.firstChild);
+    panel.style.display = "none";
+  }
+
+  if (mainContent) mainContent.style.display = "block";
 
   if (searchInput) searchInput.value = "";
   if (errorEl) errorEl.textContent = "";
@@ -137,10 +147,12 @@ if (searchForm) {
   searchForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const errorEl    = document.getElementById("searchError");
-    const panel      = document.getElementById("searchResults");
-    const forumContainer = document.getElementById("forumContainer");
+    const errorEl = document.getElementById("searchError");
+    const panel = document.getElementById("searchResults");
+    const mainContent = getMainContent();
 
+    if (!panel || !errorEl) return;
+    
     const now = Date.now();
     if (now - lastSearchTime < SEARCH_COOLDOWN_MS) {
       errorEl.textContent = "Please wait a moment before searching again.";
@@ -161,7 +173,8 @@ if (searchForm) {
 
     if (!query) {
       panel.style.display = "block";
-      forumContainer.style.display = "none";
+
+      if (mainContent) mainContent.style.display = "none";
       showNoResults(panel, "");
       return;
     }
@@ -174,7 +187,7 @@ if (searchForm) {
     }
 
     panel.style.display = "block";
-    forumContainer.style.display = "none";
+    if(mainContent) mainContent.style.display = "none";
 
     if (results.length === 0) {
       showNoResults(panel, query);

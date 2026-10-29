@@ -9,11 +9,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
 
   <script src="../javascript/forum-data.js"></script>
+  <script defer src="../javascript/forum-search.js"></script>
   <script defer src="../javascript/thread.js"></script>
+  <script type="module" src="../javascript/managers/effect-boot.js"></script>
 </head>
-<body>
+<body data-page-id="thread">
 
   <div class="page-wrapper">
+    
 
     <table class="top-header" cellspacing="0" cellpadding="0">
       <tr>
@@ -23,10 +26,25 @@
         <td class="nav-area">
           <a href="forum.html"><img src="../../public/images/home_forum_icon.png"></a>
           <a href="../html/404pages/forum-404.html"><img src="../../public/images/faq_forum_icon.png"></a>
-          <a href="../html/404pages/forum-404.html"><img src="../../public/images/log_in_forum_icon.png"></a>
+          <a href="newsletter.html"><img src="../../public/images/log_in_forum_icon.png"></a>
         </td>
       </tr>
     </table>
+
+    <div class="search-container">
+      <form id="searchForm">
+        <input
+          type="text"
+          id="searchInput"
+          class="retro-search"
+          placeholder="Search for more forums!"
+        />
+        <button type="submit" class="retro-button">GO</button>
+      </form>
+      <div id="searchError" class="search-error"></div>
+    </div>
+
+    <div id="searchResults" class="search-results-panel" style="display:none"></div>
     <div id="threadContainer"></div>
 
   </div>
