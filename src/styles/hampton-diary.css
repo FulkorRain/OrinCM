@@ -114,3 +114,12 @@ body {
         .bottom-nav a:visited {
             color: magenta;
         }
+        
+        .doll-shelf {
+            margin-top: 100px;
+            border-bottom: solid 10px brown;
+            display: inline-block;
+        }
+        #doll-content {
+            text-align: center;
+        }
