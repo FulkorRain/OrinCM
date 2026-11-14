@@ -145,9 +145,6 @@ body {
             margin-left: 150px;
         }
 
-        #music-button {
-            background:none;
-            border:none;
-            padding:0;
+        #music-player {
             cursor:pointer;
         }

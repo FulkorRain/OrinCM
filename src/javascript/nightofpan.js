@@ -14,3 +14,22 @@ document.querySelectorAll('.sidebar-btn').forEach(button => {
         }
     });
 });
+
+const audio = document.getElementById('music-track');
+const button = document.getElementById('music-player');
+
+button.addEventListener('click', () => {
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+})
+
+audio.addEventListener('play', () => {
+    button.src = "../assets/images/music_button_on.png";
+})
+
+audio.addEventListener('pause', () => {
+    button.src = "../assets/images/music_button_pause.png";
+})
