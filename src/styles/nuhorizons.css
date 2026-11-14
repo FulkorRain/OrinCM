@@ -1,0 +1,52 @@
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; overflow-x: hidden; background: #e4e1d8 url(../assets/images/pastel-on-white-marble-embossed-1024px-r8mj-web.png) repeat; font-family: Arial, Helvetica, sans-serif; color: #000; }
+
+.stage { position: relative; width: 100%; max-width: 2200px; margin: 0 auto; aspect-ratio: 1536/1110; container-type: inline-size; }
+.stage > * { position: absolute; }
+
+.hdr  { left: 0; top: 0; width: 67%; height: auto; }
+.side { right: 0; top: 0; width: 54.49%; height: 93.69%; background: url(../assets/images/Sidebar.png) 0 0 / 100% 100% no-repeat; pointer-events: none; }
+
+
+.navs { inset: 0; pointer-events: none; }
+.b { position: absolute; display: block; pointer-events: auto; transition: transform .15s, filter .15s; }
+.b img { display: block; width: 100%; height: auto; }
+.b:hover, .b:focus-visible { transform: scale(1.05); filter: brightness(1.12); }
+.b-amenities { left: 57.11%; top: 5.23%; width: 12.85%; }
+.b-funsendai { left: 74.09%; top: 4.14%; width: 14.56%; }
+.b-events { left: 65.64%; top: 13.69%; width: 13.54%; }
+.b-ogdoad { left: 83.60%; top: 14.41%; width: 15.62%; }
+.b-inspired { left: 73.86%; top: 23.60%; width: 14.84%; }
+.b-about { left: 79.39%; top: 31.98%; width: 16.41%; }
+.b-contact { left: 83.36%; top: 43.42%; width: 15.85%; }
+.b-stay { left: 85.63%; top: 52.97%; width: 13.59%; }
+
+
+.map  { left: 5.66%; top: 20.54%; width: 25.39%; }
+.map img { display: block; width: 100%; height: auto; }
+
+.box  { font-size: 1cqw; line-height: 1.3; padding: 1.3% 1.8%; }
+.box p { margin: 0 0 1.3em; }
+.box p:last-child { margin: 0; }
+.info { left: 33.79%; top: 30.63%; width: 38.48%; background: #fff; border: 1px solid #555; }
+
+.note { left: 5.66%; top: 78.02%; width: 25.39%; background: #ff0; border: 1px solid #555; padding-top: 1.1%; }
+
+/* ---------- Narrow layout: arch moves left, main text box narrower ---------- */
+@media (max-width: 1100px) {
+  .stage { aspect-ratio: 1024/960; }
+  .hdr  { width: 68%; }
+  .side { width: 62.50%; height: 82.84%; }
+  .b-amenities { left: 50.81%; top: 4.62%; width: 14.74%; }
+  .b-funsendai { left: 70.28%; top: 3.66%; width: 16.70%; }
+  .b-events { left: 60.59%; top: 12.11%; width: 15.53%; }
+  .b-ogdoad { left: 81.18%; top: 12.74%; width: 17.92%; }
+  .b-inspired { left: 70.02%; top: 20.87%; width: 17.02%; }
+  .b-about { left: 76.37%; top: 28.28%; width: 18.82%; }
+  .b-contact { left: 80.92%; top: 38.39%; width: 18.18%; }
+  .b-stay { left: 83.52%; top: 46.83%; width: 15.59%; }
+  .map  { left: 3.91%; top: 18.23%; width: 32.23%; }
+  .box  { font-size: 1.4cqw; }
+  .info { left: 39.55%; top: 27.29%; width: 29.30%; }
+  .note { left: 3.91%; top: 74.58%; width: 32.23%; }
+}
