@@ -117,7 +117,7 @@ body {
         
         .doll-shelf {
             margin-top: 100px;
-            border-bottom: solid 10px brown;
+            border-bottom: solid 10px #7f3f0c;
             display: inline-block;
         }
         #doll-content {
