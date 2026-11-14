@@ -144,3 +144,10 @@ body {
             font-style: normal;
             margin-left: 150px;
         }
+
+        #music-button {
+            background:none;
+            border:none;
+            padding:0;
+            cursor:pointer;
+        }
