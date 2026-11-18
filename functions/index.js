@@ -5,7 +5,7 @@ const apiKey = defineSecret('EMAILOCTOPUS_API_KEY');
 const listId = defineSecret('EMAILOCTOPUS_LIST_ID');
 
 const ALLOWED_ORIGINS = [
-    "https://localhost:5173", //TODO: Add github link
+    "https://localhost:5173", "https://fulkorrain.github.io/OrinCM"
 ];
 
 exports.subscribe = onRequest(

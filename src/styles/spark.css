@@ -1,5 +1,6 @@
 body {
     background-image: url(../assets/images/spark_background.png);
+    background-size: 4000px;
     font-family: 'Times New Roman', Times, serif; 
     text-align: center;
     margin: 0;
@@ -140,4 +141,8 @@ a:hover {
     margin-top: 60px;
     width: 120px;
     height: auto;
+}
+
+body a {
+    font-size: 44px;
 }
