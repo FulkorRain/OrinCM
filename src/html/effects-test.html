@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effects Test Page</title>
+    <link rel="stylesheet" href="/src/styles/effects-test.css">
+</head>
+
+<body data-page-id="effects-test">
+
+    <div class="lab">
+
+        <div class="lab-panel" data-no-effects>
+
+            <div class="lab-panel__header">
+                <h1>Effects Test Page</h1>
+                <p class="lab-sub">Change the intensity and turn effects on or off.</p>
+            </div>
+
+            <div id="lab-banner" class="lab-banner" hidden></div>
+
+            <div class="lab-group">
+                <h2>Intensity</h2>
+                <div class="level-row">
+                    <input type="range" id="level-slider" min="1" max="10" step="1" value="5" aria-label="Intensity level">
+                    <output id="level-value" class="level-value">5</output>
+                </div>
+                <div class="quick-row">
+                    <button type="button" class="btn btn--small" data-level="1">Min (1)</button>
+                    <button type="button" class="btn btn--small" data-level="5">Mid (5)</button>
+                    <button type="button" class="btn btn--small" data-level="8">High (8)</button>
+                    <button type="button" class="btn btn--small" data-level="10">Max (10)</button>
+                </div>
+            </div>
+
+            <div class="lab-group">
+                <h2>Director</h2>
+                <p class="lab-hint">
+                    Picks effects automatically, the way a real visitor would see them.
+                    The first effect appears after 15 to 30 seconds. The manual buttons are locked while it runs.
+                </p>
+                <button type="button" id="director-toggle" class="btn">Start Director</button>
+            </div>
+
+            <div class="lab-group">
+                <div class="lab-group__head">
+                    <h2>Effects</h2>
+                    <span class="lab-hint">Active: <strong id="active-count">0</strong></span>
+                </div>
+                <div class="quick-row">
+                    <button type="button" id="start-all" class="btn btn--small">Start all</button>
+                    <button type="button" id="stop-all" class="btn btn--small btn--ghost">Stop all</button>
+                </div>
+
+                <div id="effect-list" class="effect-list"></div>
+            </div>
+
+            <div class="lab-group">
+                <h2>Saved state</h2>
+                <p class="lab-hint">
+                    Levels and saved effects are stored in this browser and are shared with your real pages.
+                </p>
+                <div class="quick-row">
+                    <button type="button" id="cure-button" class="btn btn--small btn--ghost">Test cure</button>
+                    <button type="button" id="reset-button" class="btn btn--small btn--ghost">Reset everything</button>
+                </div>
+                <p id="lab-note" class="lab-note"></p>
+            </div>
+
+        </div>
+
+
+        <main id="app" class="stage">
+
+            <header class="stage-header">
+                <h2>Sample Page</h2>
+                <p>
+                    This content is only here for testing. Effects only touch what is on screen,
+                    so scroll down to try them on different parts of the page.
+                </p>
+            </header>
+
+            <section class="stage-section">
+                <h3>About Us</h3>
+                <p>We are an independent publisher making comic books, board games and apparel, with every project designed and produced in house.</p>
+                <p>Our goal is to make things people want to keep, read again and share with their friends.</p>
+                <ul>
+                    <li>Comic books and graphic novels</li>
+                    <li>Board games for two to six players</li>
+                    <li>T-shirts, hoodies and accessories</li>
+                </ul>
+            </section>
+
+            <section class="stage-section">
+                <h3>Gallery</h3>
+                <div class="stage-gallery">
+                    <img class="stage-image" src="/src/assets/images/index_banner.png" alt="Banner artwork, first copy">
+                    <img class="stage-image" src="/src/assets/images/index_banner.png" alt="Banner artwork, second copy">
+                    <img class="stage-image" src="/src/assets/images/index_banner.png" alt="Banner artwork, third copy">
+                </div>
+                <p>Image effects change whichever pictures are currently visible on the screen.</p>
+            </section>
+
+            <section class="stage-section">
+                <h3>From the Studio</h3>
+                <blockquote>Good books are built one page at a time, and good games one playtest at a time.</blockquote>
+                <figure class="stage-figure">
+                    <img class="stage-image" src="/src/assets/images/index_banner.png" alt="Banner artwork with a caption">
+                    <figcaption>Figure one: cover artwork for the upcoming release.</figcaption>
+                </figure>
+            </section>
+
+            <section class="stage-section">
+                <h3>Catalog</h3>
+                <table class="stage-table">
+                    <thead>
+                        <tr><th>Title</th><th>Format</th><th>Availability</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Issue One</td><td>Comic book</td><td>In stock</td></tr>
+                        <tr><td>Board Game Starter Set</td><td>Board game</td><td>Pre-order</td></tr>
+                        <tr><td>Logo Hoodie</td><td>Apparel</td><td>Sold out</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="stage-section">
+                <h3>Shop</h3>
+                <p>Browse the full collection of comic books, board games and apparel, all available to order online.</p>
+                <p>
+                    <a href="#" class="stage-link">Comics</a> |
+                    <a href="#" class="stage-link">Board games</a> |
+                    <a href="#" class="stage-link">Apparel</a>
+                </p>
+                <button type="button" class="stage-button">Join the mailing list</button>
+            </section>
+
+            <section class="stage-section">
+                <h3>More Information</h3>
+                <p>Orders are packed and shipped within a few business days, and tracking details are emailed as soon as they are available.</p>
+                <p>If something arrives damaged or incorrect, contact us and we will repair or replace it as quickly as we can.</p>
+                <p>Sign up for the mailing list to hear about new releases, restocks and upcoming events before everyone else.</p>
+            </section>
+
+        </main>
+
+    </div>
+
+    <script type="module" src="/src/javascript/effects-test.js"></script>
+</body>
+</html>

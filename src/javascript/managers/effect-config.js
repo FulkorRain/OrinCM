@@ -171,6 +171,44 @@ export const DIRECTOR = {
     skipAttribute: 'data-effects-skip'
 };
 
+export const MESSAGE_SWAP = {
+    minIntensity: 2,
+    messages: ['Something has noticed you'],
+    count: 1,
+    minTextLength: 30,
+    showMinMs: 4000,
+    showMaxMs: 9000,
+}
+
+export const LINK_CORRUPTION = {
+    selector: '.corruptable-text',
+    glitchChars: TEXT_CORRUPTION.glitchChars,
+    baseChars: 2,
+    charsPerIntensity: 0.5,
+    glitchChance: 0.5,
+    tickMs: 200,
+    burstMinMs: 2000,
+    burstMaxMs: 4000,
+    pauseMinMs: 5000,
+    pauseMaxMs: 9000,
+}
+
+export const BAIT = {
+    enabled: true,
+    tag: 'div',
+    id: 'the-mall-sees-you',
+    texts: ['Webpage structural integrity in critical condition'],
+    minCount: 2,
+    maxCount: 4,
+    scatter: true,
+    safetyCheckMs: 1000,
+    glitchChars: TEXT_CORRUPTION.glitchChars,
+    glitchTickMs: 140,
+    glitchFraction: 0.65,
+};
+
+//DIRECTOR:
+
 const MIN_COOLDOWN = 30000;
 const MAX_COOLDOWN = 80000;
 const COOLDOWN = [MIN_COOLDOWN, MAX_COOLDOWN];
@@ -202,28 +240,6 @@ export const JUMP_PAGES = {
     'jumpscare-404': {level: 8},
 }
 
-export const BAIT = {
-    enabled: true,
-    tag: 'div',
-    id: 'the-mall-sees-you',
-    texts: ['Webpage structural integrity in critical condition'],
-    minCount: 2,
-    maxCount: 4,
-    scatter: true,
-    safetyCheckMs: 1000,
-    glitchChars: TEXT_CORRUPTION.glitchChars,
-    glitchTickMs: 140,
-    glitchFraction: 0.65,
-};
-
-export const MESSAGE_SWAP = {
-    minIntensity: 2,
-    messages: ['Something has noticed you'],
-    count: 1,
-    minTextLength: 30,
-    showMinMs: 4000,
-    showMaxMs: 9000,
-}
 
 export const MASTER_SWITCH = {
     enabled: true, // ON & OFF SWITCH

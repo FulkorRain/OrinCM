@@ -1,4 +1,4 @@
-import { corruptText } from "./effects/text-corruption.js";
+import { linkCorruption } from "./effects/link-corruption.js";
 import { getPristineText } from "./managers/targets.js";
 import { addToCart, formatPrice } from "./cart.js";
 
@@ -167,7 +167,7 @@ if (initiallyActive) {
 }
 
 if (tabContentElement) {
-    corruptText.start(tabContentElement, { textInclude: CORRUPTABLE_SELECTOR });
+    linkCorruption();
 }
 
 document.fonts.ready.then(lockCorruptableSizes);
