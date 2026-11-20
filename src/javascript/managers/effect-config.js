@@ -95,11 +95,11 @@ export const IMAGE_WARP = {
 
 export const SCREEN_DECAY = {
     minIntensity: 6,
-    maxCoverage: 0.2,
+    maxCoverage: 0.001,
     secondsAtLowest: 25,
     secondsAtHighest: 7,
-    cellSizeDesktop: 6,
-    cellSizeMobile: 14,
+    cellSizeDesktop: 2,
+    cellSizeMobile: 6,
     mobileBelowPx: 768,
     flashColor: '#3a0a0a',
     flashAlpha: 0.85,
@@ -111,7 +111,7 @@ export const SCREEN_DECAY = {
 };
 
 export const PERMANENT_DISSOLVE = {
-    minIntensity: 8,
+    minIntensity: 2,
     imageSrc: '/src/assets/images/index_banner.png',
     maxCoverage: 0.2,
     coverageCurve: 2,
@@ -223,7 +223,7 @@ export const DIRECTOR_EFFECTS = {
     'permanent-corruption': { enabled: false, mode: 'permanent' },
     'permanent-dissolve': { enabled: true, mode: 'permanent' },
     'message-swap': {enabled: true, mode: 'once', cooldownMs: COOLDOWN, },
-    'permanent-decay': {enabled: true, mode: 'permanent'},
+    'permanent-decay': {enabled: false, mode: 'permanent'},
 };
 
 export const ESCALATION = {

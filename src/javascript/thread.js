@@ -163,7 +163,7 @@ if (!threadId) {
   }
 }
 
-const mallLink = document.querySelector();
+const mallLink = document.querySelector('#mall-link');
 if (mallLink) {
   mallLink.addEventListener('click', () => {
     if (stateManager.getStoredIntensity() < 1) stateManager.setIntensity(1);
