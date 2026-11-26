@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hampton's Haven</title>
     <link rel="stylesheet" href="../styles/hampton-diary.css">
-    <script src="../javascript/overlay.js" defer></script>
-    <script src="../javascript/diary.js" defer></script>
+    <script type="module" src="../javascript/overlay.js"></script>
+    <script type="module" src="../javascript/diary.js"></script>
+    <!-- Must stay above effect-boot.js so it can pause the random effects first -->
+    <script type="module" src="../javascript/haven-scare.js"></script>
     <script type="module" src="../javascript/managers/effect-boot.js"></script>
     <style>
         /* OVERLAY STYLES */
@@ -89,6 +91,11 @@
                 <div class="header-section">
                     <h1>Hampton's Haven</h1>
                     <img src="#" alt="Dancing Rat" class="rat-gif">
+                </div>
+
+                <!-- High infection only (shown by haven-scare.js) -->
+                <div id = "petrol-content" class = "content-page" style = "display: none;" data-no-effects>
+                    <p>I've gone to see the Petrol Man. He's taken all my dolls away.</p>
                 </div>
 
                 <!-- EDITABLE -->
