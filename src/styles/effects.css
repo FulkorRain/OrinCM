@@ -3,6 +3,12 @@
   --effects-scanline-gap: 2px;
   --effects-vignette-color: rgba(0, 0, 0, .85);
   --effects-vignette-clear: 50%;
+  --banner-bg: #1a1a1a;
+  --banner-ratio-leaderboard: 1920 / 640;
+  --banner-ratio-rectangle: 300 / 250;
+  --banner-width-leaderboard: 100%;
+  --banner-width-rectangle: 300px;
+  --banner-spacing: 1.5rem;
 }
 
 @keyframes flicker-low {
@@ -153,60 +159,51 @@ body.vignette::after {
       var(--effects-vignette-color) 100%);
 }
 
-:root {
-    --banner-bg: #1a1a1a;
-    --banner-ratio-leaderboard: 728 / 90;
-    --banner-ratio-rectangle: 300 / 250;
-    --banner-width-leaderboard: 728px;
-    --banner-width-rectangle: 300px;
-    --banner-spacing: 1.5rem;
-}
-
 .banner-ad {
-    position: relative;
-    display: block;
-    width: 100%;
-    max-width: var(--banner-width-leaderboard);
-    aspect-ratio: var(--banner-ratio-leaderboard);
-    margin: var(--banner-spacing) auto;
-    overflow: hidden;
-    background: var(--banner-bg);
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: var(--banner-width-leaderboard);
+  aspect-ratio: var(--banner-ratio-leaderboard);
+  margin: var(--banner-spacing) auto;
+  overflow: hidden;
+  background: var(--banner-bg);
 }
 
 .banner-ad--leaderboard {
-    max-width: var(--banner-width-leaderboard);
-    aspect-ratio: var(--banner-ratio-leaderboard);
+  max-width: var(--banner-width-leaderboard);
+  aspect-ratio: var(--banner-ratio-leaderboard);
 }
 
 .banner-ad--rectangle {
-    max-width: var(--banner-width-rectangle);
-    aspect-ratio: var(--banner-ratio-rectangle);
+  max-width: var(--banner-width-rectangle);
+  aspect-ratio: var(--banner-ratio-rectangle);
 }
 
 .banner-ad a,
 .banner-ad__stage {
-    position: absolute;
-    inset: 0;
-    display: block;
+  position: absolute;
+  inset: 0;
+  display: block;
 }
 
 .banner-ad__stage {
-    will-change: transform;
+  will-change: transform;
 }
 
 .banner-ad img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .banner-ad__static {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    pointer-events: none;
-    image-rendering: pixelated;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  image-rendering: pixelated;
 }

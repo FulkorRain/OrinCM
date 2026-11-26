@@ -1,6 +1,6 @@
 import { stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED } from './state-manager.js';
 import { isEffectsEnabled } from './targets.js';
-import { DIRECTOR, DIRECTOR_EFFECTS } from './effect-config.js';
+import { DIRECTOR_CONFIG, DIRECTOR_EFFECTS } from './effect-config.js';
 
 import { chaosText } from '../effects/chaos-text.js';
 import { corruptText } from '../effects/text-corruption.js';
@@ -9,7 +9,7 @@ import { flicker } from '../effects/flicker.js';
 import { screenShake } from '../effects/screen-shake.js';
 import { imageWarp } from '../effects/image-warp.js';
 import { screenDecay } from '../effects/screen-decay.js';
-import { permanentDissolve } from '../effects/dissolve.js';
+import { dissolve } from '../effects/dissolve.js';
 import { messageSwap } from '../effects/message-swap.js';
 import { permanentDecay } from '../effects/permanent_decay.js';
 import { earwig } from '../effects/earwig.js';
@@ -26,7 +26,7 @@ const registry = [];
     screenShake,
     imageWarp,
     screenDecay,
-    permanentDissolve,
+    dissolve,
     messageSwap,
     permanentDecay,
     earwig,
@@ -65,7 +65,7 @@ function _progress() {
 }
 
 function _chanceFor(entry) {
-    const base = DIRECTOR.chanceAtLowest + _progress() * (DIRECTOR.chanceAtHighest - DIRECTOR.chanceAtLowest);
+    const base = DIRECTOR_CONFIG.chanceAtLowest + _progress() * (DIRECTOR_CONFIG.chanceAtHighest - DIRECTOR_CONFIG.chanceAtLowest);
     const weight = entry.settings.weight ?? 1;
     return Math.min(1, base * weight);
 }
@@ -75,7 +75,7 @@ function _isQuiet() {
 }
 
 function _getSkipped() {
-    const raw = document.body.getAttribute(DIRECTOR.skipAttribute) || '';
+    const raw = document.body.getAttribute(DIRECTOR_CONFIG.skipAttribute) || '';
     return new Set(raw.split(',').map(item => item.trim()).filter(Boolean));
 }
 
@@ -152,7 +152,7 @@ function _fire(entry) {
     const started = effect.start();
 
     if (!started) {
-        cooldownUntil[effect.id] = performance.now() + DIRECTOR.retryAfterFailMs;
+        cooldownUntil[effect.id] = performance.now() + DIRECTOR_CONFIG.retryAfterFailMs;
         return;
     }
 
@@ -201,21 +201,21 @@ function _tick() {
         console.error('Director tick failed', error);
     }
 
-    _scheduleTick(_randomBetween(DIRECTOR.tickMinMs, DIRECTOR.tickMaxMs));
+    _scheduleTick(_randomBetween(DIRECTOR_CONFIG.tickMinMs, DIRECTOR_CONFIG.tickMaxMs));
 }
 
 function startDirector() {
     if (running) return;
     running = true;
 
-    quietUntil = performance.now() + _randomBetween(DIRECTOR.startDelayMinMs, DIRECTOR.startDelayMaxMs);
+    quietUntil = performance.now() + _randomBetween(DIRECTOR_CONFIG.startDelayMinMs, DIRECTOR_CONFIG.startDelayMaxMs);
     if (isEffectsEnabled() && stateManager.getIntensity() > 0) {
         const skipped = _getSkipped();
         _syncPermanent(skipped);
         _syncAmbient(skipped);
         _syncLoad(skipped);
     }
-    _scheduleTick(_randomBetween(DIRECTOR.tickMinMs, DIRECTOR.tickMaxMs));
+    _scheduleTick(_randomBetween(DIRECTOR_CONFIG.tickMinMs, DIRECTOR_CONFIG.tickMaxMs));
 }
 
 function stopDirector() {

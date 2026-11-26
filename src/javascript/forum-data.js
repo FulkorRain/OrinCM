@@ -1041,38 +1041,39 @@ Yes, you. If you want to keep your account don’t make me explain this again.`
 
 
 
-  // {
-  //   id: "weird-flood-dreams",
-  //   title: "Weird Flood Dreams",
-  //   type: "thread",
-  //   keywords: ["ra1nger"],
-  //   author: "Butterfly♡Kisser",
-  //   posts: 2,
-  //   views: 9,
-  //   lastPost: "11-06-1999",
-  //   content: [
-  //     {
-  //       author: "Butterfly♡Kisser",
-  //       userTitle: "Lurker",
-  //       joinDate: "Nov 1998",
-  //       postCount: 4,
-  //       location: "The Internet",
-  //       avatar: "https://placehold.co/80x80",
-  //       date: "11-06-1999, 06:00 PM",
-  //       signature: "Pretty High (for a Butterfly)",
-  //       text: `What does it mean when you keep having recurring vivid dreams about flooding? And black skies?`
-  //     },
-  //     {
-  //       author: "de0rdra",
-  //       userTitle: "Lurker",
-  //       joinDate: "Mar 1999",
-  //       postCount: 16,
-  //       location: "Nice try",
-  //       avatar: "https://placehold.co/80x80",
-  //       date: "11-06-1999, 06:44 PM",
-  //       signature: "...",
-  //       text: `Probably means drink less water before bed bro`
-  //     }
-  //   ]
-  // }
 ]
+
+const SPECIAL_THREAD = {
+  id: "weird-flood-dreams",
+  title: "Weird Flood Dreams",
+  type: "thread",
+  keywords: ["ra1nger"],
+  author: "Butterfly♡Kisser",
+  posts: 2,
+  views: 9,
+  lastPost: "11-06-1999",
+  content: [
+    {
+      author: "Butterfly♡Kisser",
+      userTitle: "Lurker",
+      joinDate: "Nov 1998",
+      postCount: 4,
+      location: "The Internet",
+      avatar: "https://placehold.co/80x80",
+      date: "11-06-1999, 06:00 PM",
+      signature: "Pretty High (for a Butterfly)",
+      text: `What does it mean when you keep having recurring vivid dreams about flooding? And black skies?`
+    },
+    {
+      author: "de0rdra",
+      userTitle: "Lurker",
+      joinDate: "Mar 1999",
+      postCount: 16,
+      location: "Nice try",
+      avatar: "https://placehold.co/80x80",
+      date: "11-06-1999, 06:44 PM",
+      signature: "...",
+      text: `Probably means drink less water before bed bro`
+    }
+  ]
+}

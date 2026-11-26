@@ -457,17 +457,17 @@ function stop() {
 }
 
 
-function permanentDissolve() {
+function dissolve() {
     if (isActive) stop();
     else start();
     return isActive;
 }
 
-permanentDissolve.id = EFFECT_ID;
-permanentDissolve.minIntensity = SETTINGS.minIntensity;
-permanentDissolve.start = start;
-permanentDissolve.stop = stop;
-permanentDissolve.isActive = () => isActive;
+dissolve.id = EFFECT_ID;
+dissolve.minIntensity = SETTINGS.minIntensity;
+dissolve.start = start;
+dissolve.stop = stop;
+dissolve.isActive = () => isActive;
 
 document.addEventListener(EVENT_INFECTION_CURED, () => _shutdown({ notify: true }));
 document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
@@ -483,4 +483,4 @@ document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
     _wake();
 });
 
-export { permanentDissolve };
+export { dissolve  };

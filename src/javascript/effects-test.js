@@ -8,7 +8,7 @@ import {
     EVENT_INFECTION_CURED
 } from './managers/state-manager.js';
 import { isEffectsEnabled } from './managers/targets.js';
-import { DIRECTOR, DIRECTOR_EFFECTS } from './managers/effect-config.js';
+import { DIRECTOR_CONFIG, DIRECTOR_EFFECTS, BANNER_CORRUPTION, BANNER } from './managers/effect-config.js';
 import { director } from './managers/director.js';
 
 import { chaosText } from './effects/chaos-text.js';
@@ -18,10 +18,14 @@ import { flicker } from './effects/flicker.js';
 import { screenShake } from './effects/screen-shake.js';
 import { imageWarp } from './effects/image-warp.js';
 import { screenDecay } from './effects/screen-decay.js';
-import { permanentDissolve } from './effects/dissolve.js';
+import { dissolve } from './effects/dissolve.js';
 import { messageSwap } from './effects/message-swap.js';
 import { permanentDecay } from './effects/permanent_decay.js';
 import { earwig } from './effects/earwig.js';
+import { bannerCorruption } from './effects/banner-corruption.js';
+import { bannerSize } from './effects/banner-size.js';
+import { bannerStatic } from './effects/banner-static.js';
+import { bannerSwitch } from './effects/banner-switch.js';
 
 const LAB = {
     startLevel: 5,
@@ -74,7 +78,7 @@ const EFFECTS = [
         info: 'Dark squares eat away at the screen, up to 20% coverage. Not saved.'
     },
     {
-        effect: permanentDissolve,
+        effect: dissolve,
         name: 'Permanent Dissolve',
         info: 'The banner image dissolves over the screen in blocks. Saved across reloads.'
     },
@@ -92,7 +96,27 @@ const EFFECTS = [
         effect: earwig,
         name: 'Earwig',
         info: 'Bug crawling on and off the screen.'
-    }
+    },
+    {
+        effect: bannerCorruption,
+        name: 'Banner Corruption',
+        info: 'Showing the corrupted version of a banner.'
+    },
+    {
+        effect: bannerSize,
+        name: 'Banner Size',
+        info: 'Changes the size of a banner.'
+    },
+    {
+        effect: bannerStatic,
+        name: 'Banner Static',
+        info: 'Adds static effect to a banner.',
+    },
+    {
+        effect: bannerSwitch,
+        name: 'Banner Switch',
+        info: 'Switches banner from one to another.'
+    },
 ];
 
 const levelSlider = document.getElementById('level-slider');
@@ -193,7 +217,7 @@ function setLevel(value) {
 
 function updateSkipList() {
     const skipped = cards.filter(entry => !entry.pool.checked).map(entry => entry.item.effect.id);
-    document.body.setAttribute(director.skipAttribute, skipped.join(','));
+    document.body.setAttribute(DIRECTOR_CONFIG.skipAttribute, skipped.join(','));
 }
 
 function toggleDirector() {
@@ -276,6 +300,7 @@ function restoreSaved() {
 }
 
 function init() {
+    BANNER_CORRUPTION.rollWindowMs = Infinity;
     buildCards();
     updateSkipList();
 

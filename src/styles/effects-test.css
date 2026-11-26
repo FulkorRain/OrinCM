@@ -345,6 +345,11 @@ blockquote {
     cursor: pointer;
 }
 
+.banner-ad {
+    width: 100%;
+    height: 100%;
+}
+
 @media (max-width: 860px) {
     .lab {
         grid-template-columns: 1fr;

@@ -71,15 +71,15 @@ export const FLICKER = {
     frameMs: 70,
     linesAtLowest: 6,
     linesAtHighest: 45,
-    maxLineHeight: 3,
+    maxLineHeight: 0.5,
     alphaAtLowest: 0.12,
     alphaAtHighest: 0.4,
     barChanceAtLowest: 0.04,
     barChanceAtHighest: 0.3,
-    maxBarHeight: 40,
+    maxBarHeight: 5,
     dimChance: 0.1,
     dimMax: 0.12,
-    bandHeight: 120,
+    bandHeight: 60,
     bandSpeed: 0.15,
     fadeOutMs: 300,
     zIndex: 9100,
@@ -88,12 +88,12 @@ export const FLICKER = {
 export const SCREEN_SHAKE = {
     minIntensity: 1,
     targets: ['#app', 'main'],
-    stepMs: 60,
+    stepMs: 80,
     amplitudeAtLowest: 1,
-    amplitudeAtHighest: 5,
-    ghostCount: 3,
-    ghostOpacity: 0.35,
-    ghostSpread: 2,
+    amplitudeAtHighest: 3,
+    ghostCount: 9,
+    ghostOpacity: 0.8,
+    ghostSpread: 4,
 };
 
 export const IMAGE_WARP = {
@@ -171,7 +171,7 @@ export const PERMANENT_DECAY = {
     resizeDebounceMs: 200,
 };
 
-export const DIRECTOR = {
+export const DIRECTOR_CONFIG = {
     startDelayMinMs: 15000,
     startDelayMaxMs: 30000,
     tickMinMs: 4000,
@@ -187,7 +187,7 @@ export const MESSAGE_SWAP = {
     messages: ['Something has noticed you'],
     countAtLowest: 1,
     countAtHighest: 8,
-    minTextLength: 30,
+    minTextLength: 25,
     showMinMs: 4000,
     showMaxMs: 9000,
 };
@@ -222,7 +222,7 @@ export const BAIT = {
 export const BANNER = {
     selector: '[data-banner]',
     stageClass: 'banner-ad__stage',
-    specialSrc: '/images/banners/special.png',
+    specialSrc: '/images/special.png',
     corruptSuffix: '-corrupt',
 }
 
@@ -258,10 +258,10 @@ export const BANNER_SIZE = {
 export const BANNER_STATIC = {
     minIntensity: 6,
     maxBanners: 1,
-    cellSize: 3,
+    cellSize: 6,
     frameMs: 70,
-    alphaAtLowest: 0.35,
-    alphaAtHighest: 0.85,
+    alphaAtLowest: 0.08,
+    alphaAtHighest: 0.30,
     tearChance: 0.25,
     tearMinFraction: 0.05,
     tearMaxFraction: 0.2,
@@ -309,7 +309,7 @@ export const JUMP_PAGES = {
 
 
 export const MASTER_SWITCH = {
-    enabled: false, // ON & OFF SWITCH
+    enabled: true, // ON & OFF SWITCH
     allowUrlOverride: true,
     urlParam: 'effects',
     rememberFor: 'session'

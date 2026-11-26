@@ -147,6 +147,10 @@ function findThread(id) {
     }
   }
 
+  if (id === SPECIAL_THREAD.id) {
+    return SPECIAL_THREAD;
+  }
+
   return null;
 }
 

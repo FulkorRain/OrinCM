@@ -1,6 +1,6 @@
-import {stateManager, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager.js';
-import {getTextTargets, showRestingText, pickRandom, isEffectsEnabled } from '../managers/targets.js';
-import {MESSAGE_SWAP as SETTINGS} from '../managers/effect-config.js';
+import { stateManager, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED } from '../managers/state-manager.js';
+import { getTextTargets, showRestingText, pickRandom, isEffectsEnabled } from '../managers/targets.js';
+import { MESSAGE_SWAP as SETTINGS } from '../managers/effect-config.js';
 
 const EFFECT_ID = 'message-swap';
 
@@ -12,7 +12,7 @@ function _randomBetween(min, max) {
     return min + Math.random() * (max - min);
 }
 
-function _getCount(){
+function _getCount() {
     const intensity = stateManager.getIntensity();
     const progress = Math.max(0, Math.min(1, (intensity - SETTINGS.minIntensity) / (MAX_INTENSITY - SETTINGS.minIntensity)));
     return Math.max(1, Math.round(SETTINGS.countAtLowest + progress * (SETTINGS.countAtHighest - SETTINGS.countAtLowest)));
@@ -22,9 +22,21 @@ function _isEligible(node) {
     return node.nodeValue.trim().length >= SETTINGS.minTextLength;
 }
 
-function stop({notify = false} = {}) {
-    if (!isActive) return;
+function _injectMessage(original, message) {
+    const leading = original.match(/^\s*/)[0];
+    const trailing = original.match(/\s*$/)[0];
+    const body = original.slice(leading.length, original.length - trailing.length);
     
+    const words = body.split(' ');
+    const index = Math.floor(Math.random() * (words.length + 1));
+
+    words.splice(index, 0, message);
+    return leading + words.join(' ') + trailing;
+}
+
+function stop({ notify = false } = {}) {
+    if (!isActive) return;
+
     clearTimeout(endTimer);
     endTimer = null;
 
@@ -35,7 +47,7 @@ function stop({notify = false} = {}) {
     isActive = false;
 
     if (notify) {
-        document.dispatchEvent(new CustomEvent('effect-ended', {detail: {id: EFFECT_ID}}));
+        document.dispatchEvent(new CustomEvent('effect-ended', { detail: { id: EFFECT_ID } }));
     }
 }
 
@@ -44,20 +56,18 @@ function start(root) {
     if (!isEffectsEnabled()) return false;
     if (stateManager.getIntensity() === 0) return false;
     if (SETTINGS.messages.length === 0) return false;
-    
-    const eligible = getTextTargets({root, max: Infinity}).filter(_isEligible);
+
+    const eligible = getTextTargets({ root, max: Infinity }).filter(_isEligible);
     if (eligible.length === 0) return false;
 
     targets = pickRandom(eligible, _getCount());
     targets.forEach(node => {
-        const original = node.nodeValue;
-        const leading = original.match(/^\s*/)[0];
-        const trailing = original.match(/\s*$/)[0];
-        node.nodeValue = leading + pickRandom(SETTINGS.messages, 1)[0] + trailing;
+        const message = pickRandom(SETTINGS.messages, 1)[0];
+        node.nodeValue = _injectMessage(node.nodeValue, message);
     });
 
     isActive = true;
-    endTimer = setTimeout(() => stop({notify: true}), _randomBetween(SETTINGS.showMinMs, SETTINGS.showMaxMs));
+    endTimer = setTimeout(() => stop({ notify: true }), _randomBetween(SETTINGS.showMinMs, SETTINGS.showMaxMs));
     return true;
 }
 
@@ -73,9 +83,9 @@ messageSwap.start = start;
 messageSwap.stop = stop;
 messageSwap.isActive = () => isActive;
 
-document.addEventListener(EVENT_INFECTION_CURED, () => stop({notify: true}));
+document.addEventListener(EVENT_INFECTION_CURED, () => stop({ notify: true }));
 document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
-    if (event.detail.intensity === 0) stop({notify: true});
+    if (event.detail.intensity === 0) stop({ notify: true });
 });
 
-export {messageSwap};
+export { messageSwap };

@@ -1,31 +1,21 @@
 import { EVENT_INFECTION_CURED, EVENT_INTENSITY_CHANGED, stateManager } from './managers/state-manager.js';
 
 // stateManager.setIntensity(2);
+const MIN_INTENSITY = 5;
 
-const search = document.querySelector(".search-container");
-const goButton = document.querySelector(".retro-button");
-const originalButtonText = goButton ? goButton.textContent : "GO";
-
-function updateSearchBlock() {
-  if (!search) return;
-
-  const blocked = stateManager.getIntensity() >= 5;
-
-  search.classList.toggle("is-active", blocked);
-  search.inert = blocked;
-  if (goButton) {
-    goButton.textContent = blocked ? "NO" : originalButtonText;
+function getVisibleThreads() {
+  const threads = PUBLIC_THREADS.slice();
+  if (stateManager.getIntensity() >= MIN_INTENSITY) {
+    threads[0] = SPECIAL_THREAD;
   }
+
+  return threads;
 }
-
-
-updateSearchBlock();
-document.addEventListener(EVENT_INFECTION_CURED, updateSearchBlock);
-document.addEventListener(EVENT_INTENSITY_CHANGED, updateSearchBlock);
 
 function buildForumIndex() {
   const container = document.getElementById("forumContainer");
   if (!container) return;
+  container.innerHTML = "";
 
   const table = document.createElement("table");
   table.className = "forum-table";
@@ -49,7 +39,7 @@ function buildForumIndex() {
   `;
   table.appendChild(colRow);
 
-  PUBLIC_THREADS.forEach(function (thread) {
+  getVisibleThreads().forEach(function (thread) {
     const row = document.createElement("tr");
     row.className = "forum-row";
 
@@ -112,3 +102,25 @@ function buildPagination() {
 
 buildForumIndex();
 
+const search = document.querySelector(".search-container");
+const goButton = document.querySelector(".retro-button");
+const originalButtonText = goButton ? goButton.textContent : "GO";
+
+function updateSearchBlock() {
+  if (!search) return;
+
+  const blocked = stateManager.getIntensity() >= MIN_INTENSITY;
+
+  search.classList.toggle("is-active", blocked);
+  search.inert = blocked;
+  if (goButton) {
+    goButton.textContent = blocked ? "NO" : originalButtonText;
+  }
+}
+
+
+updateSearchBlock();
+document.addEventListener(EVENT_INFECTION_CURED, updateSearchBlock);
+document.addEventListener(EVENT_INFECTION_CURED,  buildForumIndex);
+document.addEventListener(EVENT_INTENSITY_CHANGED, updateSearchBlock);
+document.addEventListener(EVENT_INTENSITY_CHANGED, buildForumIndex);
