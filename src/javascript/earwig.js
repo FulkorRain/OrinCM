@@ -5,13 +5,13 @@
   var FRAME_INTERVAL = 120;        
   var SPEED_MIN = 25;             
   var SPEED_MAX = 65;              
-  var SPRINT_CHANCE = 0.25;       // after a direction change: motor off
+  var SPRINT_CHANCE = 0.25;   
   var SPRINT_MIN = 120;
   var SPRINT_MAX = 180;
-  var DAWDLE_CHANCE = 0.25;       // ...or take its time
+  var DAWDLE_CHANCE = 0.25;    
   var DAWDLE_MIN = 10;
   var DAWDLE_MAX = 20;
-  var NORMAL_SPEED = 45;          // speed at which legs move every FRAME_INTERVAL
+  var NORMAL_SPEED = 45;    
   var FRAME_INTERVAL_MIN = 50;
   var FRAME_INTERVAL_MAX = 220;
   var DIR_CHANGE_MIN = 1500;      
@@ -47,7 +47,7 @@
       if (p.charAt(p.length - 1) !== '/') p += '/';
       return p;
     }
-    return '/OrinCM/public/images/earwig/';
+    return '../../images/earwig/'; // public/images/earwig, from a page in src/html
   }
 
   function rand(min, max) {
@@ -263,7 +263,6 @@
         changed = true;
       }
 
-      // legs keep pace with the body
       var interval = Math.min(FRAME_INTERVAL_MAX,
         Math.max(FRAME_INTERVAL_MIN, FRAME_INTERVAL * NORMAL_SPEED / speed));
 
@@ -320,13 +319,13 @@
     scheduleFirstAppearance();
   }
 
-  var ENTRY_TRIGGER_PAGE = '/OrinCM/src/html/spark.html';
+  var ENTRY_TRIGGER_PAGE = '/src/html/spark.html';
 
   function cameFromTriggerPage() {
-    if (!document.referrer) return false; // no referrer = typed URL, bookmark, reload, or new tab
+    if (!document.referrer) return false;
     try {
       var refUrl = new URL(document.referrer);
-      return refUrl.pathname === ENTRY_TRIGGER_PAGE;
+      return refUrl.pathname.endsWith(ENTRY_TRIGGER_PAGE);
     } catch (e) {
       return false;
     }
