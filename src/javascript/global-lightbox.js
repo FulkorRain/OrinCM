@@ -36,7 +36,8 @@
       if (
         target.tagName === 'IMG' && 
         !target.classList.contains('global-lightbox-content') &&
-        !target.closest('#global-lightbox')
+        !target.closest('#global-lightbox') &&
+        target.classList.contains('lightbox-img')
       ) {
         lightboxImg.src = target.src;
         lightboxImg.alt = target.alt || 'Enlarged View';

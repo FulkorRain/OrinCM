@@ -1,6 +1,6 @@
-import {stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from './state-manager.js';
-import {isEffectsEnabled, pickRandom} from './targets.js';
-import {DIRECTOR, DIRECTOR_EFFECTS} from './effect-config.js';
+import { stateManager, MIN_INTENSITY, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED } from './state-manager.js';
+import { isEffectsEnabled } from './targets.js';
+import { DIRECTOR, DIRECTOR_EFFECTS } from './effect-config.js';
 
 import { chaosText } from '../effects/chaos-text.js';
 import { corruptText } from '../effects/text-corruption.js';
@@ -9,25 +9,47 @@ import { flicker } from '../effects/flicker.js';
 import { screenShake } from '../effects/screen-shake.js';
 import { imageWarp } from '../effects/image-warp.js';
 import { screenDecay } from '../effects/screen-decay.js';
-import { permanentDissolve } from '../effects/permanent-dissolve.js';
-import {messageSwap} from '../effects/message-swap.js';
-import {permanentDecay} from '../effects/permanent_decay.js';
+import { permanentDissolve } from '../effects/dissolve.js';
+import { messageSwap } from '../effects/message-swap.js';
+import { permanentDecay } from '../effects/permanent_decay.js';
+import { earwig } from '../effects/earwig.js';
+import { bannerCorruption } from '../effects/banner-corruption.js';
+import { bannerSwitch } from '../effects/banner-switch.js';
+import { bannerSize } from '../effects/banner-size.js';
+import { bannerStatic } from '../effects/banner-static.js';
 
 const registry = [];
-[chaosText, corruptText, permanentCorruption, flicker, screenShake, imageWarp, screenDecay, permanentDissolve, messageSwap, permanentDecay].forEach(effect => {
-    const settings = DIRECTOR_EFFECTS[effect.id];
-    if (!settings) {
-        console.warn(`No entry for ${effect.id} in DIRECTOR_EFFECTS`);
-        return;
-    }
-    registry.push({effect, settings});
-});
+[chaosText,
+    corruptText,
+    permanentCorruption,
+    flicker,
+    screenShake,
+    imageWarp,
+    screenDecay,
+    permanentDissolve,
+    messageSwap,
+    permanentDecay,
+    earwig,
+    bannerCorruption,
+    bannerSwitch,
+    bannerSize,
+    bannerStatic].forEach(effect => {
+        const settings = DIRECTOR_EFFECTS[effect.id];
+        if (!settings) {
+            console.warn(`No entry for ${effect.id} in DIRECTOR_EFFECTS`);
+            return;
+        }
+        registry.push({ effect, settings });
+    });
+
+const TEMPORARY_MODES = ['burst', 'once', 'session'];
 
 let running = false;
 let tickTimer = null;
 let quietUntil = 0;
 const cooldownUntil = {};
 const burstTimers = {};
+const loadRolled = new Set();
 
 function _randomBetween(min, max) {
     return min + Math.random() * (max - min);
@@ -42,37 +64,14 @@ function _progress() {
     return Math.max(0, Math.min(1, (intensity - MIN_INTENSITY) / (MAX_INTENSITY - MIN_INTENSITY)));
 }
 
-function _maxConcurrent() {
-    let intensity = stateManager.getIntensity();
-    let max = 0;
-    DIRECTOR.concurrencyTiers.forEach(tier => {
-        if (intensity >= tier.fromLevel) max = tier.max;
-    });
-    return max;
-}
-
-function _countActive() {
-    return registry.filter(entry => {
-        if (!entry.effect.isActive()) return false;
-        return DIRECTOR.countPermanentInCap || entry.settings.mode !== 'permanent';
-    }).length;
-}
-
-function _hasRoom() {
-    return _countActive() < _maxConcurrent();
-}
-
-
-function _gapMs() {
-    return DIRECTOR.gapAtLowestMs + _progress() * (DIRECTOR.gapAtHighestMs - DIRECTOR.gapAtLowestMs);
+function _chanceFor(entry) {
+    const base = DIRECTOR.chanceAtLowest + _progress() * (DIRECTOR.chanceAtHighest - DIRECTOR.chanceAtLowest);
+    const weight = entry.settings.weight ?? 1;
+    return Math.min(1, base * weight);
 }
 
 function _isQuiet() {
     return performance.now() < quietUntil;
-}
-
-function _noteEffectStarted() {
-    quietUntil = performance.now() + _gapMs();
 }
 
 function _getSkipped() {
@@ -80,7 +79,7 @@ function _getSkipped() {
     return new Set(raw.split(',').map(item => item.trim()).filter(Boolean));
 }
 
-function _isAllowed (entry, skipped) {
+function _isAllowed(entry, skipped) {
     return entry.settings.enabled !== false && !skipped.has(entry.effect.id) && !skipped.has('all');
 }
 
@@ -100,33 +99,42 @@ function _clearBurstTimers() {
 }
 
 function _syncPermanent(skipped) {
-    let startedNew = false;
     registry.forEach(entry => {
-        const {effect, settings} = entry;
+        const { effect, settings } = entry;
         if (settings.mode !== 'permanent') return;
         if (effect.isActive() || !_isAllowed(entry, skipped)) return;
         if (effect.restore()) return;
 
-        if (startedNew || _isQuiet() || !_hasRoom()) return;
+        if (_isQuiet()) return;
         if (stateManager.getIntensity() < effect.minIntensity) return;
-        if (effect.start()) {
-            startedNew = true;
-            _noteEffectStarted();
-        }
+        if (Math.random() >= _chanceFor(entry)) return;
+        effect.start();
     });
 }
 
 function _syncAmbient(skipped) {
     registry.forEach(entry => {
         if (entry.settings.mode !== 'ambient') return;
-        const {effect} = entry;
+        const { effect } = entry;
         const eligible = _isEligible(entry, skipped);
 
         if (!eligible && effect.isActive()) {
             effect.stop();
-        } else if (eligible && !effect.isActive() && !_isQuiet() && _hasRoom()) {
-            if (effect.start()) _noteEffectStarted();
+        } else if (eligible && !effect.isActive() && !_isQuiet()) {
+            effect.start();
         }
+    });
+}
+
+function _syncLoad(skipped) {
+    registry.forEach(entry => {
+        const {effect, settings} = entry;
+        if (settings.mode !== 'load') return;
+        if (loadRolled.has(effect.id)) return;
+        if (!_isEligible(entry, skipped)) return;
+
+        loadRolled.add(effect.id);
+        effect.start();
     });
 }
 
@@ -140,7 +148,7 @@ function _endBurst(id) {
 }
 
 function _fire(entry) {
-    const {effect, settings} = entry;
+    const { effect, settings } = entry;
     const started = effect.start();
 
     if (!started) {
@@ -148,26 +156,25 @@ function _fire(entry) {
         return;
     }
 
-    _noteEffectStarted();
-
     if (settings.mode === 'burst') {
         burstTimers[effect.id] = setTimeout(() => _endBurst(effect.id), _pickFromRange(settings.durationMs));
     }
 }
 
 function _rollTemporary(skipped) {
-    if (_isQuiet() || !_hasRoom()) return;
+    if (_isQuiet()) return;
 
     const now = performance.now();
-    const temporary = registry.filter(entry => entry.settings.mode === 'burst' || entry.settings.mode === 'once');
 
-    const chance = DIRECTOR.chanceAtLowest + _progress() * (DIRECTOR.chanceAtHighest - DIRECTOR.chanceAtLowest);
-    if (Math.random() > chance) return;
+    registry.forEach(entry => {
+        if (!TEMPORARY_MODES.includes(entry.settings.mode)) return;
+        if (!_isEligible(entry, skipped)) return;
+        if (entry.effect.isActive()) return;
+        if (now < (cooldownUntil[entry.effect.id] || 0)) return;
+        if (Math.random() >= _chanceFor(entry)) return;
+        _fire(entry);
+    });
 
-    const candidates = temporary.filter(entry => _isEligible(entry, skipped) && !entry.effect.isActive() && now >= (cooldownUntil[entry.effect.id] || 0));
-    if (candidates.length === 0) return;
-
-    _fire(pickRandom(candidates, 1)[0]);
 }
 
 function _roll() {
@@ -206,6 +213,7 @@ function startDirector() {
         const skipped = _getSkipped();
         _syncPermanent(skipped);
         _syncAmbient(skipped);
+        _syncLoad(skipped);
     }
     _scheduleTick(_randomBetween(DIRECTOR.tickMinMs, DIRECTOR.tickMaxMs));
 }
@@ -216,8 +224,8 @@ function stopDirector() {
     tickTimer = null;
     _clearBurstTimers();
 
-    registry.forEach(({effect, settings}) => {
-        if (settings.mode !== 'permanent' && effect.isActive()) effect.stop();
+    registry.forEach(({ effect, settings }) => {
+        if (settings.mode !== 'permanent' && settings.mode !== 'load' && effect.isActive()) effect.stop();
     });
 }
 
@@ -242,6 +250,7 @@ document.addEventListener(EVENT_INTENSITY_CHANGED, (event) => {
     const skipped = _getSkipped();
     _syncPermanent(skipped);
     _syncAmbient(skipped);
+    _syncLoad(skipped);
 });
 
 document.addEventListener(EVENT_INFECTION_CURED, _clearBurstTimers);
@@ -252,4 +261,4 @@ const director = {
     isRunning: () => running,
 };
 
-export {director};
+export { director };

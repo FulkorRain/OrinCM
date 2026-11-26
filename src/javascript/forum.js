@@ -1,3 +1,28 @@
+import { EVENT_INFECTION_CURED, EVENT_INTENSITY_CHANGED, stateManager } from './managers/state-manager.js';
+
+// stateManager.setIntensity(2);
+
+const search = document.querySelector(".search-container");
+const goButton = document.querySelector(".retro-button");
+const originalButtonText = goButton ? goButton.textContent : "GO";
+
+function updateSearchBlock() {
+  if (!search) return;
+
+  const blocked = stateManager.getIntensity() >= 5;
+
+  search.classList.toggle("is-active", blocked);
+  search.inert = blocked;
+  if (goButton) {
+    goButton.textContent = blocked ? "NO" : originalButtonText;
+  }
+}
+
+
+updateSearchBlock();
+document.addEventListener(EVENT_INFECTION_CURED, updateSearchBlock);
+document.addEventListener(EVENT_INTENSITY_CHANGED, updateSearchBlock);
+
 function buildForumIndex() {
   const container = document.getElementById("forumContainer");
   if (!container) return;

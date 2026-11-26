@@ -65,32 +65,51 @@ export const PERMANENT_CORRUPTION = {
 
 export const FLICKER = {
     minIntensity: 1,
-    midFrom: 7,
-    highFrom: 10,
     scanlinesFrom: 8,
     vignetteFrom: 10,
+    bandFrom: 6,
+    frameMs: 70,
+    linesAtLowest: 6,
+    linesAtHighest: 45,
+    maxLineHeight: 3,
+    alphaAtLowest: 0.12,
+    alphaAtHighest: 0.4,
+    barChanceAtLowest: 0.04,
+    barChanceAtHighest: 0.3,
+    maxBarHeight: 40,
+    dimChance: 0.1,
+    dimMax: 0.12,
+    bandHeight: 120,
+    bandSpeed: 0.15,
+    fadeOutMs: 300,
+    zIndex: 9100,
 };
 
 export const SCREEN_SHAKE = {
     minIntensity: 1,
-    midFrom: 6,
-    highFrom: 10,
-    targets: ['#app', 'main']
+    targets: ['#app', 'main'],
+    stepMs: 60,
+    amplitudeAtLowest: 1,
+    amplitudeAtHighest: 5,
+    ghostCount: 3,
+    ghostOpacity: 0.35,
+    ghostSpread: 2,
 };
 
 export const IMAGE_WARP = {
     minIntensity: 1,
     maxImages: 1,
-    intervalMs: 100,
+    intervalAtLowestMs: 2500,
+    intervalAtHighestMs: 200,
     warpSeconds: 0.3,
     resetSeconds: 0.4,
-    scaleXPerLevel: 0.06,
-    scaleYPerLevel: 0.08,
-    skewXPerLevel: 6,
-    skewYPerLevel: 3,
-    huePerLevel: 20,
-    blurPerLevel: 2,
-    saturatePerLevel: 0.5
+    scaleX: 0.06,
+    scaleY: 0.08,
+    skewX: 6,
+    skewY: 3,
+    hue: 20,
+    blur: 2,
+    saturate: 0.5
 };
 
 export const SCREEN_DECAY = {
@@ -112,7 +131,7 @@ export const SCREEN_DECAY = {
 
 export const PERMANENT_DISSOLVE = {
     minIntensity: 2,
-    imageSrc: '/src/assets/images/index_banner.png',
+    imageSrc: '/images/index_banner.png',
     maxCoverage: 0.2,
     coverageCurve: 2,
     secondsForFullScreen: 10,
@@ -128,7 +147,7 @@ export const PERMANENT_DISSOLVE = {
     protectPaddingPx: 10,
     zIndex: 8900,
     fadeOutMs: 600,
-}
+};
 
 export const PERMANENT_DECAY = {
     minIntensity: 5,
@@ -157,16 +176,8 @@ export const DIRECTOR = {
     startDelayMaxMs: 30000,
     tickMinMs: 4000,
     tickMaxMs: 8000,
-    chanceAtLowest: 0.15,
-    chanceAtHighest: 0.5,
-    gapAtLowestMs: 45000,
-    gapAtHighestMs: 20000,
-    concurrencyTiers: [
-        {fromLevel: 1, max: 1},
-        {fromLevel: 5, max: 2},
-        {fromLevel: 9, max: 3},
-    ],
-    countPermanentInCap: false,
+    chanceAtLowest: 0.03,
+    chanceAtHighest: 0.12,
     retryAfterFailMs: 10000,
     skipAttribute: 'data-effects-skip'
 };
@@ -174,11 +185,12 @@ export const DIRECTOR = {
 export const MESSAGE_SWAP = {
     minIntensity: 2,
     messages: ['Something has noticed you'],
-    count: 1,
+    countAtLowest: 1,
+    countAtHighest: 8,
     minTextLength: 30,
     showMinMs: 4000,
     showMaxMs: 9000,
-}
+};
 
 export const LINK_CORRUPTION = {
     selector: '.corruptable-text',
@@ -191,7 +203,7 @@ export const LINK_CORRUPTION = {
     burstMaxMs: 4000,
     pauseMinMs: 5000,
     pauseMaxMs: 9000,
-}
+};
 
 export const BAIT = {
     enabled: true,
@@ -207,6 +219,56 @@ export const BAIT = {
     glitchFraction: 0.65,
 };
 
+export const BANNER = {
+    selector: '[data-banner]',
+    stageClass: 'banner-ad__stage',
+    specialSrc: '/images/banners/special.png',
+    corruptSuffix: '-corrupt',
+}
+
+export const BANNER_CORRUPTION = {
+    minIntensity: 1,
+    corruptChanceAtLowest: 0.05,
+    corruptChanceAthighest: 0.7,
+    specialChanceAtLowest: 0.05,
+    specialChanceAtHighest: 0.3,
+    rollWindowMs: 5000,
+};
+
+export const BANNER_SWITCH = {
+    minIntensity: 1,
+    maxBanners: 1,
+    rules: {
+        normal: {corrupt: 70, special: 30},
+        corrupt: {special: 1},
+        special: {}
+    }
+};
+
+export const BANNER_SIZE = {
+    minIntensity: 3,
+    maxBanners: 1,
+    zoomAtLowest: 2.5,
+    zoomAtHighest: 6,
+    zoomJitter: 0.15,
+    zoomInSeconds: 0.15,
+    zoomOutSeconds: 0.5,
+};
+
+export const BANNER_STATIC = {
+    minIntensity: 6,
+    maxBanners: 1,
+    cellSize: 3,
+    frameMs: 70,
+    alphaAtLowest: 0.35,
+    alphaAtHighest: 0.85,
+    tearChance: 0.25,
+    tearMinFraction: 0.05,
+    tearMaxFraction: 0.2,
+    fadeInSeconds: 0.15,
+    fadeOutSeconds: 0.4,
+};
+
 //DIRECTOR:
 
 const MIN_COOLDOWN = 30000;
@@ -215,15 +277,20 @@ const COOLDOWN = [MIN_COOLDOWN, MAX_COOLDOWN];
 
 export const DIRECTOR_EFFECTS = {
     'chaos-text': { enabled: true, mode: 'once', cooldownMs: COOLDOWN },
-    'text-corruption': { enabled: true, mode: 'burst' },
+    'text-corruption': { enabled: true, mode: 'burst', durationMs: [5000, 10000], cooldownMs: COOLDOWN },
     'flicker': { enabled: true, mode: 'burst', durationMs: [4000, 7000], cooldownMs: COOLDOWN },
-    'screen-shake': { enabled: true, mode: 'burst', durationMs: [1500, 4000], cooldownMs: COOLDOWN },
+    'screen-shake': { enabled: true, mode: 'burst', durationMs: [800, 2000], cooldownMs: COOLDOWN },
     'image-warp': { enabled: true, mode: 'burst', durationMs: [3000, 7000], cooldownMs: COOLDOWN },
     'screen-decay': { enabled: true, mode: 'burst', durationMs: [8000, 15000], cooldownMs: [60000, 120000] },
     'permanent-corruption': { enabled: false, mode: 'permanent' },
-    'permanent-dissolve': { enabled: true, mode: 'permanent' },
+    'dissolve': { enabled: true, mode: 'session' },
     'message-swap': {enabled: true, mode: 'once', cooldownMs: COOLDOWN, },
     'permanent-decay': {enabled: false, mode: 'permanent'},
+    'earwig': {enabled: true, mode: 'burst', durationMs: [30000, 60000], cooldownMs: [60000, 120000]},
+    'banner-corruption': {enabled: true, mode: 'load'},
+    'banner-switch': {enabled: true, mode: 'burst', durationMs: [300, 1500], cooldownMs: [10000, 30000]},
+    'banner-size': {enabled: true, mode: 'burst', durationMs: [3000, 8000], cooldownMs: [30000, 60000]},
+    'banner-static': {enabled: true, mode: 'burst', durationMs: [1500, 4000], cooldownMs: [20000, 50000]}
 };
 
 export const ESCALATION = {
@@ -233,21 +300,21 @@ export const ESCALATION = {
     maxChance: 0.5,
     levelsPerIncrease: 1,
     maxLevelFromVisits: 4,
-}
+};
 
 export const JUMP_PAGES = {
     'mall': {level: 1},
     'jumpscare-404': {level: 8},
-}
+};
 
 
 export const MASTER_SWITCH = {
-    enabled: true, // ON & OFF SWITCH
+    enabled: false, // ON & OFF SWITCH
     allowUrlOverride: true,
     urlParam: 'effects',
     rememberFor: 'session'
-}
+};
 
 export const LOGGING = {
     logLevelChanges: true,
-}
+};

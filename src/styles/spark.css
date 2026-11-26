@@ -1,7 +1,7 @@
 body {
     background-image: url(../assets/images/spark_background.png);
     background-size: 4000px;
-    font-family: 'Times New Roman', Times, serif; 
+    font-family: 'Times New Roman', Times, serif;
     text-align: center;
     margin: 0;
     padding: 20px;
@@ -46,7 +46,7 @@ h1 {
     display: inline-block;
     padding: 5px 10px;
     font-size: 44px;
-    margin-bottom: 250px; 
+    margin-bottom: 250px;
     line-height: 1.2;
     max-width: 50vw;
 }
@@ -58,24 +58,24 @@ footer {
 
 .link-row {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 30px;
 }
 
 a {
-    color: #0000EE; 
+    color: #0000EE;
     text-decoration: none;
     font-size: 20px;
     line-height: 1.2;
 }
 
 a:visited {
-    color: #0000EE; 
+    color: #0000EE;
 }
 
 a:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 
 .archive-row {
@@ -85,11 +85,11 @@ a:hover {
 .pillar-footer {
     display: flex;
     justify-content: center;
-    align-items: stretch; 
+    align-items: stretch;
     gap: 30px;
     width: 100%;
     max-width: 900px;
-    margin: 40px auto; 
+    margin: 40px auto;
     font-family: 'Times New Roman', Times, serif;
 }
 
@@ -102,7 +102,7 @@ a:hover {
 .footer-col {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly; 
+    justify-content: space-evenly;
     text-align: left;
     padding: 10px 0;
 }
@@ -110,7 +110,7 @@ a:hover {
 
 .archived-col {
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     text-align: center;
     padding: 30px 0;
 }
@@ -118,17 +118,17 @@ a:hover {
 .footer-col a {
     color: #0000EE;
     text-decoration: none;
-    font-size: 22px; 
+    font-size: 22px;
     line-height: 1.3;
     font-weight: bold;
 }
 
 .footer-col a:visited {
-    color: #0000EE; 
+    color: #0000EE;
 }
 
 .footer-col a:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 
 .footer-eagle-icon {
@@ -145,4 +145,63 @@ a:hover {
 
 body a {
     font-size: 44px;
+}
+
+@media (max-width: 768px) {
+
+    .pillar-footer {
+        gap: 4px;
+    }
+
+    .pillar-img {
+        height: 180px;
+    }
+
+    .footer-col a {
+        font-size: 12px;
+        line-height: 1.25;
+        margin: 0;
+    }
+
+    .archived-col {
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 0;
+    }
+
+    .footer-eagle-icon {
+        width: 70px;
+        margin-top: 8px;
+    }
+
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+        overflow-x: clip;
+    }
+
+    .rant-box {
+        max-width: 75vw;
+
+    }
+
+    .rant-box,
+    body a {
+        font-size: 30px;
+        margin-bottom: 100px;
+    }
+
+    .thick-line {
+        margin: 10px auto 75px auto
+    }
+
+    .header-eagle-icon {
+        width: 70px;
+    }
+
+    .spark-header {
+        width: 55%;
+    }
+
 }

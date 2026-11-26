@@ -1,0 +1,193 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --plaque-size: 20px;
+  --plaque-width: 30em;
+  --scoop-radius: 1.7em;
+  --rim-width: 0.6em;
+
+  --counter-digits: 6;
+  --counter-font-size: 3.6em;
+  --digit-gap: 0.06em;
+  --cell-divider-width: 0.05em;
+
+  --font-plaque: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-digits: "Tinos", "Times New Roman", Times, serif;
+
+  --wall-light: #94a8b8;
+  --wall-dark: #5f7689;
+
+  --bronze-highlight: #f2d596;
+  --bronze-light: #d6a455;
+  --bronze-rim: #b98542;
+  --bronze-mid: #7a5226;
+  --bronze-dark: #4a2e14;
+  --bronze-shadow: #24140a;
+
+  --window-frame: #2a170a;
+  --cell-top: #361712;
+  --cell-orange: #eb8432;
+  --cell-glow: #ffb047;
+  --cell-amber: #ba6b2a;
+  --cell-brown: #5a2f19;
+  --cell-bottom: #170d04;
+  --cell-divider: #1d1008;
+  --digit-color: #0d0603;
+
+  --bronze-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='blotch' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.035' numOctaves='5' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.14  0 0 0 0 0.07  0 0 0 0 0.02  1.7 0 0 0 -0.62'/%3E%3C/filter%3E%3Cfilter id='speck' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.96  0 0 0 0 0.8  0 0 0 0 0.5  1.3 0 0 0 -0.52'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23blotch)'/%3E%3Crect width='100%25' height='100%25' filter='url(%23speck)' opacity='0.22'/%3E%3C/svg%3E");
+}
+
+html,
+body {
+  margin: 0;
+}
+
+.plaque-page {
+  min-height: 100vh;
+  font-family: var(--font-plaque);
+  background:
+    radial-gradient(ellipse at 50% 30%, var(--wall-light), var(--wall-dark) 90%);
+}
+
+.plaque-page__stage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.plaque {
+  width: var(--plaque-width);
+  font-size: min(var(--plaque-size), 3vw);
+  filter:
+    drop-shadow(0 0.1em 0.08em rgba(10, 18, 28, 0.55))
+    drop-shadow(0 0.6em 0.6em rgba(10, 18, 28, 0.45));
+}
+
+.plaque__rim,
+.plaque__face {
+  mask:
+    radial-gradient(circle at var(--mask-o) var(--mask-o), transparent var(--mask-r), #000 calc(var(--mask-r) + 0.5px)) top left,
+    radial-gradient(circle at calc(100% - var(--mask-o)) var(--mask-o), transparent var(--mask-r), #000 calc(var(--mask-r) + 0.5px)) top right,
+    radial-gradient(circle at var(--mask-o) calc(100% - var(--mask-o)), transparent var(--mask-r), #000 calc(var(--mask-r) + 0.5px)) bottom left,
+    radial-gradient(circle at calc(100% - var(--mask-o)) calc(100% - var(--mask-o)), transparent var(--mask-r), #000 calc(var(--mask-r) + 0.5px)) bottom right;
+  mask-size: 51% 51%;
+  mask-repeat: no-repeat;
+  -webkit-mask:
+    radial-gradient(circle at var(--mask-o) var(--mask-o), transparent var(--mask-r), #000 calc(var(--mask-r) + 0.5px)) top left,
+    radial-gradient(circle at calc(100% - var(--mask-o)) var(--mask-o), transparent var(--mask-r), #000 calc(var(--mask-r) + 0.5px)) top right,
+    radial-gradient(circle at var(--mask-o) calc(100% - var(--mask-o)), transparent var(--mask-r), #000 calc(var(--mask-r) + 0.5px)) bottom left,
+    radial-gradient(circle at calc(100% - var(--mask-o)) calc(100% - var(--mask-o)), transparent var(--mask-r), #000 calc(var(--mask-r) + 0.5px)) bottom right;
+  -webkit-mask-size: 51% 51%;
+  -webkit-mask-repeat: no-repeat;
+}
+
+.plaque__rim {
+  --mask-r: var(--scoop-radius);
+  --mask-o: 0px;
+  padding: var(--rim-width);
+  background:
+    var(--bronze-grain),
+    linear-gradient(135deg, var(--bronze-highlight) 0%, var(--bronze-light) 28%, var(--bronze-rim) 62%, var(--bronze-mid) 100%);
+  box-shadow:
+    inset 0.07em 0.07em 0 rgba(255, 236, 192, 0.75),
+    inset -0.07em -0.07em 0 rgba(36, 20, 10, 0.5);
+}
+
+.plaque__face {
+  --mask-r: calc(var(--scoop-radius) + var(--rim-width));
+  --mask-o: calc(var(--rim-width) * -1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
+  padding: 1.3em 3.6em 1.5em;
+  background:
+    var(--bronze-grain),
+    radial-gradient(ellipse at 28% 15%, rgba(255, 222, 160, 0.34), transparent 60%),
+    linear-gradient(180deg, var(--bronze-mid) 0%, var(--bronze-dark) 130%);
+  box-shadow:
+    inset 0.16em 0.16em 0.22em rgba(10, 5, 2, 0.65),
+    inset -0.07em -0.07em 0.1em rgba(255, 222, 160, 0.3);
+}
+
+.plaque__screw {
+  position: absolute;
+  top: 50%;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  border-radius: 50%;
+  background: radial-gradient(circle at 55% 60%, #080402 0 50%, #1d1008 100%);
+  box-shadow:
+    inset 0.1em 0.12em 0.16em rgba(0, 0, 0, 0.9),
+    0.06em 0.07em 0 rgba(255, 225, 170, 0.5),
+    -0.04em -0.04em 0 rgba(0, 0, 0, 0.45);
+}
+
+.plaque__screw--left {
+  left: 1.3em;
+}
+
+.plaque__screw--right {
+  right: 1.3em;
+}
+
+.plaque__title,
+.plaque__subtitle {
+  margin: 0;
+  font-family: var(--font-plaque);
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--bronze-light);
+  text-shadow:
+    -0.02em -0.02em 0 var(--bronze-highlight),
+    0.04em 0.05em 0 var(--bronze-shadow),
+    0.08em 0.1em 0.12em rgba(0, 0, 0, 0.5);
+}
+
+.plaque__title {
+  font-size: 2.1em;
+  line-height: 1.1;
+  letter-spacing: 0.1em;
+}
+
+.plaque__subtitle {
+  font-size: 1.05em;
+  letter-spacing: 0.16em;
+}
+
+.plaque__window {
+  padding: 0.35em;
+  border-radius: 0.2em;
+  background: var(--window-frame);
+  box-shadow:
+    inset 0 0.12em 0.25em rgba(0, 0, 0, 0.85),
+    0 0.07em 0 rgba(255, 225, 170, 0.55),
+    0 -0.05em 0 rgba(10, 5, 2, 0.6);
+}
+
+.counter__value {
+  --cell-width: calc(1ch + var(--digit-gap));
+  display: block;
+  width: calc(var(--counter-digits) * var(--cell-width));
+  overflow: hidden;
+  white-space: pre;
+  font-family: var(--font-digits);
+  font-size: var(--counter-font-size);
+  font-weight: 700;
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 1.1;
+  letter-spacing: var(--digit-gap);
+  text-indent: calc(var(--digit-gap) / 2);
+  color: var(--digit-color);
+  text-shadow: 0 0.02em 0 rgba(255, 190, 110, 0.35);
+  background:
+    linear-gradient(90deg, transparent calc(100% - var(--cell-divider-width)), var(--cell-divider) 0) 0 0 / var(--cell-width) 100% repeat-x,
+    linear-gradient(180deg, var(--cell-top) 0%, var(--cell-orange) 14%, var(--cell-glow) 37%, var(--cell-amber) 51%, var(--cell-brown) 65%, var(--cell-bottom) 100%) 0 0 / var(--cell-width) 100% repeat-x;
+  box-shadow: inset 0 0.08em 0.2em rgba(0, 0, 0, 0.55);
+}

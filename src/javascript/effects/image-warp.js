@@ -1,5 +1,5 @@
 import {gsap} from 'gsap';
-import {stateManager, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager.js';
+import {stateManager, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED, MIN_INTENSITY, MAX_INTENSITY} from '../managers/state-manager.js';
 import {getImageTargets, isEffectsEnabled} from '../managers/targets.js';
 import { IMAGE_WARP as SETTINGS} from '../managers/effect-config.js';
 
@@ -15,34 +15,44 @@ function _randomBetween(min, max) {
     return min + Math.random() * (max - min);
 }
 
-function _warpImage(img, n) {
-    const hue = _randomBetween(-SETTINGS.huePerLevel, SETTINGS.huePerLevel) * n;
-    const blur = _randomBetween(0, SETTINGS.blurPerLevel) * n;
-    const saturate = Math.max(0, 1 + _randomBetween(-SETTINGS.saturatePerLevel, SETTINGS.saturatePerLevel) * n);
+function _getIntervalMs() {
+    const intensity = stateManager.getIntensity();
+    const progress = Math.max(0, Math.min(1, (intensity - MIN_INTENSITY) / (MAX_INTENSITY - MIN_INTENSITY)));
+    const base = SETTINGS.intervalAtLowestMs + progress * (SETTINGS.intervalAtHighestMs - SETTINGS.intervalAtLowestMs);
+    return base * _randomBetween(0.7, 1.3);
+}
+
+function _warpImage(img) {
+    const hue = _randomBetween(-SETTINGS.hue, SETTINGS.hue);
+    const blur = _randomBetween(0, SETTINGS.blur);
+    const saturate = Math.max(0, 1 + _randomBetween(-SETTINGS.saturate, SETTINGS.saturate));
 
     gsap.to(img, {
         duration: SETTINGS.warpSeconds,
-        scaleX: 1 + _randomBetween(-SETTINGS.scaleXPerLevel, SETTINGS.scaleXPerLevel) * n,
-        scaleY: 1 + _randomBetween(-SETTINGS.scaleYPerLevel, SETTINGS.scaleYPerLevel) * n,
-        skewX: _randomBetween(-SETTINGS.skewXPerLevel, SETTINGS.skewXPerLevel) * n,
-        skewY: _randomBetween(-SETTINGS.skewYPerLevel, SETTINGS.skewYPerLevel) * n,
+        scaleX: 1 + _randomBetween(-SETTINGS.scaleX, SETTINGS.scaleX),
+        scaleY: 1 + _randomBetween(-SETTINGS.scaleY, SETTINGS.scaleY),
+        skewX: _randomBetween(-SETTINGS.skewX, SETTINGS.skewX),
+        skewY: _randomBetween(-SETTINGS.skewY, SETTINGS.skewY),
         filter: `hue-rotate(${hue}deg) blur(${blur}px) saturate(${saturate})`,
         ease: 'power1.inOut',
+        yoyo: true,
+        repeat: 1,
         overwrite: 'auto'
     });
 }
 
 function _tick() {
-    const n = stateManager.getIntensity();
+    if (!isActive) return;
     targets.forEach(img => {
-        if (img.isConnected) _warpImage(img, n);
+        if (img.isConnected) _warpImage(img);
     });
+    tickTimer = setTimeout(_tick, _getIntervalMs());
 }
 
 function stop({notify = false} = {}) {
     if (!isActive) return;
 
-    clearInterval(tickTimer);
+    clearTimeout(tickTimer);
     tickTimer = null;
 
     targets.forEach(img => {
@@ -82,7 +92,6 @@ function start(root) {
 
     gsap.set(targets, {filter: NEUTRAL_FILTER});
     _tick();
-    tickTimer = setInterval(_tick, SETTINGS.intervalMs);
     return true;
 }
 

@@ -3,7 +3,7 @@ import { PERMANENT_DISSOLVE as SETTINGS } from '../managers/effect-config.js';
 import { isEffectsEnabled } from '../managers/targets.js';
 import { createSeededRandom, newSeed } from '../managers/seeded-random.js';
 
-const EFFECT_ID = 'permanent-dissolve';
+const EFFECT_ID = 'dissolve';
 
 const ALIVE = 0;
 const DYING = 1;
@@ -389,7 +389,7 @@ function _onResize() {
     }, 200);
 }
 
-function _begin(withSeed, instant) {
+function _begin(withSeed) {
     seed = withSeed;
     isActive = true;
     ready = false;
@@ -410,12 +410,11 @@ function _begin(withSeed, instant) {
         window.addEventListener('load', _scheduleMaskRefresh);
         if (document.fonts) document.fonts.ready.then(_scheduleMaskRefresh);
         _scheduleMaskRefresh();
-        if (instant) _paintInstant(_getTargetCells());
         _wake();
     });
 }
 
-function _shutdown({ notify = false, clearSaved = false } = {}) {
+function _shutdown({ notify = false} = {}) {
     if (!isActive) return;
 
     runId++;
@@ -437,7 +436,6 @@ function _shutdown({ notify = false, clearSaved = false } = {}) {
     ready = false;
     isActive = false;
 
-    if (clearSaved) stateManager.clearEffectState(EFFECT_ID);
     if (notify) {
         document.dispatchEvent(new CustomEvent('effect-ended', {
             detail: { id: EFFECT_ID }
@@ -450,25 +448,14 @@ function start() {
     if (!isEffectsEnabled()) return false;
     if (stateManager.getIntensity() === 0) return false;
 
-    const freshSeed = newSeed();
-    stateManager.saveEffectState(EFFECT_ID, { seed: freshSeed });
-    _begin(freshSeed, false);
+    _begin(newSeed());
     return true;
 }
 
 function stop() {
-    _shutdown({ clearSaved: true });
+    _shutdown();
 }
 
-function restore() {
-    if (isActive) return false;
-    if (!isEffectsEnabled()) return false;
-    if (stateManager.getIntensity() === 0) return false;
-    const saved = stateManager.loadEffectState(EFFECT_ID);
-    if (!saved || !Number.isFinite(saved.seed)) return false;
-    _begin(saved.seed, true);
-    return true;
-}
 
 function permanentDissolve() {
     if (isActive) stop();
@@ -480,7 +467,6 @@ permanentDissolve.id = EFFECT_ID;
 permanentDissolve.minIntensity = SETTINGS.minIntensity;
 permanentDissolve.start = start;
 permanentDissolve.stop = stop;
-permanentDissolve.restore = restore;
 permanentDissolve.isActive = () => isActive;
 
 document.addEventListener(EVENT_INFECTION_CURED, () => _shutdown({ notify: true }));

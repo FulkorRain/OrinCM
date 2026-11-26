@@ -33,7 +33,7 @@ function _scramble(text, count) {
 
 function _findTargets() {
     let link = document.querySelector(SETTINGS.selector);
-    if (!link) return;
+    if (!link) return [];
     return getTextTargets({root: link, max: Infinity, onlyVisible: false});
 }
 

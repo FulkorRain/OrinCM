@@ -18,9 +18,10 @@ import { flicker } from './effects/flicker.js';
 import { screenShake } from './effects/screen-shake.js';
 import { imageWarp } from './effects/image-warp.js';
 import { screenDecay } from './effects/screen-decay.js';
-import { permanentDissolve } from './effects/permanent-dissolve.js';
+import { permanentDissolve } from './effects/dissolve.js';
 import { messageSwap } from './effects/message-swap.js';
 import { permanentDecay } from './effects/permanent_decay.js';
+import { earwig } from './effects/earwig.js';
 
 const LAB = {
     startLevel: 5,
@@ -86,6 +87,11 @@ const EFFECTS = [
         effect: permanentDecay,
         name: 'Permanent Decay',
         info: 'One section of the page slowly fills with dead squares. Saved across reloads.'
+    },
+    {
+        effect: earwig,
+        name: 'Earwig',
+        info: 'Bug crawling on and off the screen.'
     }
 ];
 

@@ -1,9 +1,9 @@
-img:not(.global-lightbox-content) {
+img.lightbox-img:not(.global-lightbox-content) {
   cursor: zoom-in;
   transition: opacity 0.2s ease;
 }
 
-img:not(.global-lightbox-content):hover {
+img.lightbox-img:not(.global-lightbox-content):hover {
   opacity: 0.9;
 }
 

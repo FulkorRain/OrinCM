@@ -1,3 +1,9 @@
+:root {
+    --banner-min-height: 120px;
+    --banner-max-height: 400px;
+    --page-margin: 8px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,20 +12,11 @@
 
 
 body {
-    margin: 8px;
+    margin: var(--page-margin);
     background-color: #c3cdb1;
 }
 
-.header-container img {
-    width: 100%;
-    height: 30vh;
-    margin-bottom: 10px;
-    border: 2px solid black;
-    /* background-image: url("../assets/images/news_banner.png");
-    background-size: cover;
-    background-repeat:no-repeat; */
-    /* REMOVE IMG */
-}
+
 
 .left-sidebar,
 .right-sidebar {
@@ -30,22 +27,30 @@ body {
 .left-sidebar ul,
 .right-sidebar ul {
     display: grid;
-    place-items:center;
-    grid-template-columns: 1fr;
+    place-items: center;
+    grid-template-columns: 2fr;
     gap: 2rem;
     list-style: none;
-    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
     background-color: #b7b9a8;
-box-shadow: 
-  0 0 0 2px #999,
-  0 0 0 3px lightgray,
-  0 0 0 5px  black; 
+    box-shadow:
+        0 0 0 2px #999,
+        0 0 0 3px lightgray,
+        0 0 0 5px black;
     /* border: 2px solid #333; 
     
     outline: 2px solid #999;
     outline-offset: -4px; 
     
     box-shadow: inset 1px 1px 0px #fff, 2px 2px 0px #000; */
+}
+
+#deerSkull {
+    display: block;
+    margin: 30px auto 0;
+    max-width: 100%;
+    height: 200px;
 }
 
 .left-sidebar li,
@@ -75,17 +80,17 @@ main {
 .comment-container {
     margin-top: 50px;
     padding-top: 20px;
-    font-size: 0.9rem; 
+    font-size: 0.9rem;
 
-    max-width: 1250px; 
-    width: 100%; 
+    max-width: 1250px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
 .comment-entry {
     margin-bottom: 20px;
-    line-height: 1.2; 
+    line-height: 1.2;
 }
 
 .comment-entry p {
@@ -100,15 +105,15 @@ main {
 
 
 .news-img {
-  width: 50%;
-  height: auto;
-  align-self: center;
+    width: 50%;
+    height: auto;
+    align-self: center;
 }
 
 .news-img-pub {
-  width: 25%;
-  height: auto;
-  align-self: center;
+    width: 25%;
+    height: auto;
+    align-self: center;
 }
 
 #signup-button {
@@ -149,7 +154,7 @@ main {
     margin-bottom: 35px;
 }
 
-.obituary-body + .obituary-head {
+.obituary-body+.obituary-head {
     border-top: 1px solid black;
     padding-top: 25px;
 }
@@ -159,6 +164,7 @@ main {
 }
 
 @media (max-width: 768px) {
+
     .content {
         flex-direction: column;
     }
@@ -185,14 +191,44 @@ main {
 
     .news-img {
         width: 100%;
-        height:auto;
+        height: auto;
     }
 }
 
 #user-email::placeholder {
     text-align: center;
-  }
+}
 
-  #user-email::-webkit-input-placeholder { text-align: center; }
-  #user-email::-moz-placeholder { text-align: center; }
-  #user-email:-ms-input-placeholder { text-align: center; }
+#user-email::-webkit-input-placeholder {
+    text-align: center;
+}
+
+#user-email::-moz-placeholder {
+    text-align: center;
+}
+
+#user-email:-ms-input-placeholder {
+    text-align: center;
+}
+
+.header-container {
+    height: auto;
+    min-height: 0;
+}
+
+.header-container img {
+    display: block;
+    box-sizing: border-box;
+    width: calc(100% + var(--page-margin) * 2);
+    height: clamp(var(--banner-min-height), 25vw, var(--banner-max-height));
+    object-fit: cover;
+    object-position: right center;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    margin-left: calc(-1 * var(--page-margin));
+    margin-right: calc(-1 * var(--page-margin));
+    /* background-image: url("../assets/images/news_banner.png");
+    background-size: cover;
+    background-repeat:no-repeat; */
+    /* REMOVE IMG */
+}

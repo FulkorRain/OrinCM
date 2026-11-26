@@ -1,4 +1,4 @@
-import {stateManager, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager.js';
+import {stateManager, MAX_INTENSITY, EVENT_INTENSITY_CHANGED, EVENT_INFECTION_CURED} from '../managers/state-manager.js';
 import {getTextTargets, showRestingText, pickRandom, isEffectsEnabled } from '../managers/targets.js';
 import {MESSAGE_SWAP as SETTINGS} from '../managers/effect-config.js';
 
@@ -10,6 +10,12 @@ let targets = [];
 
 function _randomBetween(min, max) {
     return min + Math.random() * (max - min);
+}
+
+function _getCount(){
+    const intensity = stateManager.getIntensity();
+    const progress = Math.max(0, Math.min(1, (intensity - SETTINGS.minIntensity) / (MAX_INTENSITY - SETTINGS.minIntensity)));
+    return Math.max(1, Math.round(SETTINGS.countAtLowest + progress * (SETTINGS.countAtHighest - SETTINGS.countAtLowest)));
 }
 
 function _isEligible(node) {
@@ -42,7 +48,7 @@ function start(root) {
     const eligible = getTextTargets({root, max: Infinity}).filter(_isEligible);
     if (eligible.length === 0) return false;
 
-    targets = pickRandom(eligible, SETTINGS.count);
+    targets = pickRandom(eligible, _getCount());
     targets.forEach(node => {
         const original = node.nodeValue;
         const leading = original.match(/^\s*/)[0];
