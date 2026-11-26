@@ -141,3 +141,89 @@ a:hover {
     width: 120px;
     height: auto;
 }
+
+/* ---------- Infection scares ---------- */
+
+.spark-pending body {
+    visibility: hidden;
+}
+
+/* Low infection: now and then the grid loads with its colours swapped.
+   1920x1080 keeps the squares the same size as the normal background. */
+.spark-swapped body {
+    background-color: #f4f0ec;
+    background-image: url(../assets/images/spark_background_swapped.png);
+    background-size: 1920px 1080px;
+}
+
+/* High infection: lights out */
+.lights-out-text,
+.bug-zone {
+    display: none;
+}
+
+.spark-lights-out body {
+    background-color: #100b0b;
+    background-image: url(../assets/images/spark_background_dark.png);
+    /* scaled so the squares match the normal background */
+    background-size: 1032px 580px;
+}
+
+.spark-lights-out .rant-box {
+    display: none;
+}
+
+.spark-lights-out .lights-out-text {
+    display: block;
+    margin: 0;
+    font-size: min(44px, 6.5vw);
+    line-height: 1.6;
+    color: #c4c4c4;
+}
+
+.spark-lights-out .bug-zone {
+    display: block;
+    position: relative;
+    width: min(92vw, 1100px);
+    height: 250px;
+}
+
+/* the pillar images have solid white backdrops, so let them sink into the dark */
+.spark-lights-out .pillar-img {
+    mix-blend-mode: multiply;
+}
+
+.earwig-ball {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    /* lower brightness = harder to spot */
+    filter: brightness(0.3) saturate(0.7);
+}
+
+.earwig-ball img,
+.earwig-runner {
+    width: 80px;
+    height: 80px;
+    pointer-events: none;
+    user-select: none;
+}
+
+.earwig-ball img {
+    position: absolute;
+    left: 35px;
+    top: 35px;
+}
+
+.earwig-runner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    will-change: transform;
+}

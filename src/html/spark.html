@@ -5,21 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Irreplaceable Spark</title>
     <link rel="stylesheet" href="../styles/spark.css">
-    <script src = "../javascript/spark.js" defer></script>
+    <script>
+        // Keeps the lit page from flashing before spark-scare.js picks a version.
+        try {
+            if (Number(localStorage.getItem('golem_spooky_intensity')) > 0) {
+                var root = document.documentElement;
+                root.classList.add('spark-pending');
+                setTimeout(function () { root.classList.remove('spark-pending'); }, 2000);
+            }
+        } catch (e) {}
+    </script>
+    <script type="module" src="../javascript/spark.js"></script>
+    <!-- Must stay above effect-boot.js so it can pause the random effects first -->
+    <script type="module" src="../javascript/spark-scare.js"></script>
     <script type="module" src="../javascript/managers/effect-boot.js"></script>
 </head>
 <body data-page-id="spark">
 
     <header>
-        <img src="../assets/images/spark_left_wolf.gif" alt="Left Eagle Flame" class="header-eagle-icon">
+        <img src="../assets/images/spark_left_wolf.gif" alt="Left Eagle Flame" class="header-eagle-icon" data-torch="left">
         <!-- EDITABLE -->
         <img src = "../assets/images/spark_header.gif" alt = "Spark Header" class = "spark-header">
-        <img src="../assets/images/spark_right_wolf.gif " alt="Right Eagle Flame" class="header-eagle-icon">
+        <img src="../assets/images/spark_right_wolf.gif" alt="Right Eagle Flame" class="header-eagle-icon" data-torch="right">
     </header>
 
     <hr class="thick-line">
 
     <main>
+        <p class="lights-out-text" data-no-effects>
+            SEARCH FOR THE TRUTH<br>
+            SEARCH FOR TRUTH<br>
+            SEARCH TRUTH<br>
+            TRUTH
+        </p>
+        <div class="bug-zone"></div>
+
         <div class="rant-box">
             <!-- EDITABLE -->
             <div id = "home-content" class = "content-page">
@@ -107,7 +127,7 @@
 
         <div class="footer-col archived-col">
             <a href="./404pages/diary-404.html">Archived</a>
-            <img src="../assets/images/spark_right_wolf.gif" alt="Flaming Eagle" class="footer-eagle-icon">
+            <img src="../assets/images/spark_right_wolf.gif" alt="Flaming Eagle" class="footer-eagle-icon" data-torch="right">
         </div>
     </footer>
 

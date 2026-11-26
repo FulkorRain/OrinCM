@@ -5,6 +5,15 @@
   var FRAME_INTERVAL = 120;        
   var SPEED_MIN = 25;             
   var SPEED_MAX = 65;              
+  var SPRINT_CHANCE = 0.25;       // after a direction change: motor off
+  var SPRINT_MIN = 120;
+  var SPRINT_MAX = 180;
+  var DAWDLE_CHANCE = 0.25;       // ...or take its time
+  var DAWDLE_MIN = 10;
+  var DAWDLE_MAX = 20;
+  var NORMAL_SPEED = 45;          // speed at which legs move every FRAME_INTERVAL
+  var FRAME_INTERVAL_MIN = 50;
+  var FRAME_INTERVAL_MAX = 220;
   var DIR_CHANGE_MIN = 1500;      
   var DIR_CHANGE_MAX = 4000;
   var PAUSE_CHANCE = 0.3;          
@@ -43,6 +52,13 @@
 
   function rand(min, max) {
     return Math.random() * (max - min) + min;
+  }
+
+  function pickSpeed() {
+    var roll = Math.random();
+    if (roll < SPRINT_CHANCE) return rand(SPRINT_MIN, SPRINT_MAX);
+    if (roll < SPRINT_CHANCE + DAWDLE_CHANCE) return rand(DAWDLE_MIN, DAWDLE_MAX);
+    return rand(SPEED_MIN, SPEED_MAX);
   }
 
   function degToRad(deg) {
@@ -158,7 +174,7 @@
 
     function pickNewDirection() {
       angle = rand(0, Math.PI * 2);
-      speed = rand(SPEED_MIN, SPEED_MAX);
+      speed = pickSpeed();
     }
 
     function scheduleDirectionChange() {
@@ -187,6 +203,7 @@
     function beginLeaving() {
       clearWanderTimers();
       state = 'leaving';
+      speed = Math.max(speed, SPEED_MIN); // don't crawl off screen for ages
 
       var distLeft = x;
       var distRight = window.innerWidth - (x + SIZE);
@@ -246,7 +263,11 @@
         changed = true;
       }
 
-      if (timestamp - lastFrameTime > FRAME_INTERVAL) {
+      // legs keep pace with the body
+      var interval = Math.min(FRAME_INTERVAL_MAX,
+        Math.max(FRAME_INTERVAL_MIN, FRAME_INTERVAL * NORMAL_SPEED / speed));
+
+      if (timestamp - lastFrameTime > interval) {
         frameIndex = (frameIndex + 1) % FRAMES_PER_DIRECTION;
         lastFrameTime = timestamp;
         changed = true;
