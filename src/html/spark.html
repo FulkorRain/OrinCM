@@ -6,7 +6,6 @@
     <title>The Irreplaceable Spark</title>
     <link rel="stylesheet" href="../styles/spark.css">
     <script>
-        // Keeps the lit page from flashing before spark-scare.js picks a version.
         try {
             if (Number(localStorage.getItem('golem_spooky_intensity')) > 0) {
                 var root = document.documentElement;
@@ -16,7 +15,6 @@
         } catch (e) {}
     </script>
     <script type="module" src="../javascript/spark.js"></script>
-    <!-- Must stay above effect-boot.js so it can pause the random effects first -->
     <script type="module" src="../javascript/spark-scare.js"></script>
     <script type="module" src="../javascript/managers/effect-boot.js"></script>
     <script type="module" src="../javascript/haven-popup.js"></script>

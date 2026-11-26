@@ -1,11 +1,12 @@
 const THREAD_PAGE = "thread.html";
+const FORUM_404_PATH = new URL("404pages/forum-404.html", window.location.href).pathname;
 
 const PAGINATION = {
   totalPages: 10,
   currentPage: 1,
   prevLabel: "< Previous",
   nextLabel: "Next >",
-  defaultRedirect: "/src/html/404pages/forum-404.html",
+  defaultRedirect: FORUM_404_PATH,
 }
 
 const PUBLIC_THREADS = [
@@ -356,7 +357,7 @@ const SEARCH_THREADS = [
   {
     type: "redirect",
     keywords: ["triptych"],
-    redirect: "/src/html/404pages/forum-404.html"
+    redirect: FORUM_404_PATH
   },
 
   {

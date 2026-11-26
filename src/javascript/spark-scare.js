@@ -1,12 +1,11 @@
-// Spark page scares, driven by the site's infection level (read only).
 import { stateManager, EVENT_INTENSITY_CHANGED } from './managers/state-manager.js';
 import { isEffectsEnabled } from './managers/targets.js';
 import { createEarwigBalls } from './spark-earwigs.js';
 import { HIGH_INFECTION } from './scare-settings.js';
 
 const SETTINGS = {
-    lightsOutFrom: HIGH_INFECTION, // loads the dark page
-    swappedChance: 0.25, // below that level, chance per visit of the swapped background
+    lightsOutFrom: HIGH_INFECTION,
+    swappedChance: 0.25,
 };
 
 const TORCHES_OUT = {

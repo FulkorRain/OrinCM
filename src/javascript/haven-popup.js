@@ -4,7 +4,6 @@ import { isEffectsEnabled } from './managers/targets.js';
 import { SHELF_SEEN_KEY } from './scare-settings.js';
 
 const DOLL_SRC = new URL('../assets/images/crawling_doll.gif', import.meta.url).href;
-// swap the file (any size or shape) and update the text when the final art arrives
 const POPUP_SRC = new URL('../assets/images/haven_alert_popup.png', import.meta.url).href;
 const POPUP_TEXT = 'Emergency Alert System. Something has noticed you. Immediately cease all internet activity and deauthenticate all modems and routers.';
 

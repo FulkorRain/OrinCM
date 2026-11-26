@@ -112,7 +112,7 @@ export const SCREEN_DECAY = {
 
 export const PERMANENT_DISSOLVE = {
     minIntensity: 8,
-    imageSrc: '/src/assets/images/index_banner.png',
+    imageSrc: new URL('../../assets/images/index_banner.png', import.meta.url).href,
     maxCoverage: 0.2,
     coverageCurve: 2,
     secondsForFullScreen: 10,

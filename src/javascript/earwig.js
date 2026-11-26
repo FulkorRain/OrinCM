@@ -47,7 +47,7 @@
       if (p.charAt(p.length - 1) !== '/') p += '/';
       return p;
     }
-    return '../../images/earwig/'; // public/images/earwig, from a page in src/html
+    return '../../images/earwig/';
   }
 
   function rand(min, max) {
@@ -203,7 +203,7 @@
     function beginLeaving() {
       clearWanderTimers();
       state = 'leaving';
-      speed = Math.max(speed, SPEED_MIN); // don't crawl off screen for ages
+      speed = Math.max(speed, SPEED_MIN);
 
       var distLeft = x;
       var distRight = window.innerWidth - (x + SIZE);

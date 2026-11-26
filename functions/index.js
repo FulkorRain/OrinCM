@@ -4,9 +4,11 @@ const {defineSecret} = require('firebase-functions/params');
 const apiKey = defineSecret('EMAILOCTOPUS_API_KEY');
 const listId = defineSecret('EMAILOCTOPUS_LIST_ID');
 
-const ALLOWED_ORIGINS = [
-    "https://localhost:5173", //TODO: Add github link
-];
+const SITE_URLS = {
+    "https://fulkorrain.github.io": "https://fulkorrain.github.io/OrinCM",
+    "https://localhost:5173": "https://localhost:5173",
+};
+const ALLOWED_ORIGINS = Object.keys(SITE_URLS);
 
 exports.subscribe = onRequest(
     {
@@ -75,8 +77,8 @@ const PRODUCTS = {
     "super-villians-game": {name: "SuperVillians - Game", priceCents: 999, physical: true},
 }
 
-const SUCCESS_PATH = "/success.html";
-const CANCEL_PATH = "/checkout.html";
+const SUCCESS_PATH = "/src/html/success.html";
+const CANCEL_PATH = "/src/html/checkout.html";
 
 const app = express();
 app.use(cors({origin: true}));
@@ -120,8 +122,8 @@ app.post("/create-checkout-session", async (req, res) => {
             ... (needsShipping && {
                 shipping_address_collection: {allowed_countries: SHIPPING_COUNTRIES}
             }),
-            success_url: `${origin}${SUCCESS_PATH}`,
-            cancel_url: `${origin}${CANCEL_PATH}`
+            success_url: `${SITE_URLS[origin]}${SUCCESS_PATH}`,
+            cancel_url: `${SITE_URLS[origin]}${CANCEL_PATH}`
         });
 
         res.json({url: session.url});

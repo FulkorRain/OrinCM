@@ -5,10 +5,8 @@ import { createLogger, defineConfig } from 'vite';
 
 const root = dirname(fileURLToPath(import.meta.url));
 
-// developer test pages, left out of the live site
 const TEST_PAGES = ['test.html', 'spooky.html', 'dissolve-test.html'];
 
-// every page gets built, so new pages in src/html are picked up automatically
 const pages = [
     resolve(root, 'index.html'),
     ...readdirSync(resolve(root, 'src/html'), { recursive: true })
@@ -16,8 +14,6 @@ const pages = [
         .map(file => resolve(root, 'src/html', file)),
 ];
 
-// Vite only bundles type="module" scripts, and it can't follow file paths that
-// are written inside JavaScript. Both are copied to dist/ at the same paths.
 function copyUnbundledFiles() {
     let outDir;
     const copy = file => cpSync(file, join(outDir, relative(root, file)), { recursive: true });
@@ -43,7 +39,6 @@ function copyUnbundledFiles() {
     };
 }
 
-// hide Vite's "can't be bundled" warning, since those scripts are copied above
 const logger = createLogger();
 const warn = logger.warn;
 logger.warn = (message, options) => {

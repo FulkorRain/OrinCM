@@ -1,4 +1,3 @@
-// Wriggling balls of earwigs for the Spark page. Uses the same sprites as earwig.js.
 const DIRECTIONS = [
     ['east', 'E'], ['south-east', 'SE'], ['south', 'S'], ['south-west', 'SW'],
     ['west', 'W'], ['north-west', 'NW'], ['north', 'N'], ['north-east', 'NE'],
@@ -8,7 +7,6 @@ const FRAMES = DIRECTIONS.map(([name, code]) => [1, 2, 3, 4].map(
     i => new URL(`../assets/images/earwig/${name}/earwig${i}_${code}.png`, import.meta.url).href
 ));
 
-// where a ball can sit, as % across the page: always off-centre
 const SLOTS = [[4, 14], [20, 30], [70, 80], [86, 96]];
 const BALL_SIZE = 150;
 const BUG_SIZE = 80;
@@ -18,7 +16,7 @@ const HUDDLE_RADIUS = 28;
 const FRAME_MS = 110;
 const TURN_MIN_MS = 300;
 const TURN_MAX_MS = 1100;
-const RUN_SPEED_MIN = 380; // px per second
+const RUN_SPEED_MIN = 380;
 const RUN_SPEED_MAX = 750;
 const RUN_FRAME_MS = 55;
 
@@ -47,7 +45,6 @@ function createBug(parent) {
     img.alt = '';
     img.draggable = false;
 
-    // stays put inside the ball, only legs and heading change
     const x = rand(-HUDDLE_RADIUS, HUDDLE_RADIUS);
     const y = rand(-HUDDLE_RADIUS, HUDDLE_RADIUS);
     img.style.transform = `translate(${x}px, ${y}px)`;
@@ -61,7 +58,6 @@ function createBug(parent) {
 export function createEarwigBalls(zone, onClick) {
     FRAMES.flat().forEach(src => { new Image().src = src; });
 
-    // usually one ball, sometimes two or three, somewhere new each visit
     const roll = Math.random();
     const count = roll < 0.6 ? 1 : roll < 0.9 ? 2 : 3;
 
@@ -71,7 +67,6 @@ export function createEarwigBalls(zone, onClick) {
         element.className = 'earwig-ball';
         element.setAttribute('aria-label', 'Something is moving');
         element.setAttribute('data-effect-ui', '');
-        // calc() keeps the whole ball inside the zone on narrow screens
         element.style.left = `calc((100% - ${BALL_SIZE}px) * ${rand(from, to) / 100})`;
         element.style.top = `${rand(0, zone.clientHeight - BALL_SIZE)}px`;
         element.addEventListener('click', onClick);
@@ -112,7 +107,6 @@ export function createEarwigBalls(zone, onClick) {
         });
         balls.forEach(({ element }) => element.remove());
 
-        // headings are spread evenly round the circle so they flee in all directions
         let runners = shuffle(start).map((from, i) => {
             const img = document.createElement('img');
             img.className = 'earwig-runner';
